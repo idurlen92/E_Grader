@@ -67,6 +67,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\CurrentUser.cs" />
+    <Compile Include="Classes\Database\DatabaseManager.cs" />
+    <Compile Include="Classes\Database\StatementBuilder.cs" />
+    <Compile Include="Classes\Database\StatementBuilderException.cs" />
+    <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\ControllerFactory.cs" />
+    <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\ModelFactory.cs" />
+    <Compile Include="Views\MenuFactory.cs" />
+    <Compile Include="Views\Menus\AdminMenu.xaml.cs">
+      <DependentUpon>AdminMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menus\StudentMenu.xaml.cs">
+      <DependentUpon>StudentMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menus\TeacherMenu.xaml.cs">
+      <DependentUpon>TeacherMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFactory.cs" />
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -77,8 +101,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\DatabaseManager.cs" />
     <Compile Include="Models\UsersModel.cs" />
+    <Page Include="Views\Menus\AdminMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menus\StudentMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menus\TeacherMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,7 +156,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

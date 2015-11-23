@@ -1,4 +1,6 @@
 ﻿using EGrader.Classes;
+using EGrader.Classes.Database;
+using EGrader.Controllers;
 using EGrader.Models;
 using System;
 using System.Collections.Generic;
@@ -20,49 +22,20 @@ namespace EGrader.Windows {
     /// </summary>
     public partial class LoginWindow : Window {
 
-        int invalidCredentialsCounter = 0;
-        UsersModel usersModel = new UsersModel(DatabaseManager.GetInstance());
-
-        // ---------- TEMPORARY ---------- 
-        String[,] usersPasswords = new String[,] { { "idurlen", "fnh57dsx" }, { "admin", "AdmiN12345" } };
-        // -------------------------------
+        Controller controller;
 
 
         public LoginWindow() {
             InitializeComponent();
-            buttonLogin.IsEnabled = false;
+
+            Model model = ModelFactory.NewInstance(AppContext.Login);
+            controller = ControllerFactory.NewInstance(model, AppContext.Login);
+
+            buttonLogin.Click += controller.DoAction;
+            textBoxUsername.KeyUp += controller.DoAction;
+            textBoxPassword.KeyUp += controller.DoAction;
         }
+        
 
-
-        private void HandleKeyPress(object sender, RoutedEventArgs e) {
-            if (IsExistentUser(textBoxUsername.Text))
-                buttonLogin.IsEnabled = true;
-        }
-
-
-        private void HandleLogin(object sender, RoutedEventArgs e) {
-            if (!isValidCredentials(textBoxUsername.Text, textBoxPassword.Password)) {
-                invalidCredentialsCounter++;
-                if (invalidCredentialsCounter == 3)
-                    labelForgottenPassword.Visibility = Visibility.Visible;
-            }
-            else {
-                MessageBox.Show("Valid login for: " + textBoxUsername.Text);
-                MainWindow mainWindow = new MainWindow();
-                App.Current.MainWindow = mainWindow;
-                this.Close();
-                mainWindow.Show();
-            }
-        }
-
-
-        private Boolean IsExistentUser(String username) {
-            return usersModel.userExists(username);
-        }
-
-
-        private Boolean isValidCredentials(String username, String password) {
-            return usersModel.userExists(username, password);
-        }
     }
 }

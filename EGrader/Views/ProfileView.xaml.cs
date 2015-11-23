@@ -1,6 +1,4 @@
-﻿using EGrader.Views;
-using EGrader.Views.Menus;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,15 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EGrader.Controllers;
+using EGrader.Models;
 
-namespace EGrader.Windows {
+namespace EGrader.Views {
+    /// <summary>
+    /// Interaction logic for ProfileView.xaml
+    /// </summary>
+    public partial class ProfileView : UserControl {
+
+        Controller controller;
+        Model model;
 
 
-    public partial class MainWindow : Window {
-
-
-        public MainWindow() {
+        public ProfileView(Controller controler, Model model) {
             InitializeComponent();
         }
 

@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EGrader.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+        Title="" 
+        ResizeMode="CanMinimize"
+        Width="800" Height="600" >
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal" Height="25">
+            <Button Width="50" Height="25">| | |</Button>
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ContentControl Panel.ZIndex="2" HorizontalAlignment="Left" Width="Auto" Height="775" Visibility="Collapsed" Name="sideMenu"/>
+            <ContentControl Panel.ZIndex="1" Name="mainWindowContent"/>
+        </Grid>
+    </StackPanel>
 </Window>
