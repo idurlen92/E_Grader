@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EGrader.Classes.Database {
-    class DatabaseManager {
+    public class DatabaseManager {
         private static DatabaseManager instance = null;
 
         private const String connectionString = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=fnh57dsx;Database=e_grader;";
@@ -97,7 +97,6 @@ namespace EGrader.Classes.Database {
 
 
         public List<List<String>> Select(String commandString) {
-
             NpgsqlCommand command = new NpgsqlCommand(commandString, Connection);
             NpgsqlDataReader dataReader = command.ExecuteReader();
 

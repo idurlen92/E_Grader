@@ -6,14 +6,15 @@
              xmlns:local="clr-namespace:EGrader.Views.Menus"
              mc:Ignorable="d" 
              d:DesignWidth="300"
-             d:DesignHeight="775">
-    <StackPanel Background="DarkCyan">
+             d:DesignHeight="575"
+             Visibility="Collapsed">
+    <StackPanel Name="contentHolder" Background="DarkCyan">
         <!-- Margin: Left Up Right Down -->
         <!-- Margin: Left Up Right Down -->
-        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Content="Škole"/>
-        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Content="Korisnici" />
-        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Content="Predmeti"/>
-        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Content="Smjerovi"/>
+        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonSchools" Content="Škole"/>
+        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonUsers" Content="Korisnici" />
+        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonCourses" Content="Predmeti"/>
+        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonDirections" Content="Smjerovi"/>
         <Button Width="200" Height="25"  Background="White" Content="Razredi"/>
     </StackPanel>
 </UserControl>

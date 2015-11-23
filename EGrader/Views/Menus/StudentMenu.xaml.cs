@@ -1,4 +1,6 @@
-﻿using EGrader.Windows;
+﻿using EGrader.Controllers.Factory;
+using EGrader.Controllers.Menu;
+using EGrader.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,21 +20,20 @@ namespace EGrader.Views.Menus {
     /// <summary>
     /// Interaction logic for StudentMenu.xaml
     /// </summary>
-    public partial class StudentMenu : UserControl {
+    public partial class StudentMenu : UserControl, MenuView {
 
+        MenuController controller;
 
         public StudentMenu() {
             InitializeComponent();
-            
+            controller = (MenuController) ControllerFactory.NewMenuControllerInstance();
+            foreach (object element in contentHolder.Children)
+                ((Button) element).Click += controller.DoAction;
         }
 
-  
-        private void ButtonLogout_Click(object sender, RoutedEventArgs e) {
-            if (MessageBox.Show("Želite li se odjaviti?", "Odjava", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
-                App.Current.MainWindow.Close();
-                App.Current.MainWindow = new LoginWindow();
-                App.Current.MainWindow.Show();
-            }
+
+        public void Toggle(object sender, RoutedEventArgs e) {
+            Visibility = IsVisible ? Visibility.Collapsed : Visibility.Visible;
         }
-    }
+    }//class
 }

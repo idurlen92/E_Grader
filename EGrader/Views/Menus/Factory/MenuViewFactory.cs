@@ -1,5 +1,4 @@
 ﻿using EGrader.Classes;
-using EGrader.Views.Menus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace EGrader.Views {
-    class MenuFactory {
+namespace EGrader.Views.Menus.Factory {
+    class MenuViewFactory {
 
-        public static UserControl NewInstance() {
-            if (CurrentUser.IsAdmin())
+        public static MenuView NewMenuInstance(UserType userType) {
+            if (userType == UserType.Admin)
                 return new AdminMenu();
-            else if (CurrentUser.IsStudent())
+            else if (userType == UserType.Student)
                 return new StudentMenu();
-            else 
+            else
                 return new TeacherMenu();
         }
 

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{66433B8E-677F-4764-BC40-EAD39496121A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EGrader</RootNamespace>
     <AssemblyName>EGrader</AssemblyName>
@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>EGrader.Models.UsersModel</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -73,24 +73,27 @@
     <Compile Include="Classes\Database\StatementBuilderException.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\Controller.cs" />
-    <Compile Include="Controllers\ControllerFactory.cs" />
+    <Compile Include="Controllers\Factory\ControllerFactory.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\Menu\MenuController.cs" />
+    <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\Model.cs" />
-    <Compile Include="Models\ModelFactory.cs" />
-    <Compile Include="Views\MenuFactory.cs" />
+    <Compile Include="Models\Objects\UserObject.cs" />
+    <Compile Include="Views\Factory\ViewFactory.cs" />
     <Compile Include="Views\Menus\AdminMenu.xaml.cs">
       <DependentUpon>AdminMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Menus\Factory\MenuViewFactory.cs" />
+    <Compile Include="Views\Menus\MenuView.cs" />
     <Compile Include="Views\Menus\StudentMenu.xaml.cs">
       <DependentUpon>StudentMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Menus\TeacherMenu.xaml.cs">
       <DependentUpon>TeacherMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfileView.xaml.cs">
-      <DependentUpon>ProfileView.xaml</DependentUpon>
+    <Compile Include="Views\StartView.xaml.cs">
+      <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewFactory.cs" />
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -114,7 +117,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProfileView.xaml">
+    <Page Include="Views\StartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

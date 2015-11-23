@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EGrader.Controllers.Factory;
+using EGrader.Controllers.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +19,23 @@ namespace EGrader.Views.Menus {
     /// <summary>
     /// Interaction logic for TeacherMenu.xaml
     /// </summary>
-    public partial class TeacherMenu : UserControl {
+    public partial class TeacherMenu : UserControl, MenuView {
+
+        MenuController controller;
+
+
         public TeacherMenu() {
             InitializeComponent();
+            controller = (MenuController) ControllerFactory.NewMenuControllerInstance();
+            foreach(object element in contentHolder.Children)
+                ((Button) element).Click += controller.DoAction;
         }
-    }
+
+
+        public void Toggle(object sender, RoutedEventArgs e) {
+            Visibility =  IsVisible ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+
+    }//class
 }

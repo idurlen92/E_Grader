@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EGrader.Classes.Database {
-    class StatementBuilderException : Exception{
+    public class StatementBuilderException : Exception{
 
         public StatementBuilderException() : base("SQLStatementBuilderException") { }
         public StatementBuilderException(String message) : base(message) { }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EGrader.Classes.Database {
-    class StatementBuilder {
+    public class StatementBuilder {
 
         public enum JoinType { Left, Right, Full };
 
@@ -86,6 +86,21 @@ namespace EGrader.Classes.Database {
             int insertIndex = selectStatement.ToString().IndexOf("JOIN") - 1;
             selectStatement.Insert(insertIndex, ' ' + alias);
         }
+
+
+
+        public StatementBuilder Join(String[] joinParams) {
+            if (joinParams.Length != 3)
+                throw new StatementBuilderException("Array must be 3 of lenght");
+
+            String[,] stringArray = new String[1, 3];
+            stringArray[0, 0] = joinParams[0];
+            stringArray[0, 1] = joinParams[1];
+            stringArray[0, 2] = joinParams[2];
+
+            return Join(stringArray);
+        }
+
 
 
         /// <summary>
@@ -211,8 +226,9 @@ namespace EGrader.Classes.Database {
 
 
         // ------------------- EXECUTION -------------------
-        public void Exec() {
+        public String Create() {
             StringBuilder fullStatementBuilder = new StringBuilder();
+
             fullStatementBuilder.Append(selectStatement);
             fullStatementBuilder.Append(whereStatement);
             fullStatementBuilder.Append(groupByStatement);
@@ -220,11 +236,10 @@ namespace EGrader.Classes.Database {
             fullStatementBuilder.Append(limitStatement);
             fullStatementBuilder.Append(offsetStatement);
 
-            // ---------- TODO: replace with db exec ----------
-            Console.WriteLine(fullStatementBuilder.ToString());
-
             // ----- cleaning up statement -----
             resetFields();
+
+            return fullStatementBuilder.ToString();
         }
 
 
