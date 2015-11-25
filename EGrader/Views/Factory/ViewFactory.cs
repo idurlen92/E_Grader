@@ -11,7 +11,8 @@ namespace EGrader.Views.Factory {
     class ViewFactory {
 
         public static UserControl NewViewInstance(Controller controller, Model model, AppContext context) {
-            //UNFINISHED
+            if (context == AppContext.Profile)
+                return new ProfileView(controller, model);
             return null;
         }
 

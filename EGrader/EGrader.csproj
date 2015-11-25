@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EGrader.Models.UsersModel</StartupObject>
+    <StartupObject>EGrader.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -71,6 +71,7 @@
     <Compile Include="Classes\Database\DatabaseManager.cs" />
     <Compile Include="Classes\Database\StatementBuilder.cs" />
     <Compile Include="Classes\Database\StatementBuilderException.cs" />
+    <Compile Include="Classes\Utils.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\Factory\ControllerFactory.cs" />
@@ -90,6 +91,9 @@
     </Compile>
     <Compile Include="Views\Menus\TeacherMenu.xaml.cs">
       <DependentUpon>TeacherMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
@@ -114,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Menus\TeacherMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

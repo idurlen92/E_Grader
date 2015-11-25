@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -24,12 +25,13 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">Prijava</Label>
-        <Label Grid.Row="1" Grid.Column="0" Width="75" Height="25">Kor. ime:</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Width="200" Height="25" Name="textBoxUsername"></TextBox>
-        <Label Grid.Row="2" Grid.Column="0" Width="75" Height="25">Lozinka:</Label>
-        <PasswordBox Grid.Row="2" Grid.Column="1" Width="200" Height="25" Name="textBoxPassword"></PasswordBox>
-        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="100" Height="25" Name="buttonLogin">Prijava</Button>
-        <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Collapsed" Name="labelForgottenPassword">Zaboravljena lozinka?</Label>
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelInfo">Nepostojeći korisnik</Label>
+        <Label Grid.Row="2" Grid.Column="0" Width="75" Height="25">Kor. ime:</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Width="200" Height="25" Name="textBoxUsername"></TextBox>
+        <Label Grid.Row="3" Grid.Column="0" Width="75" Height="25">Lozinka:</Label>
+        <PasswordBox Grid.Row="3" Grid.Column="1" Width="200" Height="25" Name="textBoxPassword"></PasswordBox>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Width="100" Height="25" Name="buttonLogin">Prijava</Button>
+        <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelForgottenPassword">Zaboravljena lozinka?</Label>
     </Grid>
 </Window>
 

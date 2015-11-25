@@ -1,4 +1,7 @@
-﻿using System;
+﻿using EGrader.Classes;
+using EGrader.Controllers;
+using EGrader.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using EGrader.Controllers;
-using EGrader.Models;
 
 namespace EGrader.Views {
     /// <summary>
@@ -24,11 +25,19 @@ namespace EGrader.Views {
         Controller controller;
         Model model;
 
-
-        public ProfileView(Controller controler, Model model) {
+        public ProfileView(Controller controller, Model model) {
+            this.controller = controller;
+            this.model = model;
             InitializeComponent();
+
+            labelName.Content = CurrentUser.Name;
+            labelLastname.Content = CurrentUser.Lastname;
+            labelUsername.Content = CurrentUser.Username;
+            labelBirthDate.Content = CurrentUser.BirthDate;
+            labelGender.Content = CurrentUser.Gender;
         }
 
 
-    }
+
+    }//class
 }

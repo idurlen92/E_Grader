@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="EGrader.Views.ProfileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EGrader.Views"
+             mc:Ignorable="d" 
+             d:DesignWidth="800"
+             d:DesignHeight="575" >
+    <Grid Margin="50" Name="contentGrid" HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left">Ime:</Label>
+        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left">Prezime:</Label>
+        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left">Kor.ime:</Label>
+        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left">Datum rođenja:</Label>
+        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left">Spol:</Label>
+
+        <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="labelName"></Label>
+        <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Name="labelLastname"></Label>
+        <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Name="labelUsername"></Label>
+        <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Name="labelBirthDate"></Label>
+        <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Name="labelGender"></Label>
+
+    </Grid>
+</UserControl>

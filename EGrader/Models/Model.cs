@@ -23,9 +23,9 @@ namespace EGrader.Models {
 
 
         public abstract List<object> Execute();
-        public abstract object GetAll();
+        public abstract List<object> GetAll ();
         public abstract object GetById(int id);
-        public abstract List<object> GetByCriteria(params String[] criteriaParams);
+        public abstract List<object> GetByCriteria(params object[] criteriaParams);
 
 
         public Model Select() {

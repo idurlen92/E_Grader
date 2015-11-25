@@ -35,5 +35,7 @@ namespace EGrader.Views.Menus {
         public void Toggle(object sender, RoutedEventArgs e) {
             Visibility = IsVisible ? Visibility.Collapsed : Visibility.Visible;
         }
+
+
     }//class
 }

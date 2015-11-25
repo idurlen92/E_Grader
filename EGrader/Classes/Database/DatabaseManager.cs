@@ -1,5 +1,6 @@
 ﻿using Npgsql;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -62,9 +63,9 @@ namespace EGrader.Classes.Database {
         /// Inserts one row in database, with string parameters defined respectivly as stated in the query.
         /// </summary>
         /// <param name="queryString"></param>
-        /// <param name="parametersList"></param>
+        /// <param name="valuesDictionary"></param>
         /// <returns></returns>
-        public int Insert(String queryString, params String[] parametersList) {
+        public int Insert(String queryString, Dictionary<String, String> valuesDictionary) {
             //TODO: add checks!
 
             String subString = queryString.Substring(queryString.IndexOf("values", StringComparison.OrdinalIgnoreCase));
@@ -74,10 +75,8 @@ namespace EGrader.Classes.Database {
             String[] subStringParts = subString.Split(',');
 
             NpgsqlCommand command = new NpgsqlCommand(queryString, Connection);
-            for (int i = 0; i < parametersList.Length; i++) {
-                String paramName = subStringParts[i].Substring(subStringParts[i].IndexOf(':') + 1);
-                command.Parameters.AddWithValue(paramName, parametersList[i]);
-            }
+            foreach (KeyValuePair<String, String> entry in valuesDictionary)
+                command.Parameters.AddWithValue(entry.Key, entry.Value);
 
             return command.ExecuteNonQuery();
         }
@@ -95,25 +94,66 @@ namespace EGrader.Classes.Database {
         }
 
 
-
-        public List<List<String>> Select(String commandString) {
-            NpgsqlCommand command = new NpgsqlCommand(commandString, Connection);
-            NpgsqlDataReader dataReader = command.ExecuteReader();
-
+        // --------------- Querying  ---------------
+        private List<List<String>> CreateResultsList(NpgsqlDataReader dataReader) {
             List<List<String>> resultList = new List<List<String>>();
+
             while (dataReader.Read()) {
                 List<String> rowColumnsList = new List<String>();
                 for (int i = 0; i < dataReader.FieldCount; i++) {
                     if (dataReader.IsDBNull(i))
                         rowColumnsList.Add("-");
                     else
-                        rowColumnsList.Add(dataReader.GetValue(i).ToString());
+                        rowColumnsList.Add(Convert.ToString(dataReader.GetValue(i)));
                 }
                 resultList.Add(rowColumnsList);
             }
 
             return resultList;
         }
+
+
+
+
+        /// <summary>
+        /// Used for query with no binding parameters.
+        /// </summary>
+        /// <param name="commandString"></param>
+        /// <returns>List of list of strings: every primitive type will be cast to String</returns>
+        public List<List<String>> Select(String commandString) {
+            NpgsqlCommand command = new NpgsqlCommand(commandString, Connection);
+            NpgsqlDataReader dataReader = command.ExecuteReader();
+            List<List<String>> resultsList = CreateResultsList(dataReader);
+            dataReader.Close();
+            //command.Dispose();
+
+            return resultsList;
+        }
+
+
+
+        /// <summary>
+        /// Used for querying with binded parameters. 
+        /// paramsDictionary: name/value
+        /// </summary>
+        /// <param name="commandString"></param>
+        /// <param name="paramsDictionary"></param>
+        /// <returns></returns>
+        public List<List<String>> Select(String commandString, Dictionary<String, String> paramsDictionary) {
+            List<List<String>> resultList = new List<List<String>>();
+
+            NpgsqlCommand command = new NpgsqlCommand(commandString, Connection);
+            foreach (KeyValuePair<String, String> entry in paramsDictionary)
+                command.Parameters.AddWithValue(entry.Key, entry.Value);
+
+            NpgsqlDataReader dataReader = command.ExecuteReader();
+            List<List<String>> resultsList = CreateResultsList(dataReader);
+            dataReader.Close();
+            //command.Dispose();
+
+            return resultsList; ;
+        }
+
 
 
     }//class

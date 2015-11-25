@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EGrader.Models.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,66 +10,47 @@ namespace EGrader.Classes {
     public enum UserType { Admin, Teacher, Student, None };
 
 
-    class CurrentUser {    
+    class CurrentUser {
 
-        private static int userId;
-        private static String username;
-        private static UserType userType = UserType.None;
+        private static UserObject userObject;
 
 
 
-        public static int GetUserId(){ 
-            return userId;
-        }
-
-
-        public static String GetUsername(){
-            return username;
-        }
-
-
-        public static UserType GetUserType() {
-            return userType;
-        }
-
-
+        public static int Id { get { return  (userObject == null) ? -1 : userObject.GetId(); } }
+        public static String BirthDate { get { return (userObject == null) ? "Not logged in" : userObject.GetBirthDate(); } }
+        public static String Gender { get { return (userObject == null) ? "Not logged in" : userObject.GetGender(); } }
+        public static String Name { get { return (userObject == null) ? "Not logged in" : userObject.GetName();  } }
+        public static String Lastname { get { return (userObject == null) ? "Not logged in" : userObject.GetLastname(); } }
+        public static String Username { get { return (userObject == null) ? "Not logged in" : userObject.GetUsername(); } }
+        public static UserType UserType { get { return (userObject == null) ? UserType.None : userObject.GetUserType(); } }
+        
 
         public static bool IsAdmin() {
-            return userType == UserType.Admin;
+            return (userObject != null && userObject.GetUserType() == UserType.Admin);
         }
-
 
 
         public static bool IsStudent() {
-            return userType == UserType.Student;
+            return (userObject != null && userObject.GetUserType() == UserType.Student);
         }
-
 
 
         public static bool isTeacher() {
-            return userType == UserType.Teacher;
+            return (userObject != null && userObject.GetUserType() == UserType.Teacher);
         }
 
 
 
-        public static void LogUserIn(String username, int userId, String userType) {
-            CurrentUser.username = username;
-            CurrentUser.userId = userId;
-            if (userType.StartsWith("student", StringComparison.OrdinalIgnoreCase))
-                CurrentUser.userType = UserType.Student;
-            else
-                CurrentUser.userType = (userType.StartsWith("admin", StringComparison.OrdinalIgnoreCase) ? UserType.Admin : UserType.Teacher);
+        public static void LogUserIn(UserObject userObject) {
+            CurrentUser.userObject = userObject;
         }
         
 
 
         public static void LogUserOut() {
-            CurrentUser.username = "";
-            CurrentUser.userId = 0;
-            CurrentUser.userType = UserType.None;
+            CurrentUser.userObject = null;
         }
         
 
-
-    }
+    }//class
 }

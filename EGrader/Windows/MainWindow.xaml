@@ -19,8 +19,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Button  Grid.Row="0" Grid.Column="0"  Width="50" Height="25" HorizontalAlignment="Left" Name="buttonToggleMenu">| | |</Button>
-            <Label Grid.Row="0" Grid.Column="1" Width="Auto" Height="25" HorizontalAlignment="Right">username</Label>
+            <Button  Grid.Row="0" Grid.Column="0" Width="50" Height="25" HorizontalAlignment="Left" Name="buttonToggleMenu">| | |</Button>
+            <Label Grid.Row="0" Grid.Column="1" Margin="0 0 10 0" Width="Auto" Height="25" HorizontalAlignment="Right" Name="labelUsername">Ivan Durlen</Label>
             
             <ContentControl Panel.ZIndex="2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="Auto" Height="575" Name="sideMenu"/>
             <ContentControl Panel.ZIndex="1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="mainWindowContent"/>

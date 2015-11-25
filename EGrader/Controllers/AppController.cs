@@ -31,22 +31,35 @@ namespace EGrader.Controllers {
             Window currentWindow = App.Current.MainWindow;
             mainWindow = new MainWindow();
 
-            //MenuView menu = MenuViewFactory.NewMenuInstance(CurrentUser.GetUserType());
-            MenuView menu = MenuViewFactory.NewMenuInstance(UserType.Teacher);//TODO: remove; TEMP
+            MenuView menu = MenuViewFactory.NewMenuInstance(CurrentUser.UserType);
 
             mainWindow.sideMenu.Content = (UserControl) menu;
             mainWindow.buttonToggleMenu.Click += menu.Toggle;
             mainWindow.mainWindowContent.Content = ViewFactory.NewStartViewInstance();
-
+            mainWindow.labelUsername.Content = CurrentUser.Lastname + " " + CurrentUser.Name;
 
             currentAppContext = AppContext.Start;
             App.Current.MainWindow = mainWindow;
+
             currentWindow.Close();
             mainWindow.Show();
         }
 
 
         
+        public static void ReturnToLoginWindow() {
+            LoginWindow loginWindow = new LoginWindow();
+            App.Current.MainWindow = loginWindow;
+
+            mainWindow.Close();
+            mainWindow = null;
+            loginWindow.Show();
+
+            currentAppContext = AppContext.Login;
+        }
+
+
+
         public static void ChangeContext(AppContext context) {
             currentAppContext = context;
 
@@ -54,9 +67,10 @@ namespace EGrader.Controllers {
                 Model model = ModelFactory.NewModelInstance(context);
                 Controller controller = ControllerFactory.NewControllerInstance(model, context);
                 UserControl view = ViewFactory.NewViewInstance(controller, model, context);
+                if(controller != null)
+                    controller.AttachView(view);
 
                 mainWindow.mainWindowContent.Content = view;
-                controller.AttachView(view);
             }
             catch(Exception e) {
                 Console.WriteLine(e.Message + ":\n" + e.StackTrace);

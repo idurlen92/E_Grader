@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EGrader.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,10 @@ namespace EGrader.Controllers.Menu {
 
 
         public void ActionLogOut() {
-            MessageBox.Show("Odjava", "Želite li se odjaviti?", MessageBoxButton.YesNo);
+            if(MessageBox.Show("Odjava", "Želite li se odjaviti?", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+                CurrentUser.LogUserOut();
+                AppController.ReturnToLoginWindow();
+            }
         }
 
 

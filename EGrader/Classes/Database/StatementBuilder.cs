@@ -9,15 +9,16 @@ namespace EGrader.Classes.Database {
 
         public enum JoinType { Left, Right, Full };
 
-        private readonly String tableName;
-        private DatabaseManager dbManager;
+        protected readonly String tableName;
 
-        List<String> selectColumnsList;
-        List<String> whereVaraiables;
+        List<String> columnsList;
+        Dictionary<String, String> paramsDictionary;
 
-        String[] keywordsArray = { "AND", "OR", "IN", "NOT IN", "(", ")", "=" };
+        String[] keywordsArray = { "AND", "OR", "IN", "NOT IN", "(", ")", "=", "<", ">", "<>"};
 
-        bool isJoined = false;
+        Boolean IsJoined = false;
+
+        String tableAlias;
 
         StringBuilder selectStatement;
         StringBuilder whereStatement;
@@ -30,10 +31,8 @@ namespace EGrader.Classes.Database {
         public StatementBuilder(String tableName) {
             this.tableName = tableName;
 
-            dbManager = DatabaseManager.GetInstance();
-
-            selectColumnsList = new List<String>();
-            whereVaraiables = new List<String>();
+            columnsList = new List<String>();
+            paramsDictionary = new Dictionary<String, String>();
 
             selectStatement = new StringBuilder();
             whereStatement = new StringBuilder();
@@ -42,6 +41,9 @@ namespace EGrader.Classes.Database {
             limitStatement = new StringBuilder();
             offsetStatement = new StringBuilder();
         }
+
+
+        public Dictionary<String, String> ParamsDictionary { get { return paramsDictionary; } }
 
 
 
@@ -53,12 +55,23 @@ namespace EGrader.Classes.Database {
 
 
 
+
         public StatementBuilder Select(params String[] columnParams) {
+            List<String> columnsList = new List<string>();
+            foreach (String column in columnParams)
+                columnsList.Add(column);
+
+            return Select(columnsList);
+        }
+
+
+        public StatementBuilder Select(List<String> columnsList) {
+            this.columnsList.Clear();
             selectStatement.Append("SELECT ");
 
-            for (int i = 0; i < columnParams.Length; i++) {
-                selectColumnsList.Add(columnParams[i]);
-                selectStatement.Append(columnParams[i] + (i < (columnParams.Length - 1) ? ", " : " "));
+            for (int i = 0; i < columnsList.Count; i++) {
+                this.columnsList.Add(columnsList[i]);
+                selectStatement.Append(columnsList[i] + (i < (columnsList.Count - 1) ? ", " : " "));
             }
 
             selectStatement.Append("FROM " + tableName + " ");
@@ -67,10 +80,8 @@ namespace EGrader.Classes.Database {
 
 
         // ---------- JOIN STATEMENT ----------
-
-
-        private String GetTableAlias(List<String> aliasesList) {
-            foreach (String aliasedColumn in selectColumnsList) {
+        private String FindTableAlias(List<String> aliasesList) {
+            foreach (String aliasedColumn in columnsList) {
                 String[] parts = aliasedColumn.Split('.');
                 if (parts.Length != 2)
                     throw new StatementBuilderException("Select statement should contain aliases when listing columns");
@@ -89,6 +100,14 @@ namespace EGrader.Classes.Database {
 
 
 
+        /// <summary>
+        /// 3D array where:
+        /// [1] foreign key 
+        /// [2] foreign table id
+        /// Example: Join('users u', 't.user_id', 'u.id')
+        /// </summary>
+        /// <param name="joinParams"></param>
+        /// <returns></returns>
         public StatementBuilder Join(String[] joinParams) {
             if (joinParams.Length != 3)
                 throw new StatementBuilderException("Array must be 3 of lenght");
@@ -106,9 +125,7 @@ namespace EGrader.Classes.Database {
         /// <summary>
         /// <para>Array of 3D arrays where:
         /// [0] table to join name
-        /// [1] foreign key 
-        /// [2] foreign table id
-        /// Example: Join('users u', 't.user_id', 'u.id')
+        
         /// </summary>
         /// <param name="joinParams"></param>
         /// <returns></returns>
@@ -126,8 +143,10 @@ namespace EGrader.Classes.Database {
                 selectStatement.Append("JOIN " + joinParams[i, 0] + " ON " + joinParams[i, 1] + " = " + joinParams[i, 2] + " ");
             }
 
-            AddTableAlias(GetTableAlias(aliasesList));
-            isJoined = true;
+            tableAlias = FindTableAlias(aliasesList);
+            AddTableAlias(tableAlias);
+
+            IsJoined = true;
 
             return this;
         }
@@ -135,49 +154,64 @@ namespace EGrader.Classes.Database {
 
 
         // ---------- WHERE STATEMENT ----------
+        /// <summary>
+        /// Check if given parameter is a part of a statement or a variable that needs to be bound.
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
         private Boolean IsVariable(object arg) {
-            if (arg is byte || arg is short || arg is int || arg is long)
-                return true;
-            else if (arg is string) {
+            if (arg is string) {
                 String stringArg = (String) Convert.ChangeType(arg, TypeCode.String);
                 foreach (String keyword in keywordsArray) {
                     if (stringArg.Contains(keyword))
                         return false;
                 }
-                return true;
             }
 
-            return false;
+            return true;
         }
 
 
 
         /// <summary>
-        /// TODO:
+        /// Accepting strings or numbers!
         /// </summary>
         /// <param name="variablesList"></param>
         /// <param name="stringParams"></param>
         /// <returns></returns>
         public StatementBuilder Where(params object[] conditionParams) {
-            whereStatement.Append("WHERE ");
+            return Where(false, conditionParams);
+        } 
 
+
+
+        /// <summary>
+        /// Accepting strings or numbers!
+        /// </summary>
+        /// <param name="variablesList"></param>
+        /// <param name="stringParams"></param>
+        /// <returns></returns>
+        public StatementBuilder Where(Boolean isCheckAlias, params object[] conditionParams) {
+            paramsDictionary.Clear();
+            whereStatement.Append("WHERE ");
+            //TODO: fix IN and NOT IN operator (multiple params between parenthesis)
             int counter = 1;
             foreach (object param in conditionParams) {
                 try {
                     String stringParam = (String) Convert.ChangeType(param, TypeCode.String);
+
                     if (!IsVariable(param))
-                        whereStatement.Append(" " + stringParam + " ");
+                        whereStatement.Append(" " + stringParam + " ");//TODO: 
                     else {
-                        whereVaraiables.Add(stringParam);
-                        whereStatement.Append(":v" + (counter++) + " ");
+                        paramsDictionary.Add(":v" + counter, stringParam);
+                        whereStatement.Append(":v" + counter + " ");
+                        counter++;
                     }
                 }
                 catch (Exception e) {
                     throw e;
                 }
             }
-
-            Console.WriteLine("Statement =>\t" + whereStatement.ToString());
 
             return this;
         }
@@ -226,6 +260,10 @@ namespace EGrader.Classes.Database {
 
 
         // ------------------- EXECUTION -------------------
+        /// <summary>
+        /// Creates SQL Select statement.
+        /// </summary>
+        /// <returns></returns>
         public String Create() {
             StringBuilder fullStatementBuilder = new StringBuilder();
 
@@ -246,7 +284,8 @@ namespace EGrader.Classes.Database {
 
 
         private void resetFields() {
-            selectColumnsList.Clear();
+            IsJoined = false;
+            tableAlias = "";
 
             selectStatement.Clear();
             whereStatement.Clear();
@@ -257,5 +296,5 @@ namespace EGrader.Classes.Database {
         }
 
 
-    }
+    }//class
 }
