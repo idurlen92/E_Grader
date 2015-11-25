@@ -39,7 +39,7 @@ namespace EGrader.Models {
                 new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Where(true, criteriaParams).Create();
 
             List<object> userObjectList = new List<object>();
-            foreach (List<String> userRow in databaseManager.Select(statement, statementBuilder.ParamsDictionary))
+            foreach (List<String> userRow in databaseManager.Select(statement, statementBuilder.WhereParamsDictionary))
                 userObjectList.Add(new UserObject(userRow));
 
             return userObjectList;
@@ -51,7 +51,7 @@ namespace EGrader.Models {
             String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.birth_date", "u.gender", "ut.user_type_name").Join(
                 new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Where("u.id=", id).Create();
 
-            List<List<string>> resultList = databaseManager.Select(statement, statementBuilder.ParamsDictionary);
+            List<List<string>> resultList = databaseManager.Select(statement, statementBuilder.WhereParamsDictionary);
             return new UserObject(resultList[0]);
         }
 

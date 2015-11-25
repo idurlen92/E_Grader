@@ -12,11 +12,13 @@ namespace EGrader.Classes.Database {
         protected readonly String tableName;
 
         List<String> columnsList;
-        Dictionary<String, String> paramsDictionary;
 
-        String[] keywordsArray = { "AND", "OR", "IN", "NOT IN", "(", ")", "=", "<", ">", "<>"};
+        Dictionary<String, String> whereParamsDictionary;
+        public Dictionary<String, String> insertValuesDictionary;
 
-        Boolean IsJoined = false;
+        String[] keywordsArray = { "SELECT", "AND", "OR", "BETWEEN", "IN", "NOT IN", "(", ")", "=", "<", ">", "<>"};
+
+        bool isJoined = false;
 
         String tableAlias;
 
@@ -27,12 +29,16 @@ namespace EGrader.Classes.Database {
         StringBuilder limitStatement;
         StringBuilder offsetStatement;
 
+        StringBuilder insertStatement;
+
 
         public StatementBuilder(String tableName) {
             this.tableName = tableName;
 
             columnsList = new List<String>();
-            paramsDictionary = new Dictionary<String, String>();
+
+            whereParamsDictionary = new Dictionary<String, String>();
+            insertValuesDictionary = new Dictionary<string, string>();
 
             selectStatement = new StringBuilder();
             whereStatement = new StringBuilder();
@@ -40,13 +46,22 @@ namespace EGrader.Classes.Database {
             orderByStatement = new StringBuilder();
             limitStatement = new StringBuilder();
             offsetStatement = new StringBuilder();
+
+            insertStatement = new StringBuilder();
         }
 
 
-        public Dictionary<String, String> ParamsDictionary { get { return paramsDictionary; } }
+        public Dictionary<String, String> WhereParamsDictionary { get { return whereParamsDictionary; } }
+
+
+        // ###############################  H E L P E R     M E T H O D S  ###############################
+        private bool IsPrimitiveType(object param) {
+            return (param is string || param is int || param is long || param is short);
+        }
 
 
 
+        // ###############################  I N S E R T  ###############################
         // ---------- SELECT STATEMENT ----------
         public StatementBuilder Select() {
             selectStatement.Append("SELECT * FROM " + tableName + " ");
@@ -146,7 +161,7 @@ namespace EGrader.Classes.Database {
             tableAlias = FindTableAlias(aliasesList);
             AddTableAlias(tableAlias);
 
-            IsJoined = true;
+            isJoined = true;
 
             return this;
         }
@@ -163,14 +178,25 @@ namespace EGrader.Classes.Database {
             if (arg is string) {
                 String stringArg = (String) Convert.ChangeType(arg, TypeCode.String);
                 foreach (String keyword in keywordsArray) {
-                    if (stringArg.Contains(keyword))
+                    if (stringArg.ToUpper().Contains(keyword))
                         return false;
                 }
             }
-
             return true;
         }
 
+
+        /// <summary>
+        /// Check if given parameter is last parameter in case of IN operators..
+        /// </summary>
+        /// <returns></returns>
+        private Boolean IsLastParam(object param) {
+            if (param is string) {
+                String stringArg = (String) Convert.ChangeType(param, TypeCode.String);
+                return stringArg.StartsWith(")");
+            }
+            return false;
+        }
 
 
         /// <summary>
@@ -192,20 +218,34 @@ namespace EGrader.Classes.Database {
         /// <param name="stringParams"></param>
         /// <returns></returns>
         public StatementBuilder Where(Boolean isCheckAlias, params object[] conditionParams) {
-            paramsDictionary.Clear();
+            whereParamsDictionary.Clear();
             whereStatement.Append("WHERE ");
-            //TODO: fix IN and NOT IN operator (multiple params between parenthesis)
+            
             int counter = 1;
-            foreach (object param in conditionParams) {
+            bool isInOperator = false;
+
+            for(int i=0; i<conditionParams.Length; i++) {
+                object param = conditionParams[i];
+
                 try {
                     String stringParam = (String) Convert.ChangeType(param, TypeCode.String);
 
-                    if (!IsVariable(param))
-                        whereStatement.Append(" " + stringParam + " ");//TODO: 
-                    else {
-                        paramsDictionary.Add(":v" + counter, stringParam);
-                        whereStatement.Append(":v" + counter + " ");
+                    if (!IsVariable(param)) {
+                        whereStatement.Append(" " + stringParam + " ");
+                        isInOperator = (stringParam.ToLower().Contains(" in") && stringParam.EndsWith("("));
+                    }
+                    else{
+                        whereParamsDictionary.Add(":v" + counter, stringParam);
+                        whereStatement.Append(":v" + counter);
                         counter++;
+                        if (!isInOperator)
+                            whereStatement.Append(" ");
+                        else if(IsLastParam(conditionParams[i + 1])) { 
+                            isInOperator = false;
+                            whereStatement.Append(" ");
+                        }
+                        else
+                            whereStatement.Append(", ");
                     }
                 }
                 catch (Exception e) {
@@ -282,10 +322,8 @@ namespace EGrader.Classes.Database {
         }
 
 
-
-
         private void resetFields() {
-            IsJoined = false;
+            isJoined = false;
             tableAlias = "";
 
             selectStatement.Clear();
@@ -294,6 +332,65 @@ namespace EGrader.Classes.Database {
             orderByStatement.Clear();
             limitStatement.Clear();
             offsetStatement.Clear();
+        }
+
+
+        // ###############################  I N S E R T  ###############################
+        public StatementBuilder Insert(params String[] columns) {
+            insertStatement.Clear();
+            insertStatement.Append("INSERT INTO " + tableName + "(");
+
+            for(int i=0; i<columns.Length; i++)
+                insertStatement.Append(columns[i] + ((i < columns.Length - 1) ? ", " : ") "));
+            return this;
+        }
+
+
+        public String Values(params object[] parameters) {
+            insertValuesDictionary.Clear();
+            insertStatement.Append("VALUES(");
+
+            int counter = 1;
+            for(int i=0; i<parameters.Length; i++) {
+                if (!IsPrimitiveType(parameters[i]))
+                    throw new StatementBuilderException("Only strings and numbers allowed!");
+
+
+                insertValuesDictionary.Add(":v" + counter, Convert.ToString(parameters[i]));
+                insertStatement.Append(":v" + counter + ((i < parameters.Length - 1) ? ", " : ") "));
+                counter++;
+            }
+
+            return insertStatement.ToString();
+        }
+
+
+
+        // ###############################  U P D A T E  ###############################
+        public StatementBuilder Update(params object[] parameters) {
+            //UNFINISHED
+            return this;
+        }
+
+
+        /// <summary>
+        /// Where clause of Update statement. DO NOT use for Select statement!
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public String UWhere(params object[] parameters) {
+            return "";
+        }
+
+
+
+
+        public static void Main(String[] args) {
+            StatementBuilder builder = new StatementBuilder("users");
+            Console.WriteLine(builder.Insert("name", "surname", "birth_date").Values("ivan", "durlen", 2));
+
+            foreach (KeyValuePair<String, String> element in builder.insertValuesDictionary)
+                Console.WriteLine(element.Key + ": " + element.Value);
         }
 
 

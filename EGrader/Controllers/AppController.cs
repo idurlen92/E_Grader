@@ -35,7 +35,7 @@ namespace EGrader.Controllers {
 
             mainWindow.sideMenu.Content = (UserControl) menu;
             mainWindow.buttonToggleMenu.Click += menu.Toggle;
-            mainWindow.mainWindowContent.Content = ViewFactory.NewStartViewInstance();
+            mainWindow.mainWindowContent.Content = ViewFactory.NewViewInstance(null, null, AppContext.Start);
             mainWindow.labelUsername.Content = CurrentUser.Lastname + " " + CurrentUser.Name;
 
             currentAppContext = AppContext.Start;

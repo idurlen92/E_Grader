@@ -7,23 +7,7 @@
              mc:Ignorable="d" 
              d:DesignWidth="800"
              d:DesignHeight="575" >
-    <StackPanel Margin="50 25" VerticalAlignment="Top" HorizontalAlignment="Center">
-        <ScrollViewer Height="200">
-            <ListBox>
-                <ListBoxItem>
-                    <Label Width="200" Height="75"  Content="Label1"></Label>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Label Width="200" Height="75"  Content="Label2"></Label>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Label Width="200" Height="75"  Content="Label3"></Label>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Label Width="200" Height="75"  Content="Label4"></Label>
-                </ListBoxItem>
-            </ListBox>
-        </ScrollViewer>
+    <StackPanel Margin="50 25" Width="800" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Center" Name="contentPanel">
         <Button Margin="0 25" Width="100" Height="25" Name="buttonAddSchool" Content="Kreiraj školu"></Button>
     </StackPanel>
 </UserControl>

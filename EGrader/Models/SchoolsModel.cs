@@ -33,7 +33,7 @@ namespace EGrader.Models {
             String statement = statementBuilder.Select("id", "school_name", "address").Where(criteriaParams).Create();
 
             List<object> schoolsObjectsList = new List<object>();
-            foreach (List<String> schoolRow in databaseManager.Select(statement, statementBuilder.ParamsDictionary))
+            foreach (List<String> schoolRow in databaseManager.Select(statement, statementBuilder.WhereParamsDictionary))
                 schoolsObjectsList.Add(new SchoolObject(schoolRow));
 
             return schoolsObjectsList;
@@ -43,23 +43,16 @@ namespace EGrader.Models {
 
         public override object GetById(int id) {
             String statement = statementBuilder.Select("id", "school_name", "address").Where(true, "id=", id).Create();
-            List<List<string>> resultList = databaseManager.Select(statement, statementBuilder.ParamsDictionary);
+            List<List<string>> resultList = databaseManager.Select(statement, statementBuilder.WhereParamsDictionary);
 
             return new SchoolObject(resultList[0]);
         }
 
 
 
-        public static void Main(String[] args){
-            try {
-                SchoolsModel model = new SchoolsModel();
-                foreach (SchoolObject school in model.GetByCriteria("id >", 1, "AND id <", 4))
-                    Console.WriteLine(school.SchoolName + ", " + school.Address);
-            }
-            catch(Exception e) {
-                Console.WriteLine(e.Message + " =>\n" + e.StackTrace);
-            }
-            
+        public static void Main(String[] args) {
+            //TODO: test
+            SchoolsModel model = new SchoolsModel();
         }
 
 

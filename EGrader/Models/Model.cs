@@ -26,6 +26,10 @@ namespace EGrader.Models {
         public abstract List<object> GetAll ();
         public abstract object GetById(int id);
         public abstract List<object> GetByCriteria(params object[] criteriaParams);
+        //UNFINISHED
+        //TODO: public abstract int Delete(params object[] criteriaParams);
+        //TODO: public abstract int Insert();
+        //TODO: public abstract int Update();
 
 
         public Model Select() {
@@ -84,6 +88,7 @@ namespace EGrader.Models {
             statementBuilder.Offset(offset);
             return this;
         }
+
 
 
 

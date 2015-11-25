@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EGrader.App</StartupObject>
+    <StartupObject>EGrader.Classes.Database.StatementBuilder</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -83,6 +83,9 @@
     <Compile Include="Models\Objects\SchoolObject.cs" />
     <Compile Include="Models\Objects\UserObject.cs" />
     <Compile Include="Models\SchoolsModel.cs" />
+    <Compile Include="Views\Admin\Schools\InsertSchoolDialog.xaml.cs">
+      <DependentUpon>InsertSchoolDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Admin\Schools\SchoolsView.xaml.cs">
       <DependentUpon>SchoolsView.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\UsersModel.cs" />
+    <Page Include="Views\Admin\Schools\InsertSchoolDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Admin\Schools\SchoolsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
