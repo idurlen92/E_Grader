@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EGrader.Models.Objects {
-    class UserObject {
+    public class UserObject {
 
         private int id;
 
@@ -35,73 +35,23 @@ namespace EGrader.Models.Objects {
         }
 
 
-        // ---------- Getters ----------
-        public int GetId() {
-            return id;
-        }
-
-
-        public String GetName() {
-            return name;
-        }
-
-
-        public String GetLastname() {
-            return lastname;
-        }
-
-
-        public  String GetUsername() {
-            return username;
-        }
-
-
-        public String GetBirthDate() {
-            return birthDate;
-        }
-
-
-        public String GetGender() {
-            return gender;
-        }
-
-
-        public UserType GetUserType() {
-            return userType;
-        }
+        // ---------- Getter properties ----------
+        public int Id { get { return id; } }
+        public String BirthDate { get { return birthDate; } }
+        public String Gender { get { return gender; } }
+        public String Name { get { return name; } }
+        public String Lastname { get { return lastname; } }
+        public String Username { get { return username; } }
+        public UserType UserType { get { return userType; } }
 
 
         // ---------- Setters ----------
-        public void SetId(int id) {
-            this.id = id;
-        }
-
-
-        public void SetName(String name) {
-            this.name = name;
-        }
-
-
-        public void SetLastname(String lastname) {
-            this.lastname = lastname;
-        }
-
-
-        public void SetUsername(String username) {
-            this.username = username;
-        }
-
-
-        public void SetBirthDate(String birthDate) {
-            this.birthDate = birthDate;
-        }
-
-
-        public void SetGender(String gender) {
-            this.gender = gender;
-        }
-
-
+        public void SetId(int id) { this.id = id; }
+        public void SetBirthDate(String birthDate) { this.birthDate = birthDate; }
+        public void SetName(String name) { this.name = name; }
+        public void SetLastname(String lastname) { this.lastname = lastname; }
+        public void SetUsername(String username) { this.username = username; }
+        public void SetGender(String gender) { this.gender = gender; }
 
 
     }//class

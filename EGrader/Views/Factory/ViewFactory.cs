@@ -1,5 +1,6 @@
 ﻿using EGrader.Controllers;
 using EGrader.Models;
+using EGrader.Views.Admin.Schools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,12 @@ namespace EGrader.Views.Factory {
     class ViewFactory {
 
         public static UserControl NewViewInstance(Controller controller, Model model, AppContext context) {
-            if (context == AppContext.Profile)
+            if (context == AppContext.Start)
+                return new StartView();
+            else if (context == AppContext.Profile)
                 return new ProfileView(controller, model);
+            else if (context == AppContext.Schools)
+                return new SchoolsView(controller, model);
             return null;
         }
 

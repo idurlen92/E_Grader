@@ -276,6 +276,7 @@ namespace EGrader.Classes.Database {
 
             // ----- cleaning up statement -----
             resetFields();
+            Console.WriteLine(fullStatementBuilder.ToString());
 
             return fullStatementBuilder.ToString();
         }

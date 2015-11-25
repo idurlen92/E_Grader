@@ -23,6 +23,8 @@ namespace EGrader.Controllers.Menu {
                 ActionLogOut();
             else if (clickedButton.Name.ToLower().Contains("profile"))
                 AppController.ChangeContext(AppContext.Profile);
+            else if (clickedButton.Name.ToLower().Contains("school"))
+                AppController.ChangeContext(AppContext.Schools);
         }
 
 

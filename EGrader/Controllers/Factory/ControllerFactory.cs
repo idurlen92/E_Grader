@@ -1,4 +1,5 @@
-﻿using EGrader.Controllers.Menu;
+﻿using EGrader.Controllers.Admin;
+using EGrader.Controllers.Menu;
 using EGrader.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ namespace EGrader.Controllers.Factory {
 
 
         public static Controller NewControllerInstance(Model model, AppContext context) {
-            //UNFINISHED
+            //TODO: create other controllers
+            if (context == AppContext.Schools)
+                return new SchoolsController(model);
             return null;
         }
 
@@ -20,5 +23,7 @@ namespace EGrader.Controllers.Factory {
             return new MenuController();
         }
 
-    }
+
+
+    }//class
 }

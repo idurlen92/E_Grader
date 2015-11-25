@@ -13,9 +13,11 @@ namespace EGrader.Models.Factory {
 
 
         public static Model NewModelInstance(AppContext context) {
-            //UNFINISHED
-            if (context == AppContext.Login)
+            //TODO:
+            if (context == AppContext.Login || context == AppContext.Users)
                 return new UsersModel();
+            else if (context == AppContext.Schools)
+                return new SchoolsModel();
             return null;
         }
 
