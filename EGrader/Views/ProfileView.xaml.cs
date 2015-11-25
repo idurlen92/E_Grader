@@ -33,8 +33,9 @@ namespace EGrader.Views {
             labelName.Content = CurrentUser.Name;
             labelLastname.Content = CurrentUser.Lastname;
             labelUsername.Content = CurrentUser.Username;
-            labelBirthDate.Content = CurrentUser.BirthDate;
+            labelBirthDate.Content = Utils.FormatDate(CurrentUser.BirthDate);
             labelGender.Content = CurrentUser.Gender;
+            //TODO:
         }
 
 
