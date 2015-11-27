@@ -60,9 +60,41 @@ namespace EGrader.Classes.Database {
         }
 
 
+        /// <summary>
+        /// Check if given parameter is a part of a statement or a variable that needs to be bound.
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
+        private Boolean IsVariable(object arg) {
+            if (arg is string) {
+                String stringArg = (String) Convert.ChangeType(arg, TypeCode.String);
+                foreach (String keyword in keywordsArray) {
+                    if (stringArg.ToUpper().Contains(keyword))
+                        return false;
+                }
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Check if given parameter is last parameter in case of IN operators..
+        /// </summary>
+        /// <returns></returns>
+        private Boolean IsLastParam(object param) {
+            if (param is string) {
+                String stringArg = (String) Convert.ChangeType(param, TypeCode.String);
+                return stringArg.StartsWith(")");
+            }
+            return false;
+        }
+
+
 
         // ###############################  I N S E R T  ###############################
+
         // ---------- SELECT STATEMENT ----------
+
         public StatementBuilder Select() {
             selectStatement.Append("SELECT * FROM " + tableName + " ");
             return this;
@@ -169,35 +201,6 @@ namespace EGrader.Classes.Database {
 
 
         // ---------- WHERE STATEMENT ----------
-        /// <summary>
-        /// Check if given parameter is a part of a statement or a variable that needs to be bound.
-        /// </summary>
-        /// <param name="arg"></param>
-        /// <returns></returns>
-        private Boolean IsVariable(object arg) {
-            if (arg is string) {
-                String stringArg = (String) Convert.ChangeType(arg, TypeCode.String);
-                foreach (String keyword in keywordsArray) {
-                    if (stringArg.ToUpper().Contains(keyword))
-                        return false;
-                }
-            }
-            return true;
-        }
-
-
-        /// <summary>
-        /// Check if given parameter is last parameter in case of IN operators..
-        /// </summary>
-        /// <returns></returns>
-        private Boolean IsLastParam(object param) {
-            if (param is string) {
-                String stringArg = (String) Convert.ChangeType(param, TypeCode.String);
-                return stringArg.StartsWith(")");
-            }
-            return false;
-        }
-
 
         /// <summary>
         /// Accepting strings or numbers!
@@ -212,6 +215,8 @@ namespace EGrader.Classes.Database {
 
 
         /// <summary>
+        /// Where clause of Select statement.
+        /// Do not use in other statements! (Delete, update, ...)
         /// Accepting strings or numbers!
         /// </summary>
         /// <param name="variablesList"></param>
@@ -226,7 +231,6 @@ namespace EGrader.Classes.Database {
 
             for(int i=0; i<conditionParams.Length; i++) {
                 object param = conditionParams[i];
-
                 try {
                     String stringParam = (String) Convert.ChangeType(param, TypeCode.String);
 
@@ -249,7 +253,7 @@ namespace EGrader.Classes.Database {
                     }
                 }
                 catch (Exception e) {
-                    throw e;
+                    throw new StatementBuilderException(e.Message);
                 }
             }
 
@@ -379,6 +383,13 @@ namespace EGrader.Classes.Database {
         /// <param name=""></param>
         /// <returns></returns>
         public String UWhere(params object[] parameters) {
+            //UNFINISHED
+            return "";
+        }
+
+
+        public String Delete(params object[] parameters) {
+            //UNFINISHED
             return "";
         }
 
@@ -388,10 +399,10 @@ namespace EGrader.Classes.Database {
         public static void Main(String[] args) {
             StatementBuilder builder = new StatementBuilder("users");
             Console.WriteLine(builder.Insert("name", "surname", "birth_date").Values("ivan", "durlen", 2));
-
             foreach (KeyValuePair<String, String> element in builder.insertValuesDictionary)
                 Console.WriteLine(element.Key + ": " + element.Value);
         }
+
 
 
     }//class
