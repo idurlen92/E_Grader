@@ -50,8 +50,8 @@ namespace EGrader.Models {
             List<object> userObjectList = new List<object>();
 
             try {
-                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.birth_date", "u.gender", "ut.user_type_name").Join(
-                    new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Create();    
+                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in", 
+                    "u.class_id", "ut.user_type_name").Join(new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Create();    
                 foreach (List<String> userRow in databaseManager.ExecuteQuery(statement))
                     userObjectList.Add(new UserObject(userRow));
             }
@@ -71,8 +71,8 @@ namespace EGrader.Models {
             List<object> userObjectList = new List<object>();
 
             try {
-                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.birth_date", "u.gender", "ut.user_type_name").Join(
-                    new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Where(true, criteriaParams).Create();
+                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
+                   "u.class_id", "ut.user_type_name").Join(new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Where(criteriaParams).Create();
                 foreach (List<String> userRow in databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary))
                     userObjectList.Add(new UserObject(userRow));
             }
@@ -92,8 +92,8 @@ namespace EGrader.Models {
             UserObject user = null;
 
             try {
-                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.birth_date", "u.gender", "ut.user_type_name").Join(
-                    new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Where("u.id=", id).Create();
+                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
+                    "u.class_id", "ut.user_type_name").Join(new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Where("u.id=", id).Create();
                 List<List<string>> resultList = databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
                 user = new UserObject(resultList[0]);
             }

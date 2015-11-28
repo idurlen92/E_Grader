@@ -10,7 +10,7 @@
              Visibility="Collapsed">
     <StackPanel Background="DarkCyan" Name="contentHolder">
         <Button Margin="50 0 50 5" Width="200" Height="25" Name="buttonProfile">Profil</Button>
-        <Button Margin="50 0 50 5" Width="200" Height="25" Name="buttonGrades">Ocjene</Button>
+        <Button Margin="50 0 50 5" Width="200" Height="25" Name="buttonClasses">Razredi</Button>
         <Button Width="200" Height="25"  Background="White" Name="buttonLogout" Content="Odjava"/>
     </StackPanel>
 </UserControl>

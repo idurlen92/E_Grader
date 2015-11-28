@@ -12,7 +12,7 @@ namespace EGrader.Controllers.Factory {
 
 
         public static Controller NewControllerInstance(Model model, AppContext context) {
-            if (context == AppContext.Schools || context == AppContext.Users)
+            if (context == AppContext.Users)
                 return new ListableController(model);
             else if (context == AppContext.Grades)
                 return new GradesController(model);

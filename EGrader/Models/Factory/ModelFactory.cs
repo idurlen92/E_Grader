@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace EGrader.Models.Factory {
 
-    public enum ModelType { Users, Schools };
+    public enum ModelType { Classes, ClassesInSchools, CourseRubrics, Courses, Grades, Schools, StudentsInClasses, UserTypes, Users };
+
 
     class ModelFactory {
 
@@ -16,8 +17,6 @@ namespace EGrader.Models.Factory {
             //TODO:
             if (context == AppContext.Login || context == AppContext.Users)
                 return new UsersModel();
-            else if (context == AppContext.Schools)
-                return new SchoolsModel();
             return null;
         }
 

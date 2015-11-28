@@ -1,20 +1,7 @@
 ﻿using EGrader.Classes;
 using EGrader.Controllers;
 using EGrader.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EGrader.Views {
     /// <summary>
@@ -33,8 +20,6 @@ namespace EGrader.Views {
             labelName.Content = CurrentUser.Name;
             labelLastname.Content = CurrentUser.Lastname;
             labelUsername.Content = CurrentUser.Username;
-            labelBirthDate.Content = Utils.FormatDate(CurrentUser.BirthDate);
-            labelGender.Content = CurrentUser.Gender;
             //TODO:
         }
 

@@ -81,14 +81,9 @@
     <Compile Include="Controllers\Menu\MenuController.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\Model.cs" />
-    <Compile Include="Models\Objects\SchoolObject.cs" />
     <Compile Include="Models\Objects\UserObject.cs" />
-    <Compile Include="Models\SchoolsModel.cs" />
     <Compile Include="Views\Admin\ListableView.xaml.cs">
       <DependentUpon>ListableView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Admin\Schools\InsertSchoolDialog.xaml.cs">
-      <DependentUpon>InsertSchoolDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Factory\ViewFactory.cs" />
     <Compile Include="Views\GradesView.xaml.cs">
@@ -123,10 +118,6 @@
     </Compile>
     <Compile Include="Models\UsersModel.cs" />
     <Page Include="Views\Admin\ListableView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Admin\Schools\InsertSchoolDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

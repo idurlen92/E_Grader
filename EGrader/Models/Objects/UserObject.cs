@@ -9,25 +9,18 @@ namespace EGrader.Models.Objects {
     public class UserObject {
 
         private int id;
+        private int classId;
+        private int worksIn;
+        private int userTypeId;
 
         private String name;
         private String lastname;
         private String username;
-        private String birthDate;
-        private String gender;
 
         private UserType userType; 
 
 
-
-        public UserObject(int id, String name, String lastname, String username, String birthDate, String gender, UserType userType) {
-            this.id = id;
-            this.name = name;
-            this.lastname = lastname;
-            this.username = username;
-            this.birthDate = birthDate;
-            this.gender = gender;
-            this.userType = userType;
+        public UserObject() {
         }
 
 
@@ -36,10 +29,11 @@ namespace EGrader.Models.Objects {
             this.name = fieldsList[1];
             this.lastname = fieldsList[2];
             this.username = fieldsList[3];
-            this.birthDate = fieldsList[4];
-            this.gender = fieldsList[5];
+            this.userTypeId = Convert.ToInt32(fieldsList[4]);
+            this.worksIn = (fieldsList[5].CompareTo("-") == 0) ? 0 : Convert.ToInt32(fieldsList[5]);
+            this.classId = (fieldsList[6].CompareTo("-") == 0) ? 0 : Convert.ToInt32(fieldsList[6]);
 
-            String userType = fieldsList[6].ToLower();
+            String userType = fieldsList[7].ToLower();
             if (userType.Contains("admin"))
                 this.userType = UserType.Admin;
             else
@@ -49,8 +43,9 @@ namespace EGrader.Models.Objects {
 
         // ---------- Getter properties ----------
         public int Id { get { return id; } }
-        public String BirthDate { get { return birthDate; } }
-        public String Gender { get { return gender; } }
+        public int ClassId { get { return classId; } }
+        public int UserTypeId { get { return userTypeId; } }
+        public int WorksIn { get { return worksIn; } }
         public String Name { get { return name; } }
         public String Lastname { get { return lastname; } }
         public String Username { get { return username; } }
@@ -59,11 +54,12 @@ namespace EGrader.Models.Objects {
 
         // ---------- Setters ----------
         public void SetId(int id) { this.id = id; }
-        public void SetBirthDate(String birthDate) { this.birthDate = birthDate; }
+        public void SetClassId(int classId) { this.classId = classId; }
+        public void SetUserTypeId(int userTypeId) { this.userTypeId = userTypeId; }
+        public void SetWorksIn(int worksIn) { this.worksIn = worksIn; }
         public void SetName(String name) { this.name = name; }
         public void SetLastname(String lastname) { this.lastname = lastname; }
         public void SetUsername(String username) { this.username = username; }
-        public void SetGender(String gender) { this.gender = gender; }
 
 
     }//class

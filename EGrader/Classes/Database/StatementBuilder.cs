@@ -8,8 +8,8 @@ namespace EGrader.Classes.Database {
     public class StatementBuilder {
 
         public enum JoinType { Left, Right, Full };
-        private readonly String[] keywordsArray = { "SELECT", "LIKE", "AND", "OR", "BETWEEN", "IN", "NOT IN",
-            "(", ")", "=", "<", ">", "<>", "%"};
+        private readonly String[] keywordsArray = { " SELECT ", "(SELECT", " LIKE", " AND ", " OR ", " BETWEEN ", " IN(", " IN ", " NOT IN ",
+            " NOT IN(", "(", ")", "=", "<", ">", "<>"};
 
         protected readonly String tableName;
 
@@ -90,6 +90,7 @@ namespace EGrader.Classes.Database {
                     if (stringArg.ToUpper().Contains(keyword))
                         return false;
                 }
+                return true;
             }
             return true;
         }
@@ -257,19 +258,6 @@ namespace EGrader.Classes.Database {
 
 
         // ---------- WHERE STATEMENT ----------
-
-        /// <summary>
-        /// Accepting strings or numbers!
-        /// </summary>
-        /// <param name="variablesList"></param>
-        /// <param name="stringParams"></param>
-        /// <returns></returns>
-        public StatementBuilder Where(params object[] conditionParams) {
-            return Where(false, conditionParams);
-        } 
-
-
-
         /// <summary>
         /// Where clause of Select statement.
         /// Do not use in other statements! (Delete, update, ...)
@@ -278,7 +266,7 @@ namespace EGrader.Classes.Database {
         /// <param name="variablesList"></param>
         /// <param name="stringParams"></param>
         /// <returns></returns>
-        public StatementBuilder Where(Boolean isCheckAlias, params object[] conditionParams) {
+        public StatementBuilder Where(params object[] conditionParams) {
             whereParamsDictionary.Clear();
             whereStatement.Append("WHERE ");
             ProcessParameters(ref whereParamsDictionary, ref whereStatement, conditionParams);

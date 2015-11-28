@@ -17,7 +17,7 @@ using System.Windows.Controls;
 
 namespace EGrader.Controllers {
 
-    public enum AppContext { Login, Start, Profile, Schools, Users, Classes, Grades };
+    public enum AppContext { Login, Start, Profile, Users, Classes, Grades };
 
 
     class AppController {

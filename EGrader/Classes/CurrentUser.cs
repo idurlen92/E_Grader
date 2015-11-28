@@ -15,8 +15,9 @@ namespace EGrader.Classes {
 
 
         public static int Id { get { return  (userObject == null) ? -1 : userObject.Id; } }
-        public static String BirthDate { get { return (userObject == null) ? "Not logged in" : userObject.BirthDate; } }
-        public static String Gender { get { return (userObject == null) ? "Not logged in" : userObject.Gender; } }
+        public static int ClassId { get { return (userObject == null) ? -1 : userObject.ClassId; } }
+        public static int UserTypeId { get { return (userObject == null) ? -1 : userObject.UserTypeId; } }
+        public static int WorksIn { get { return (userObject == null) ? -1 : userObject.WorksIn; } }// ----- Id of school admin/teacher works in -----
         public static String Name { get { return (userObject == null) ? "Not logged in" : userObject.Name;  } }
         public static String Lastname { get { return (userObject == null) ? "Not logged in" : userObject.Lastname; } }
         public static String Username { get { return (userObject == null) ? "Not logged in" : userObject.Username; } }

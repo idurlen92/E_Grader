@@ -1,12 +1,6 @@
 ﻿using EGrader.Controllers;
 using EGrader.Models;
 using EGrader.Views.Admin;
-using EGrader.Views.Admin.Schools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -24,7 +18,7 @@ namespace EGrader.Views.Factory {
                 return new ProfileView(controller, model);
             else if (context == AppContext.Grades)
                 return new GradesView(controller, model);
-            else if (context == AppContext.Schools || context == AppContext.Users)
+            else if (context == AppContext.Users)
                 return new ListableView(controller, model);
             return null;
         }
@@ -32,8 +26,6 @@ namespace EGrader.Views.Factory {
 
         public static Window NewDialogInstance(Controller controller, Model model, DialogType type) {
             //TODO:
-            if (type == DialogType.InsertSchool)
-                return new InsertSchoolDialog(controller, model);
             return null;
         }
 
