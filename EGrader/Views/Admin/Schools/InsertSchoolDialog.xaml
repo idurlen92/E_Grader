@@ -6,10 +6,26 @@
         xmlns:local="clr-namespace:EGrader.Views.Admin.Schools"
         mc:Ignorable="d"
         Title="Dodaj školu" 
-        Width="600"
-        Height="400" 
-        >
-    <Grid>
-        
+        Width="500"
+        Height="300">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0">Naziv škole</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="inputName"></TextBox>
+        <Label Grid.Row="1" Grid.Column="0">Adresa</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="inputAddress"></TextBox>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal">
+            <Button Width="75" Height="25" Margin="15 50" VerticalAlignment="Top">Otkaži</Button>
+            <Button Width="75" Height="25" Margin="15 50" VerticalAlignment="Top">Potvrdi</Button>
+        </StackPanel>
     </Grid>
 </Window>

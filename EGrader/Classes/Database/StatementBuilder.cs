@@ -17,7 +17,7 @@ namespace EGrader.Classes.Database {
 
         private Dictionary<String, String> whereParamsDictionary;
         private Dictionary<String, String> deleteParamsDictionary;
-        private Dictionary<String, String> insertValuesDictionary;
+        private Dictionary<String, String> insertParamsDictionary;
         private Dictionary<String, String> updateParamsDictionary;
 
 
@@ -46,7 +46,7 @@ namespace EGrader.Classes.Database {
 
             whereParamsDictionary = new Dictionary<string, string>();
             deleteParamsDictionary = new Dictionary<string, string>();
-            insertValuesDictionary = new Dictionary<string, string>();
+            insertParamsDictionary = new Dictionary<string, string>();
             updateParamsDictionary = new Dictionary<string, string>();
 
             selectStatement = new StringBuilder();
@@ -64,6 +64,10 @@ namespace EGrader.Classes.Database {
 
 
         public Dictionary<String, String> WhereParamsDictionary { get { return whereParamsDictionary; } }
+        public Dictionary<String, String> DeleteParamsDictionary { get { return deleteParamsDictionary; } }
+        public Dictionary<String, String> InsertParamsDictionary { get { return insertParamsDictionary; } }
+        public Dictionary<String, String> UpdateParamsDictionary { get { return updateParamsDictionary; } }
+        
 
 
 
@@ -373,7 +377,7 @@ namespace EGrader.Classes.Database {
 
 
         public String Values(params object[] parameters) {
-            insertValuesDictionary.Clear();
+            insertParamsDictionary.Clear();
             insertStatement.Clear();
             insertStatement.Append("VALUES(");
 
@@ -382,10 +386,12 @@ namespace EGrader.Classes.Database {
                 if (!IsPrimitiveType(parameters[i]))
                     throw new StatementBuilderException("Parameter is not a primitive type!");
 
-                insertValuesDictionary.Add(":v" + counter, Convert.ToString(parameters[i]));
+                insertParamsDictionary.Add(":v" + counter, Convert.ToString(parameters[i]));
                 insertStatement.Append(":v" + counter + ((i < parameters.Length - 1) ? ", " : ") "));
                 counter++;
             }
+
+            Console.WriteLine(insertStatement.ToString());
 
             return insertStatement.ToString();
         }
@@ -399,6 +405,8 @@ namespace EGrader.Classes.Database {
             updateStatement.Append("UPDATE " + tableName + " SET ");
 
             ProcessParameters(ref updateParamsDictionary, ref updateStatement, parameters);
+
+            Console.WriteLine(updateStatement.ToString());
 
             return this;
         }
@@ -426,18 +434,10 @@ namespace EGrader.Classes.Database {
             deleteStatement.Append("DELETE FROM " + tableName + " WHERE ");
 
             ProcessParameters(ref deleteParamsDictionary, ref deleteStatement, parameters);
+            Console.WriteLine(deleteStatement.ToString());
             
             return deleteStatement.ToString();
         }
-
-
-
-
-        public static void Main(String[] args) {
-            StatementBuilder builder = new StatementBuilder("users");
-            Console.WriteLine(builder.Delete("id IN(", 1, 2, 3, ")"));
-        }
-
 
 
     }//class

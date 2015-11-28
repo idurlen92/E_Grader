@@ -1,5 +1,6 @@
 ﻿using EGrader.Controllers;
 using EGrader.Models;
+using EGrader.Views.Admin;
 using EGrader.Views.Admin.Schools;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,10 @@ namespace EGrader.Views.Factory {
                 return new StartView();
             else if (context == AppContext.Profile)
                 return new ProfileView(controller, model);
-            else if (context == AppContext.Schools)
-                return new SchoolsView(controller, model);
+            else if (context == AppContext.Grades)
+                return new GradesView(controller, model);
+            else if (context == AppContext.Schools || context == AppContext.Users)
+                return new ListableView(controller, model);
             return null;
         }
 

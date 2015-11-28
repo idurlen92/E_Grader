@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 
 namespace EGrader.Classes.Database {
     public class DatabaseManager {
+
         private static DatabaseManager instance = null;
 
         private const String connectionString = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=fnh57dsx;Database=e_grader;";
+        private NpgsqlConnection connection;
+        private NpgsqlTransaction transaction;
 
-        public NpgsqlConnection Connection { get; private set; }
+
+        public NpgsqlConnection Connection { get { return connection; } }
 
 
 
@@ -35,10 +39,10 @@ namespace EGrader.Classes.Database {
 
         public void Connect() {
             try {
-                if (Connection == null)
-                    Connection = new NpgsqlConnection(connectionString);
-                if (Connection.State != ConnectionState.Open)
-                    Connection.Open();
+                if (connection == null)
+                    connection = new NpgsqlConnection(connectionString);
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
             }
             catch (Exception e) {
                 throw e;
@@ -49,8 +53,8 @@ namespace EGrader.Classes.Database {
 
         public void Disconnect() {
             try {
-                if (Connection != null)
-                    Connection.Close();
+                if (connection != null)
+                    connection.Close();
             }
             catch (Exception e) {
                 throw e;
@@ -59,23 +63,38 @@ namespace EGrader.Classes.Database {
 
 
 
-        /// <summary>
-        /// Inserts one row in database, with string parameters defined respectivly as stated in the query.
-        /// </summary>
-        /// <param name="queryString"></param>
-        /// <param name="valuesDictionary"></param>
-        /// <returns></returns>
-        public int Insert(String queryString, Dictionary<String, String> valuesDictionary) {
-            //TODO: add checks!
+        public void StartTransaction() {
+            transaction = connection.BeginTransaction();
+        }
 
-            String subString = queryString.Substring(queryString.IndexOf("values", StringComparison.OrdinalIgnoreCase));
-            subString = subString.Substring(subString.IndexOf('('));
-            subString = subString.Substring(1, subString.IndexOf(')') - 1);
 
-            String[] subStringParts = subString.Split(',');
 
-            NpgsqlCommand command = new NpgsqlCommand(queryString, Connection);
-            foreach (KeyValuePair<String, String> entry in valuesDictionary)
+        public void CommitTransaction() {
+            if (transaction != null) {
+                transaction.Commit();
+                transaction.Dispose();
+            }
+            else
+                Console.WriteLine("Transaction object is null");
+        }
+
+
+
+        public void RollBackTransacion() {
+            if (transaction != null) {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+            else
+                Console.WriteLine("Transaction object is null");
+        }
+
+
+
+        // ####################### NON-SELECT STATEMENT #######################
+        public int ExecuteStatement(String statement, Dictionary<String, String> paramsDictionary) {
+            NpgsqlCommand command = new NpgsqlCommand(statement, connection);
+            foreach (KeyValuePair<String, String> entry in paramsDictionary)
                 command.Parameters.AddWithValue(entry.Key, entry.Value);
 
             return command.ExecuteNonQuery();
@@ -83,18 +102,7 @@ namespace EGrader.Classes.Database {
 
 
 
-        public void StartTransaction() {
-            //TODO
-        }
-
-
-
-        public void CommitTransaction() {
-            //TODO
-        }
-
-
-        // --------------- Querying  ---------------
+        // ####################### QUERYING  #######################
         private List<List<String>> CreateResultsList(NpgsqlDataReader dataReader) {
             List<List<String>> resultList = new List<List<String>>();
 
@@ -120,9 +128,10 @@ namespace EGrader.Classes.Database {
         /// </summary>
         /// <param name="commandString"></param>
         /// <returns>List of list of strings: every primitive type will be cast to String</returns>
-        public List<List<String>> Select(String commandString) {
-            NpgsqlCommand command = new NpgsqlCommand(commandString, Connection);
+        public List<List<String>> ExecuteQuery(String commandString) {
+            NpgsqlCommand command = new NpgsqlCommand(commandString, connection);
             NpgsqlDataReader dataReader = command.ExecuteReader();
+
             List<List<String>> resultsList = CreateResultsList(dataReader);
             dataReader.Close();
             //command.Dispose();
@@ -139,10 +148,10 @@ namespace EGrader.Classes.Database {
         /// <param name="commandString"></param>
         /// <param name="paramsDictionary"></param>
         /// <returns></returns>
-        public List<List<String>> Select(String commandString, Dictionary<String, String> paramsDictionary) {
+        public List<List<String>> ExecuteQuery(String commandString, Dictionary<String, String> paramsDictionary) {
             List<List<String>> resultList = new List<List<String>>();
 
-            NpgsqlCommand command = new NpgsqlCommand(commandString, Connection);
+            NpgsqlCommand command = new NpgsqlCommand(commandString, connection);
             foreach (KeyValuePair<String, String> entry in paramsDictionary)
                 command.Parameters.AddWithValue(entry.Key, entry.Value);
 

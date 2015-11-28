@@ -17,7 +17,7 @@ using System.Windows.Controls;
 
 namespace EGrader.Controllers {
 
-    public enum AppContext { Login, Start, Profile, Schools, Users, Classes };
+    public enum AppContext { Login, Start, Profile, Schools, Users, Classes, Grades };
 
 
     class AppController {
@@ -26,6 +26,8 @@ namespace EGrader.Controllers {
         static AppContext currentAppContext = AppContext.Login;
         static MainWindow mainWindow;
 
+
+        public static AppContext CurrentAppContext { get { return currentAppContext; } }
 
         public static void CreateMainWindow() {
             Window currentWindow = App.Current.MainWindow;

@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EGrader.Classes.Database.StatementBuilder</StartupObject>
+    <StartupObject>EGrader.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -72,10 +72,11 @@
     <Compile Include="Classes\Database\StatementBuilder.cs" />
     <Compile Include="Classes\Database\StatementBuilderException.cs" />
     <Compile Include="Classes\Utils.cs" />
-    <Compile Include="Controllers\Admin\SchoolsController.cs" />
+    <Compile Include="Controllers\Admin\ListableController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\Factory\ControllerFactory.cs" />
+    <Compile Include="Controllers\GradesController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\Menu\MenuController.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
@@ -83,13 +84,16 @@
     <Compile Include="Models\Objects\SchoolObject.cs" />
     <Compile Include="Models\Objects\UserObject.cs" />
     <Compile Include="Models\SchoolsModel.cs" />
+    <Compile Include="Views\Admin\ListableView.xaml.cs">
+      <DependentUpon>ListableView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Admin\Schools\InsertSchoolDialog.xaml.cs">
       <DependentUpon>InsertSchoolDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Admin\Schools\SchoolsView.xaml.cs">
-      <DependentUpon>SchoolsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Factory\ViewFactory.cs" />
+    <Compile Include="Views\GradesView.xaml.cs">
+      <DependentUpon>GradesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Menus\AdminMenu.xaml.cs">
       <DependentUpon>AdminMenu.xaml</DependentUpon>
     </Compile>
@@ -118,11 +122,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\UsersModel.cs" />
+    <Page Include="Views\Admin\ListableView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Admin\Schools\InsertSchoolDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Admin\Schools\SchoolsView.xaml">
+    <Page Include="Views\GradesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,7 +191,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Admin\Users\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

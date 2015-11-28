@@ -21,11 +21,11 @@ namespace EGrader.Views.Admin.Schools {
     /// </summary>
     public partial class InsertSchoolDialog : Window {
 
-        SchoolsController controller;
+        Controller controller;
         SchoolsModel model;
 
         public InsertSchoolDialog(Controller controller, Model model) {
-            this.controller = (SchoolsController) controller;
+            this.controller = controller;
             this.model = (SchoolsModel) model;
 
             InitializeComponent();

@@ -19,6 +19,18 @@ namespace EGrader.Models.Objects {
         private UserType userType; 
 
 
+
+        public UserObject(int id, String name, String lastname, String username, String birthDate, String gender, UserType userType) {
+            this.id = id;
+            this.name = name;
+            this.lastname = lastname;
+            this.username = username;
+            this.birthDate = birthDate;
+            this.gender = gender;
+            this.userType = userType;
+        }
+
+
         public UserObject(List<String> fieldsList) {
             this.id = Convert.ToInt32(fieldsList[0]);
             this.name = fieldsList[1];

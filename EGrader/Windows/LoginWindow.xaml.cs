@@ -32,7 +32,7 @@ namespace EGrader.Windows {
             Model model = ModelFactory.NewModelInstance(AppContext.Login);
             Controller controller = new LoginController(model, this);
 
-            buttonLogin.IsEnabled = false;
+            //buttonLogin.IsEnabled = false;
 
             buttonLogin.Click += controller.DoAction;
             textBoxUsername.KeyUp += controller.DoAction;

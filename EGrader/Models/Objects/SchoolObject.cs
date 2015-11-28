@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EGrader.Models.Objects {
-    public class SchoolObject {
+    public class SchoolObject : INotifyPropertyChanged{
 
         private int id;
         private String schoolName;
         private String address;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public SchoolObject(int id, String schoolName, String address) {
+            this.id = id;
+            this.schoolName = schoolName;
+            this.address =address;
+        }
+
 
         public SchoolObject(List<String> fieldsList) {
             this.id = Convert.ToInt32(fieldsList[0]);

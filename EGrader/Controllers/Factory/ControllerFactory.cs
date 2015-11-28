@@ -12,9 +12,10 @@ namespace EGrader.Controllers.Factory {
 
 
         public static Controller NewControllerInstance(Model model, AppContext context) {
-            //TODO: create other controllers
-            if (context == AppContext.Schools)
-                return new SchoolsController(model);
+            if (context == AppContext.Schools || context == AppContext.Users)
+                return new ListableController(model);
+            else if (context == AppContext.Grades)
+                return new GradesController(model);
             return null;
         }
 
