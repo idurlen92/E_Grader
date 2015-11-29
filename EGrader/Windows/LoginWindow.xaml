@@ -5,12 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EGrader.Windows"
         mc:Ignorable="d"
-       Title="EGrader - Prijava" Height="600" Width="600" ResizeMode="NoResize"
-        >
-    <Grid
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center">
-
+        Title="Prijava" Height="300" Width="400">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -34,4 +30,3 @@
         <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelForgottenPassword">Zaboravljena lozinka?</Label>
     </Grid>
 </Window>
-

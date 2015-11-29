@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EGrader.Controllers;
 
 namespace EGrader.Views.Menus {
     /// <summary>
@@ -22,15 +23,12 @@ namespace EGrader.Views.Menus {
     /// </summary>
     public partial class StudentMenu : UserControl, MenuView {
 
-        MenuController controller;
 
         public StudentMenu() {
             InitializeComponent();
-            controller = (MenuController) ControllerFactory.NewMenuControllerInstance();
-            foreach (object element in contentHolder.Children)
-                ((Button) element).Click += controller.DoAction;
         }
 
+        
 
         public void Toggle(object sender, RoutedEventArgs e) {
             Visibility = IsVisible ? Visibility.Collapsed : Visibility.Visible;

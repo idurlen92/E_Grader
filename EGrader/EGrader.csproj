@@ -72,7 +72,8 @@
     <Compile Include="Classes\Database\StatementBuilder.cs" />
     <Compile Include="Classes\Database\StatementBuilderException.cs" />
     <Compile Include="Classes\Utils.cs" />
-    <Compile Include="Controllers\Admin\ListableController.cs" />
+    <Compile Include="Controllers\Admin\StudentsController.cs" />
+    <Compile Include="Controllers\Admin\TeachersController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\Factory\ControllerFactory.cs" />
@@ -92,7 +93,6 @@
     <Compile Include="Views\Menus\AdminMenu.xaml.cs">
       <DependentUpon>AdminMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Factory\MenuViewFactory.cs" />
     <Compile Include="Views\Menus\MenuView.cs" />
     <Compile Include="Views\Menus\StudentMenu.xaml.cs">
       <DependentUpon>StudentMenu.xaml</DependentUpon>
@@ -106,6 +106,7 @@
     <Compile Include="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\View.cs" />
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -182,9 +183,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Admin\Users\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

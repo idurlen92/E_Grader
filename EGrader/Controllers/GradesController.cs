@@ -15,18 +15,12 @@ namespace EGrader.Controllers {
         GradesView view;
 
 
-        public GradesController(Model model) {
+        public GradesController(Model model, View view) {
             //TODO: this.model = (GradesModel) model;
-        }
-
-        public void AttachView(UserControl view) {
             this.view = (GradesView) view;
         }
 
 
-        public void DoAction(object sender, RoutedEventArgs e) {
-           //TODO:
-        }
 
 
     }//class

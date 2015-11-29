@@ -1,43 +1,38 @@
 ﻿using EGrader.Classes;
 using EGrader.Controllers.Factory;
+using EGrader.Controllers.Menu;
 using EGrader.Models;
 using EGrader.Models.Factory;
 using EGrader.Views;
 using EGrader.Views.Factory;
 using EGrader.Views.Menus;
-using EGrader.Views.Menus.Factory;
 using EGrader.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace EGrader.Controllers {
 
-    public enum AppContext { Login, Start, Profile, Users, Classes, Grades };
+    public enum AppContext { Login, Start, Profile, Teachers, Students, Classes, Grades };
 
 
     class AppController {
 
-
         static AppContext currentAppContext = AppContext.Login;
         static MainWindow mainWindow;
 
-
         public static AppContext CurrentAppContext { get { return currentAppContext; } }
+
 
         public static void CreateMainWindow() {
             Window currentWindow = App.Current.MainWindow;
             mainWindow = new MainWindow();
 
-            MenuView menu = MenuViewFactory.NewMenuInstance(CurrentUser.UserType);
+            MenuView menu = ViewFactory.NewMenuInstance(CurrentUser.UserType);
+            Controller menuController = ControllerFactory.NewMenuControllerInstance(menu);
 
             mainWindow.sideMenu.Content = (UserControl) menu;
             mainWindow.buttonToggleMenu.Click += menu.Toggle;
-            mainWindow.mainWindowContent.Content = ViewFactory.NewViewInstance(null, null, AppContext.Start);
+            mainWindow.mainWindowContent.Content = ViewFactory.NewViewInstance(AppContext.Start);
             mainWindow.labelUsername.Content = CurrentUser.Lastname + " " + CurrentUser.Name;
 
             currentAppContext = AppContext.Start;
@@ -65,18 +60,11 @@ namespace EGrader.Controllers {
         public static void ChangeContext(AppContext context) {
             currentAppContext = context;
 
-            try {
-                Model model = ModelFactory.NewModelInstance(context);
-                Controller controller = ControllerFactory.NewControllerInstance(model, context);
-                UserControl view = ViewFactory.NewViewInstance(controller, model, context);
-                if(controller != null)
-                    controller.AttachView(view);
+            Model model = ModelFactory.NewModelInstance(context);
+            View view = ViewFactory.NewViewInstance(context);
+            Controller controller = ControllerFactory.NewControllerInstance(model, view, context);
 
-                mainWindow.mainWindowContent.Content = view;
-            }
-            catch(Exception e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
+            mainWindow.mainWindowContent.Content = view;
         }
 
 

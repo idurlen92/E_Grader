@@ -21,14 +21,8 @@ namespace EGrader.Views.Menus {
     /// </summary>
     public partial class TeacherMenu : UserControl, MenuView {
 
-        MenuController controller;
-
-
         public TeacherMenu() {
             InitializeComponent();
-            controller = (MenuController) ControllerFactory.NewMenuControllerInstance();
-            foreach(object element in contentHolder.Children)
-                ((Button) element).Click += controller.DoAction;
         }
 
 

@@ -108,6 +108,28 @@ namespace EGrader.Models {
         }
 
 
+
+        public List<UserObject> GetStudents(int schoolId) {
+            List<UserObject> userObjectList = new List<UserObject>();
+
+            try {
+                String[,] joinArrays = new String[,] { { "classes_in_schools c", "u.class_id", "c.id" }, { "user_types ut", "ut.id", "u.user_type_id"} };
+                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
+                   "u.class_id", "ut.user_type_name").Join(joinArrays).Where("c.school_id =", schoolId, "AND u.user_type_id=", 3).Create();
+                foreach (List<String> userRow in databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary))
+                    userObjectList.Add(new UserObject(userRow));
+            }
+            catch (StatementBuilderException e) {
+                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
+            }
+
+            return userObjectList;
+        }
+
+
         public override List<object> Execute() {
             throw new NotImplementedException();
         }

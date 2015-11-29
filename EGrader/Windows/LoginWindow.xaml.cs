@@ -1,7 +1,4 @@
-﻿using EGrader.Classes;
-using EGrader.Classes.Database;
-using EGrader.Controllers;
-using EGrader.Controllers.Login;
+﻿using EGrader.Controllers.Login;
 using EGrader.Models;
 using EGrader.Models.Factory;
 using System;
@@ -25,20 +22,11 @@ namespace EGrader.Windows {
     public partial class LoginWindow : Window {
 
 
-
         public LoginWindow() {
             InitializeComponent();
-
-            Model model = ModelFactory.NewModelInstance(AppContext.Login);
-            Controller controller = new LoginController(model, this);
-
-            //buttonLogin.IsEnabled = false;
-
-            buttonLogin.Click += controller.DoAction;
-            textBoxUsername.KeyUp += controller.DoAction;
-            textBoxPassword.KeyUp += controller.DoAction;
+            LoginController controller = new LoginController(ModelFactory.NewModelInstance(ModelType.Users), this);
         }
-        
 
-    }
+
+    }//class
 }

@@ -19,44 +19,16 @@ namespace EGrader.Views {
     /// <summary>
     /// Interaction logic for GradesView.xaml
     /// </summary>
-    public partial class GradesView : UserControl {
+    public partial class GradesView : UserControl, View {
 
-        GradesController controller;
-        //GradesModel model;
+        
 
-        public GradesView(Controller controller, Model model) {
-            this.controller = (GradesController) controller;
-            //TODO:this.model = (GradesModel) model;
+        public GradesView() {
             InitializeComponent();
-
-            CreateGrid();
-            contentGrid.MouseLeftButtonUp += Func;
         }
 
-
-        void Func(object sender, RoutedEventArgs e) {
-            Label label = sender as Label;
-            int row = (int) label.GetValue(Grid.RowProperty);
-            int col = (int) label.GetValue(Grid.ColumnProperty);
-            MessageBox.Show(row + ", " + col);
+        public void Update(ref List<object> objectsList) {
+            throw new NotImplementedException();
         }
-
-        private void CreateGrid() {
-            for(int i=0; i<5; i++) {
-                contentGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                for(int j=0; j<5; j++) {
-                    contentGrid.RowDefinitions.Add(new RowDefinition());
-                    Label label = new Label();
-                    if (i == 0 || j == 0)
-                        label.FontWeight = FontWeights.ExtraBold;
-                    label.Content = Convert.ToString(i + 1) + Convert.ToString(j + 1);
-                    Grid.SetRow(label, i);
-                    Grid.SetColumn(label, j);
-                    contentGrid.Children.Add(label);
-                }
-            }
-        }
-
-
     }//class
 }

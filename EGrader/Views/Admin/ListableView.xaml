@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
             d:DesignWidth="800"
              d:DesignHeight="575" >
-    <Grid Margin="50 25" Width="800" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Center" Name="contentGrid">
+    <Grid Margin="50 25" Width="800" Height="575" VerticalAlignment="Top" HorizontalAlignment="Center" Name="contentGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -16,6 +16,9 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <ScrollViewer Margin="25" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <ListView  Name="currentListView" />
+        </ScrollViewer>
         <Button Margin="25 25" Grid.Column="0" Grid.Row="1" Width="100" Height="25" HorizontalAlignment="Right" Name="buttonDelete" Content="Izbriši"></Button>
         <Button Margin="25 25" Grid.Column="1" Grid.Row="1" Width="100" Height="25" HorizontalAlignment="Left" Name="buttonAdd" Content="Dodaj"></Button>
     </Grid>

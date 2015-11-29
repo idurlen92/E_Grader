@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
-namespace EGrader.Controllers {
-    public interface Controller {
+namespace EGrader.Views {
+    public interface View {
 
-
+        void Update(ref List<object> objectsList);
 
     }
 }

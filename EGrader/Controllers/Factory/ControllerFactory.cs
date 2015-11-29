@@ -1,27 +1,26 @@
 ﻿using EGrader.Controllers.Admin;
 using EGrader.Controllers.Menu;
 using EGrader.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EGrader.Views;
+using EGrader.Views.Menus;
 
 namespace EGrader.Controllers.Factory {
     class ControllerFactory {
 
 
-        public static Controller NewControllerInstance(Model model, AppContext context) {
-            if (context == AppContext.Users)
-                return new ListableController(model);
+        public static Controller NewControllerInstance(Model model, View view, AppContext context) {
+            if (context == AppContext.Students)
+                return new StudentsController(model, view);
+            else if (context == AppContext.Teachers)
+                return new TeachersController(model, view);
             else if (context == AppContext.Grades)
-                return new GradesController(model);
+                return new GradesController(model, view);
             return null;
         }
 
 
-        public static Controller NewMenuControllerInstance() {
-            return new MenuController();
+        public static Controller NewMenuControllerInstance(MenuView menu) {
+            return new MenuController(menu);
         }
 
 

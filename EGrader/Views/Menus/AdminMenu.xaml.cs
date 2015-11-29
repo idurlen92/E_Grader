@@ -25,9 +25,6 @@ namespace EGrader.Views.Menus {
 
         public AdminMenu() {
             InitializeComponent();
-            controller = (MenuController) ControllerFactory.NewMenuControllerInstance();
-            foreach (object element in contentHolder.Children)
-                ((Button) element).Click += controller.DoAction;
         }
 
         public void Toggle(object sender, RoutedEventArgs e) {

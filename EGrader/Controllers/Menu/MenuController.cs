@@ -1,4 +1,5 @@
 ﻿using EGrader.Classes;
+using EGrader.Views.Menus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +11,44 @@ using System.Windows.Controls;
 namespace EGrader.Controllers.Menu {
     public class MenuController : Controller {
 
+        MenuView menu;
 
-        public void AttachView(UserControl view) {
-            throw new NotImplementedException("Not using in Menu context");
+
+        public MenuController(MenuView menu) {
+            this.menu = menu;
+
+            if (menu is AdminMenu) {
+                foreach (Button button in ((AdminMenu) menu).contentHolder.Children)
+                    button.Click += DoAction;
+            }
+            else if (menu is StudentMenu) {
+                foreach (Button button in ((StudentMenu) menu).contentHolder.Children)
+                    button.Click += DoAction;
+            }
+            else {
+                foreach (Button button in ((TeacherMenu) menu).contentHolder.Children)
+                    button.Click += DoAction;
+            }
         }
 
-
+       
         public void DoAction(object sender, RoutedEventArgs e) {
-            Button clickedButton = (Button) sender;
+            String buttonName = ((Button) sender).Name.ToLower();
 
-            if (clickedButton.Name.ToLower().Contains("logout"))
+            if (buttonName.Contains("logout"))
                 ActionLogOut();
-            else if (clickedButton.Name.ToLower().Contains("profile"))
+            else if (buttonName.Contains("profile"))
                 AppController.ChangeContext(AppContext.Profile);
-            else if (clickedButton.Name.ToLower().Contains("users"))
-                AppController.ChangeContext(AppContext.Users);
-            else if (clickedButton.Name.ToLower().Contains("grades"))
+            else if (buttonName.Contains("teachers"))
+                AppController.ChangeContext(AppContext.Teachers);
+            else if (buttonName.Contains("students"))
+                AppController.ChangeContext(AppContext.Students);
+            else if (buttonName.Contains("grades"))
                 AppController.ChangeContext(AppContext.Grades);
+
+            menu.Toggle(sender, e);
         }
+       
 
 
         public void ActionLogOut() {

@@ -17,9 +17,16 @@ namespace EGrader.Views {
     /// <summary>
     /// Interaction logic for StartView.xaml
     /// </summary>
-    public partial class StartView : UserControl {
+    public partial class StartView : UserControl, View {
+
+
         public StartView() {
             InitializeComponent();
+        }
+
+
+        public void Update(ref List<object> objectsList) {
+            throw new NotImplementedException();
         }
     }
 }
