@@ -1,9 +1,6 @@
 ﻿using EGrader.Classes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace EGrader.Models.Objects {
     public class UserObject {
@@ -24,19 +21,24 @@ namespace EGrader.Models.Objects {
         }
 
 
-        public UserObject(List<String> fieldsList) {
-            this.id = Convert.ToInt32(fieldsList[0]);
-            this.name = fieldsList[1];
-            this.lastname = fieldsList[2];
-            this.username = fieldsList[3];
-            this.userTypeId = Convert.ToInt32(fieldsList[4]);
-            this.worksIn = (fieldsList[5].CompareTo("-") == 0) ? 0 : Convert.ToInt32(fieldsList[5]);
-            this.classId = (fieldsList[6].CompareTo("-") == 0) ? 0 : Convert.ToInt32(fieldsList[6]);
 
-            String userType = fieldsList[7].ToLower();
-            if (userType.Contains("admin"))
+        public UserObject(DataColumnCollection columns, DataRow row) {
+            foreach (DataColumn column in columns)
+                Console.WriteLine(column.ColumnName);
+
+            this.id = columns.Contains("id") ? Convert.ToInt32(row["id"]) : -1;
+            this.classId = (columns.Contains("class_id") && !row.IsNull("class_id")) ? Convert.ToInt32(row["class_id"]) : -1;
+            this.userTypeId = columns.Contains("user_type_id") ? Convert.ToInt32(row["user_type_id"]) : -1;
+            this.worksIn = (columns.Contains("works_in") && !row.IsNull("works_in")) ? Convert.ToInt32(row["works_in"]) : -1;
+
+            this.name = columns.Contains("name") ? Convert.ToString(row["name"]) : "-";
+            this.lastname = columns.Contains("lastname") ? Convert.ToString(row["lastname"]) : "-";
+            this.username = columns.Contains("username") ? Convert.ToString(row["username"]) : "-";
+
+            String userType = columns.Contains("user_type_name") ? Convert.ToString(row["user_type_name"]) : "-";
+            if (userType.ToLower().Contains("admin"))
                 this.userType = UserType.Admin;
-            else
+            else if(userType.ToLower().Contains("student"))
                 this.userType = (userType.Contains("student") ? UserType.Student : UserType.Teacher);
         }
 

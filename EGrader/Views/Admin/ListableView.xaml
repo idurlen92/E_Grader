@@ -16,8 +16,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ScrollViewer Margin="25" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <ListView  Name="currentListView" />
+        <ScrollViewer Margin="0 25" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Width="750" Name="scrollView">
         </ScrollViewer>
         <Button Margin="25 25" Grid.Column="0" Grid.Row="1" Width="100" Height="25" HorizontalAlignment="Right" Name="buttonDelete" Content="Izbriši"></Button>
         <Button Margin="25 25" Grid.Column="1" Grid.Row="1" Width="100" Height="25" HorizontalAlignment="Left" Name="buttonAdd" Content="Dodaj"></Button>

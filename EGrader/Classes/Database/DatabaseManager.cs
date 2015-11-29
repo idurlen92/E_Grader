@@ -35,7 +35,6 @@ namespace EGrader.Classes.Database {
                 connection = new NpgsqlConnection(connectionString);
             if (connection.State != ConnectionState.Open)
                 connection.Open();
-            
         }
 
 
@@ -106,19 +105,6 @@ namespace EGrader.Classes.Database {
 
 
         // ####################### QUERYING  #######################
-        private void CreateResultsList(ref List<List<String>> resultsList, ref NpgsqlDataReader dataReader) {
-            while (dataReader.Read()) {
-                List<String> rowColumnsList = new List<String>();
-                for (int i = 0; i < dataReader.FieldCount; i++) {
-                    if (dataReader.IsDBNull(i))
-                        rowColumnsList.Add("-");
-                    else
-                        rowColumnsList.Add(Convert.ToString(dataReader.GetValue(i)));
-                }
-                resultsList.Add(rowColumnsList);
-            }
-        }
-
 
 
 
@@ -127,19 +113,9 @@ namespace EGrader.Classes.Database {
         /// </summary>
         /// <param name="commandString"></param>
         /// <returns>List of list of strings: every primitive type will be cast to String</returns>
-        public List<List<String>> ExecuteQuery(String commandString) {
-            List<List<String>> resultsList = new List<List<string>>();
-            Connect();
-
-            NpgsqlCommand command = new NpgsqlCommand(commandString, connection);
-            NpgsqlDataReader dataReader = command.ExecuteReader();
-            CreateResultsList(ref resultsList, ref dataReader);
-            dataReader.Close();
-
-            if (!isTransactionExecuting)
-                Disconnect();
-
-            return resultsList;
+        public DataTable ExecuteQuery(String commandString) {
+            Dictionary<string, string> paramsDictionary = new Dictionary<string, string>();
+            return ExecuteQuery(commandString, paramsDictionary);
         }
 
 
@@ -151,24 +127,21 @@ namespace EGrader.Classes.Database {
         /// <param name="commandString"></param>
         /// <param name="paramsDictionary"></param>
         /// <returns></returns>
-        public List<List<String>> ExecuteQuery(String commandString, Dictionary<String, String> paramsDictionary) {
-            List<List<String>> resultsList = new List<List<String>>();
-            Connect();
-
+        public DataTable ExecuteQuery(String commandString, Dictionary<String, String> paramsDictionary) {
+            StartTransaction();
+            
             NpgsqlCommand command = new NpgsqlCommand(commandString, connection);
             foreach (KeyValuePair<String, String> entry in paramsDictionary)
                 command.Parameters.AddWithValue(entry.Key, entry.Value);
 
-            NpgsqlDataReader dataReader = command.ExecuteReader();
-            CreateResultsList(ref resultsList, ref dataReader);
-            dataReader.Close();
+            DataTable dataTable = new DataTable();
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command);
+            adapter.Fill(dataTable);
 
-            if (!isTransactionExecuting)
-                Disconnect();
-
-            return resultsList; ;
+            CommitTransaction();
+            return dataTable ;
         }
-
+        
 
 
     }//class

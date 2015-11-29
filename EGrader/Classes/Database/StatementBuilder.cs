@@ -158,15 +158,13 @@ namespace EGrader.Classes.Database {
         }
 
 
-
-
         public StatementBuilder Select(params String[] columnParams) {
             List<String> columnsList = new List<string>();
             foreach (String column in columnParams)
                 columnsList.Add(column);
-
             return Select(columnsList);
         }
+       
 
 
         public StatementBuilder Select(List<String> columnsList) {

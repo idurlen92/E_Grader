@@ -4,6 +4,7 @@ using EGrader.Models;
 using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace EGrader.Views {
     /// <summary>
@@ -18,6 +19,10 @@ namespace EGrader.Views {
             labelName.Content = CurrentUser.Name;
             labelLastname.Content = CurrentUser.Lastname;
             labelUsername.Content = CurrentUser.Username;
+        }
+
+        public void Update(ref DataTable dataTable) {
+            throw new NotImplementedException();
         }
 
         public void Update(ref List<object> objectsList) {

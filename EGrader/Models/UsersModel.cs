@@ -1,14 +1,16 @@
-﻿using EGrader.Classes;
-using EGrader.Classes.Database;
+﻿using EGrader.Classes.Database;
 using EGrader.Models.Objects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace EGrader.Models {
     class UsersModel : Model{
+
+        private String[] columns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
+                    "u.class_id", "ut.user_type_name" };
+        private String[] joinParams = new String[] { "user_types ut", "u.user_type_id", "ut.id" };
+
 
         // ---------- Constructor ----------
         public UsersModel() : base("users") {  }
@@ -23,7 +25,7 @@ namespace EGrader.Models {
 
 
         public override int Delete(List<object> objectsToDeleteList) {
-            int rowsAffected = 0;
+            int rowsAffected = -1;
             
             try {
                 databaseManager.StartTransaction();
@@ -46,92 +48,42 @@ namespace EGrader.Models {
         }
 
 
-        public override List<object> GetAll() {
-            List<object> userObjectList = new List<object>();
 
-            try {
-                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in", 
-                    "u.class_id", "ut.user_type_name").Join(new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Create();    
-                foreach (List<String> userRow in databaseManager.ExecuteQuery(statement))
-                    userObjectList.Add(new UserObject(userRow));
-            }
-            catch (StatementBuilderException e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
+        public override DataTable GetAll() {
+            String statement = statementBuilder.Select(columns).Join(joinParams).Create();    
+            return databaseManager.ExecuteQuery(statement);
+        }
 
-            return userObjectList;
+        public override List<object> GetAllObjects() {
+            List<object> usersList = new List<object>();
+            DataTable dataTable = GetAll();
+            foreach (DataRow row in dataTable.Rows)
+                usersList.Add(new UserObject(dataTable.Columns, row));
+            return usersList;
         }
 
 
-
-        public override List<object> GetByCriteria(params object[] criteriaParams) {
-            List<object> userObjectList = new List<object>();
-
-            try {
-                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
-                   "u.class_id", "ut.user_type_name").Join(new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Where(criteriaParams).Create();
-                foreach (List<String> userRow in databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary))
-                    userObjectList.Add(new UserObject(userRow));
-            }
-            catch (StatementBuilderException e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
-
-            return userObjectList;
+        public override DataTable GetByCriteria(params object[] criteriaParams) {
+            String statement = statementBuilder.Select(columns).Join(joinParams).Where(criteriaParams).Create();
+            return databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
         }
 
 
-
-        public override object GetById(int id) {
-            UserObject user = null;
-
-            try {
-                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
-                    "u.class_id", "ut.user_type_name").Join(new String[] { "user_types ut", "u.user_type_id", "ut.id" }).Where("u.id=", id).Create();
-                List<List<string>> resultList = databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
-                user = new UserObject(resultList[0]);
-            }
-            catch (StatementBuilderException e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
-
-            return user;
+        public override List<object> GetObjectsByCriteria(params object[] criteriaParams) {
+            List<object> usersList = new List<object>();
+            DataTable dataTable = GetByCriteria(criteriaParams);
+            foreach (DataRow row in dataTable.Rows)
+                usersList.Add(new UserObject(dataTable.Columns, row));
+            return usersList;
         }
 
 
-
-        public List<UserObject> GetStudents(int schoolId) {
-            List<UserObject> userObjectList = new List<UserObject>();
-
-            try {
-                String[,] joinArrays = new String[,] { { "classes_in_schools c", "u.class_id", "c.id" }, { "user_types ut", "ut.id", "u.user_type_id"} };
-                String statement = statementBuilder.Select("u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
-                   "u.class_id", "ut.user_type_name").Join(joinArrays).Where("c.school_id =", schoolId, "AND u.user_type_id=", 3).Create();
-                foreach (List<String> userRow in databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary))
-                    userObjectList.Add(new UserObject(userRow));
-            }
-            catch (StatementBuilderException e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
-
-            return userObjectList;
-        }
-
-
-        public override List<object> Execute() {
-            throw new NotImplementedException();
+        public DataTable GetStudents(int schoolId) {
+            String[,] joinArrays = new String[,] { { "classes_in_schools c", "u.class_id", "c.id" }, { "user_types ut", "ut.id", "u.user_type_id"} };
+            String[] selectColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
+                "u.class_id", "ut.user_type_name" };
+            String statement = statementBuilder.Select(selectColumns).Join(joinArrays).Where("c.school_id =", schoolId, "AND u.user_type_id=", 3).Create();
+            return databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
         }
 
 

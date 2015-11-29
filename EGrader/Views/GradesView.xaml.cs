@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace EGrader.Views {
     /// <summary>
@@ -25,6 +26,10 @@ namespace EGrader.Views {
 
         public GradesView() {
             InitializeComponent();
+        }
+
+        public void Update(ref DataTable dataTable) {
+            throw new NotImplementedException();
         }
 
         public void Update(ref List<object> objectsList) {
