@@ -24,8 +24,6 @@ namespace EGrader.Models {
 
         public abstract int Delete(object deleteObject);
         public abstract int Delete(List<object> objectsToDeleteList);
-        public abstract DataTable GetAll();
-        public abstract List<object> GetAllObjects();
         public abstract DataTable GetByCriteria(params object[] criteriaParams);
         public abstract List<object> GetObjectsByCriteria(params object[] criteriaParams);
         //UNFINISHED

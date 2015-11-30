@@ -266,7 +266,9 @@ namespace EGrader.Classes.Database {
         /// <returns></returns>
         public StatementBuilder Where(params object[] conditionParams) {
             whereParamsDictionary.Clear();
-            whereStatement.Append("WHERE ");
+
+            if(conditionParams.Length > 0)
+                whereStatement.Append("WHERE ");
             ProcessParameters(ref whereParamsDictionary, ref whereStatement, conditionParams);
 
             return this;

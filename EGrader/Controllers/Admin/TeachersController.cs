@@ -3,6 +3,7 @@ using EGrader.Models;
 using EGrader.Models.Objects;
 using EGrader.Views;
 using EGrader.Views.Admin;
+using EGrader.Views.Factory;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,8 +15,7 @@ namespace EGrader.Controllers.Admin {
 
         List<int> selectedListItems;
 
-        DataTable dataTable;
-
+        UserDialog dialog;
         ListableView view;
         UsersModel model;
 
@@ -25,9 +25,10 @@ namespace EGrader.Controllers.Admin {
             this.view = (ListableView) view;
 
             selectedListItems = new List<int>();
+            dialog = (UserDialog) ViewFactory.NewDialogInstance(AppContext.Teachers);
 
             this.view.buttonDelete.Click += ActionDelete;
-            this.view.buttonAdd.Click += ActionAdd;
+            this.view.buttonAdd.Click += ActionToggleDialog;
             this.view.Grid.PreviewMouseUp += ActionSelect;
 
             GetData();
@@ -50,8 +51,8 @@ namespace EGrader.Controllers.Admin {
 
 
 
-        void ActionAdd(object sender, EventArgs e) {
-            //TODO:
+        void ActionToggleDialog(object sender, EventArgs e) {
+            dialog.ShowDialog();
         }
 
 

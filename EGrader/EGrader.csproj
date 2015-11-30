@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EGrader.App</StartupObject>
+    <StartupObject>EGrader.Models.ClassesInSchoolsModel</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -80,14 +80,16 @@
     <Compile Include="Controllers\GradesController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\Menu\MenuController.cs" />
+    <Compile Include="Models\ClassesInSchoolsModel.cs" />
+    <Compile Include="Models\Objects\ClassInSchoolObject.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Objects\UserObject.cs" />
     <Compile Include="Views\Admin\ListableView.xaml.cs">
       <DependentUpon>ListableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Admin\TeacherDialog.xaml.cs">
-      <DependentUpon>TeacherDialog.xaml</DependentUpon>
+    <Compile Include="Views\Admin\UserDialog.xaml.cs">
+      <DependentUpon>UserDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Factory\ViewFactory.cs" />
     <Compile Include="Views\GradesView.xaml.cs">
@@ -125,7 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Admin\TeacherDialog.xaml">
+    <Page Include="Views\Admin\UserDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

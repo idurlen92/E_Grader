@@ -26,8 +26,9 @@ namespace EGrader.Views.Factory {
         }
 
 
-        public static Window NewDialogInstance(Controller controller, Model model, DialogType type) {
-            //TODO:
+        public static Window NewDialogInstance(AppContext context) {
+            if (context == AppContext.Students || context == AppContext.Teachers)
+                return new UserDialog();
             return null;
         }
 

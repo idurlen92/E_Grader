@@ -3,17 +3,21 @@ using EGrader.Models.Objects;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EGrader.Models {
-    class UsersModel : Model{
+    public class ClassesInSchoolsModel : Model {
 
-        private String[] tableColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
-                    "u.class_id", "ut.user_type_name" };
-        private String[] joinParams = new String[] { "user_types ut", "u.user_type_id", "ut.id" };
+        private String[] tableColumns = { "cs.id", "cs.class_id", "cs.school_id", "cs.teacher_id", "s.school_name",
+                                      "u.name || ' ' || u.lastname teacher", "c.class_year || c.class_section class_name" };
+        private String[,] joinColumns = { { "users u", "u.id", "cs.teacher_id" }, { "schools s", "s.id", "cs.school_id"}, 
+                                        {"classes c", "c.id", "cs.class_id" } };
 
 
-        // ---------- Constructor ----------
-        public UsersModel() : base("users") {  }
+
+        public ClassesInSchoolsModel() : base("classes_in_schools") {  }
 
 
 
@@ -26,11 +30,11 @@ namespace EGrader.Models {
 
         public override int Delete(List<object> objectsToDeleteList) {
             int rowsAffected = -1;
-            
+
             try {
                 databaseManager.StartTransaction();
-                foreach (UserObject user in objectsToDeleteList) {
-                    String statement = statementBuilder.Delete("id=", user.Id);
+                foreach (ClassInSchoolObject schoolClass in objectsToDeleteList) {
+                    String statement = statementBuilder.Delete("id=", schoolClass.Id);
                     rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.DeleteParamsDictionary);
                 }
                 databaseManager.CommitTransaction();
@@ -48,27 +52,33 @@ namespace EGrader.Models {
         }
 
 
+
         public override DataTable GetByCriteria(params object[] criteriaParams) {
-            String statement = statementBuilder.Select(tableColumns).Join(joinParams).Where(criteriaParams).Create();
+            String statement = statementBuilder.Select(tableColumns).Join(joinColumns).Where(criteriaParams).Create();
             return databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
         }
+
 
 
         public override List<object> GetObjectsByCriteria(params object[] criteriaParams) {
-            List<object> usersList = new List<object>();
+            List<object> classesList = new List<object>();
             DataTable dataTable = GetByCriteria(criteriaParams);
             foreach (DataRow row in dataTable.Rows)
-                usersList.Add(new UserObject(dataTable.Columns, row));
-            return usersList;
+                classesList.Add(new ClassInSchoolObject(dataTable.Columns, row));
+            return classesList;
         }
 
 
-        public DataTable GetStudents(int schoolId) {
-            String[,] joinArrays = new String[,] { { "classes_in_schools c", "u.class_id", "c.id" }, { "user_types ut", "ut.id", "u.user_type_id"} };
-            String[] selectColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
-                "u.class_id", "ut.user_type_name" };
-            String statement = statementBuilder.Select(selectColumns).Join(joinArrays).Where("c.school_id =", schoolId, "AND u.user_type_id=", 3).Create();
-            return databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
+
+        public static void Main(String[] args) {
+            try {
+                ClassesInSchoolsModel model = new ClassesInSchoolsModel();
+                foreach (ClassInSchoolObject cis in model.GetObjectsByCriteria())
+                    Console.WriteLine(cis.SchoolName + ", " + cis.TeacherName);
+            }
+            catch(Exception e) {
+                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
+            }
         }
 
 
