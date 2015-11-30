@@ -27,8 +27,8 @@ namespace EGrader.Models {
         public abstract DataTable GetByCriteria(params object[] criteriaParams);
         public abstract List<object> GetObjectsByCriteria(params object[] criteriaParams);
         //UNFINISHED
-        //TODO: public abstract int Insert();
-        //TODO: public abstract int Update()
+        public abstract int Insert(object insertObject);
+        public abstract int Update(object updateObject);
 
 
     }//class

@@ -5,14 +5,15 @@ using System.Data;
 namespace EGrader.Models.Objects {
     public class UserObject {
 
-        private int id;
-        private int classId;
-        private int worksIn;
-        private int userTypeId;
+        private int id = -1;
+        private int classId = -1;
+        private int worksIn = -1;
+        private int userTypeId = -1;
 
         private String name;
         private String lastname;
         private String username;
+        private String password;
 
         private UserType userType; 
 
@@ -51,17 +52,27 @@ namespace EGrader.Models.Objects {
         public String Name { get { return name; } }
         public String Lastname { get { return lastname; } }
         public String Username { get { return username; } }
+        public String Password { get { return password; } }
         public UserType UserType { get { return userType; } }
 
 
         // ---------- Setters ----------
         public void SetId(int id) { this.id = id; }
         public void SetClassId(int classId) { this.classId = classId; }
-        public void SetUserTypeId(int userTypeId) { this.userTypeId = userTypeId; }
         public void SetWorksIn(int worksIn) { this.worksIn = worksIn; }
         public void SetName(String name) { this.name = name; }
         public void SetLastname(String lastname) { this.lastname = lastname; }
         public void SetUsername(String username) { this.username = username; }
+        public void SetPassword(String password) { this.password = password; }
+
+
+        public void SetUserTypeId(int userTypeId) {
+            this.userTypeId = userTypeId;
+            if (userTypeId == 1)
+                this.userType = UserType.Admin;
+            else
+                this.userType = (userTypeId == 2) ? UserType.Teacher : UserType.Student;
+            }
 
 
     }//class

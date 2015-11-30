@@ -24,6 +24,8 @@ namespace EGrader.Models.Factory {
         public static Model NewModelInstance(ModelType type) {
             if (type == ModelType.Users)
                 return new UsersModel();
+            else if (type == ModelType.ClassesInSchools)
+                return new ClassesInSchoolsModel();
             return null;
         }
 

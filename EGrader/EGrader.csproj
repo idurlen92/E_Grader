@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EGrader.Models.ClassesInSchoolsModel</StartupObject>
+    <StartupObject>EGrader.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -72,8 +72,7 @@
     <Compile Include="Classes\Database\StatementBuilder.cs" />
     <Compile Include="Classes\Database\StatementBuilderException.cs" />
     <Compile Include="Classes\Utils.cs" />
-    <Compile Include="Controllers\Admin\StudentsController.cs" />
-    <Compile Include="Controllers\Admin\TeachersController.cs" />
+    <Compile Include="Controllers\Admin\UsersController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\Factory\ControllerFactory.cs" />

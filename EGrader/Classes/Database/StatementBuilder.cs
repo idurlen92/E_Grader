@@ -366,7 +366,6 @@ namespace EGrader.Classes.Database {
 
         public String Values(params object[] parameters) {
             insertParamsDictionary.Clear();
-            insertStatement.Clear();
             insertStatement.Append("VALUES(");
 
             int counter = 1;

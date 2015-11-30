@@ -18,6 +18,7 @@ namespace EGrader.Views.Admin {
     /// </summary>
     public partial class UserDialog : Window {
 
+        ComboBox comboBox = null;
 
 
         public UserDialog() {
@@ -25,16 +26,19 @@ namespace EGrader.Views.Admin {
         }
 
 
+        public ComboBox CurrentComboBox { get { return comboBox; } }
+
+
         public void CreateClassesList(List<String> classesList) {
             Label label = new Label();
             Grid.SetColumn(label, 0);
-            Grid.SetRow(label, 4);
+            Grid.SetRow(label, 5);
             label.Content = "Razred:";
 
-            ComboBox comboBox = new ComboBox();
+            comboBox = new ComboBox();
             comboBox.Height = 25;
             Grid.SetColumn(comboBox, 1);
-            Grid.SetRow(comboBox, 4);
+            Grid.SetRow(comboBox, 5);
 
             foreach (String className in classesList) {
                 ComboBoxItem item = new ComboBoxItem();

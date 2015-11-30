@@ -11,7 +11,7 @@ namespace EGrader.Models {
     public class ClassesInSchoolsModel : Model {
 
         private String[] tableColumns = { "cs.id", "cs.class_id", "cs.school_id", "cs.teacher_id", "s.school_name",
-                                      "u.name || ' ' || u.lastname teacher", "c.class_year || c.class_section class_name" };
+                                      "u.name || ' ' || u.lastname teacher", "c.class_name"};
         private String[,] joinColumns = { { "users u", "u.id", "cs.teacher_id" }, { "schools s", "s.id", "cs.school_id"}, 
                                         {"classes c", "c.id", "cs.class_id" } };
 
@@ -69,18 +69,12 @@ namespace EGrader.Models {
         }
 
 
-
-        public static void Main(String[] args) {
-            try {
-                ClassesInSchoolsModel model = new ClassesInSchoolsModel();
-                foreach (ClassInSchoolObject cis in model.GetObjectsByCriteria())
-                    Console.WriteLine(cis.SchoolName + ", " + cis.TeacherName);
-            }
-            catch(Exception e) {
-                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
-            }
+        public override int Insert(object insertObject) {
+            throw new NotImplementedException();
         }
 
-
+        public override int Update(object updateObject) {
+            throw new NotImplementedException();
+        }
     }//class
 }
