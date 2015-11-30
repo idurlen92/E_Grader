@@ -7,7 +7,7 @@ using System.Data;
 namespace EGrader.Models {
     class UsersModel : Model{
 
-        private String[] tableColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
+        private String[] tableColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.password", "u.user_type_id", "u.works_in",
                     "u.class_id", "ut.user_type_name" };
         private String[] joinParams = new String[] { "user_types ut", "u.user_type_id", "ut.id" };
 
@@ -66,7 +66,7 @@ namespace EGrader.Models {
         public List<object> GetStudents(int schoolId) {
             List<object> usersList = new List<object>();
             String[,] joinArrays = new String[,] { { "classes_in_schools c", "u.class_id", "c.id" }, { "user_types ut", "ut.id", "u.user_type_id"} };
-            String[] selectColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.user_type_id", "u.works_in",
+            String[] selectColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.password", "u.user_type_id", "u.works_in",
                 "u.class_id", "ut.user_type_name" };
 
             String statement = statementBuilder.Select(selectColumns).Join(joinArrays).Where("c.school_id =", schoolId, "AND u.user_type_id=", 3).Create();
@@ -95,10 +95,20 @@ namespace EGrader.Models {
         }
 
 
+
         public override int Update(object updateObject) {
             int rowsAffected = -1;
-            //statementBuilder.Insert()
+            UserObject user = updateObject as UserObject;
 
+            String statement = "";
+            if (user.UserType == Classes.UserType.Teacher)
+                statement = statementBuilder.Update("name=", user.Name, "lastname=", user.Lastname, "username=", user.Username, "password=",
+                            user.Password).UWhere("id=", user.Id);
+            else
+                statement = statementBuilder.Update("name=", user.Name, "lastname=", user.Lastname, "username=", user.Username, "password=",
+                            user.Password, "class_id=", user.ClassId).UWhere("id=", user.Id);
+
+            rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.UpdateParamsDictionary);
             return rowsAffected;
         }
     }//class

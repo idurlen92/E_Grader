@@ -17,9 +17,6 @@ namespace EGrader.Models.Objects {
         public ClassInSchoolObject() { }
 
         public ClassInSchoolObject(DataColumnCollection columns, DataRow row) {
-            foreach (DataColumn column in columns)
-                Console.WriteLine(column.ColumnName);
-
             this.id = columns.Contains("id") ? Convert.ToInt32(row["id"]) : -1;
             this.classId = (columns.Contains("class_id") && !row.IsNull("class_id")) ? Convert.ToInt32(row["class_id"]) : -1;
             this.schoolId = (columns.Contains("school_id") && !row.IsNull("school_id")) ? Convert.ToInt32(row["school_id"]) : -1;

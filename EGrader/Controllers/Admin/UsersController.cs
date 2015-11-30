@@ -21,6 +21,8 @@ namespace EGrader.Controllers.Admin {
         List<object> usersList;
         List<ClassInSchoolObject> schoolClassesList;
 
+        UserObject editedUser;
+
         UserDialog dialog;
         ClassesInSchoolsModel schoolClassesModel;
         UsersModel model;
@@ -104,13 +106,22 @@ namespace EGrader.Controllers.Admin {
 
         void ActionShowEditDialog(object sender, EventArgs e) {
             CreateDialog();
-            //TODO: event handler
+            dialog.buttonInsert.Click += ActionInsertUpdate;
 
-            UserObject selectedUser = usersList[view.CurrentListView.Items.IndexOf(sender)] as UserObject;
-            dialog.textBoxName.Text = selectedUser.Name;
-            dialog.textBoxLastname.Text = selectedUser.Lastname;
-            dialog.textBoxUsername.Text = selectedUser.Username;
+            editedUser = usersList[view.CurrentListView.Items.IndexOf(sender)] as UserObject;
+            dialog.textBoxName.Text = editedUser.Name;
+            dialog.textBoxLastname.Text = editedUser.Lastname;
+            dialog.textBoxUsername.Text = editedUser.Username;
 
+            if (dialog.CurrentComboBox != null) {
+                for(int i= 0; i<schoolClassesList.Count; i++) {
+                    if (schoolClassesList[i].Id == editedUser.ClassId) {
+                        dialog.CurrentComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            
             isEdit = true;
             dialog.ShowDialog();
         }
@@ -118,7 +129,7 @@ namespace EGrader.Controllers.Admin {
 
         void ActionShowDialog(object sender, EventArgs e) {
             CreateDialog();
-            dialog.buttonInsert.Click += ActionInsert;
+            dialog.buttonInsert.Click += ActionInsertUpdate;
             dialog.ShowDialog();
         }
 
@@ -186,10 +197,10 @@ namespace EGrader.Controllers.Admin {
 
 
 
-        void ActionInsert(object sender, RoutedEventArgs e) {
-            if(dialog.textBoxLastname.Text.Length == 0 || dialog.textBoxName.Text.Length == 0 || dialog.passwordBox.Password.Length == 0 
-            || dialog.passwordBoxConfirm.Password.Length == 0 || dialog.textBoxUsername.Text.Length == 0
-            || (AppController.CurrentAppContext == AppContext.Students && dialog.CurrentComboBox.SelectedIndex < 0)) {
+        void ActionInsertUpdate(object sender, RoutedEventArgs e) {
+            if((!isEdit && (dialog.passwordBox.Password.Length == 0 || dialog.passwordBoxConfirm.Password.Length == 0)) 
+                || dialog.textBoxLastname.Text.Length == 0  || dialog.textBoxName.Text.Length == 0 || dialog.textBoxUsername.Text.Length == 0
+                || (AppController.CurrentAppContext == AppContext.Students && dialog.CurrentComboBox.SelectedIndex < 0)) {
                 MessageBox.Show("Ispunite sva polja!", "Obavijest");
                 return;
             }
@@ -201,18 +212,22 @@ namespace EGrader.Controllers.Admin {
 
             UserObject userObject = FillUserData();
             if (isEdit) {
-
+                userObject.SetId(editedUser.Id);
+                userObject.SetUserTypeId(editedUser.UserTypeId);
+                userObject.SetClassId((AppController.CurrentAppContext == AppContext.Students) ? editedUser.ClassId : -1);
+                if (userObject.Password.Length == 0)
+                    userObject.SetPassword(editedUser.Password);
             }
             
             try {
-                if (isEdit && model.Insert(userObject) < 1) 
+                if (!isEdit && model.Insert(userObject) < 1) 
                     MessageBox.Show("Greška u unosu!");
-                else if (model.Update(userObject) < 1)
+                else if (model.Update(userObject) < 0)
                     MessageBox.Show("Greška u ažuriranju!");
                 GetData();
             }
             catch(Exception ex) {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message + ":\n"  + ex.StackTrace);
             }
             finally {
                 dialog.Close();

@@ -24,9 +24,6 @@ namespace EGrader.Models.Objects {
 
 
         public UserObject(DataColumnCollection columns, DataRow row) {
-            foreach (DataColumn column in columns)
-                Console.WriteLine(column.ColumnName);
-
             this.id = columns.Contains("id") ? Convert.ToInt32(row["id"]) : -1;
             this.classId = (columns.Contains("class_id") && !row.IsNull("class_id")) ? Convert.ToInt32(row["class_id"]) : -1;
             this.userTypeId = columns.Contains("user_type_id") ? Convert.ToInt32(row["user_type_id"]) : -1;
@@ -35,6 +32,7 @@ namespace EGrader.Models.Objects {
             this.name = columns.Contains("name") ? Convert.ToString(row["name"]) : "-";
             this.lastname = columns.Contains("lastname") ? Convert.ToString(row["lastname"]) : "-";
             this.username = columns.Contains("username") ? Convert.ToString(row["username"]) : "-";
+            this.password = columns.Contains("password") ? Convert.ToString(row["password"]) : "-";
 
             String userType = columns.Contains("user_type_name") ? Convert.ToString(row["user_type_name"]) : "-";
             if (userType.ToLower().Contains("admin"))

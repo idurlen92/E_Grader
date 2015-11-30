@@ -111,11 +111,17 @@ namespace EGrader.Classes.Database {
 
 
 
+        private void ProcessParameters(ref Dictionary<String, String> paramsDictionary, ref StringBuilder statement, params object[] conditionParams) {
+            ProcessParameters(false, ref paramsDictionary, ref statement, conditionParams);
+        }
+
+
+
         /// <summary>
         /// Use to proccess passed parameters in Where clause of Select, Delete, or Update statement or Set clause of Update statement.
         /// </summary>
         /// <returns></returns>
-        private void ProcessParameters(ref Dictionary<String, String> paramsDictionary, ref StringBuilder statement, params object[] conditionParams) {
+        private void ProcessParameters(bool isUpdate, ref Dictionary<String, String> paramsDictionary, ref StringBuilder statement, params object[] conditionParams) {
             int counter = (paramsDictionary.Count + 1);
             bool isInOperator = false;
             bool isLikeOperator = false;//TODO: (maybe)
@@ -135,9 +141,9 @@ namespace EGrader.Classes.Database {
                     statement.Append(":v" + counter);
                     counter++;
 
-                    if (!isInOperator)
-                        statement.Append(" ");
-                    else if (IsLastParam(conditionParams[i + 1])) {
+                    if(isUpdate &&  i < (conditionParams.Length - 1))
+                        statement.Append(", ");
+                    else if (!isInOperator || (isInOperator && IsLastParam(conditionParams[i + 1]))){
                         isInOperator = false;
                         statement.Append(" ");
                     }
@@ -391,9 +397,7 @@ namespace EGrader.Classes.Database {
             updateStatement.Clear();
             updateStatement.Append("UPDATE " + tableName + " SET ");
 
-            ProcessParameters(ref updateParamsDictionary, ref updateStatement, parameters);
-
-            Console.WriteLine(updateStatement.ToString());
+            ProcessParameters(true, ref updateParamsDictionary, ref updateStatement, parameters);
 
             return this;
         }
@@ -410,11 +414,14 @@ namespace EGrader.Classes.Database {
 
             updateStatement.Append(" WHERE ");
             ProcessParameters(ref updateParamsDictionary, ref updateStatement, parameters);
+            Console.WriteLine(updateStatement.ToString());
 
             return updateStatement.ToString();
         }
 
 
+
+        // ###############################  D E L E T E  ###############################
         public String Delete(params object[] parameters) {
             deleteParamsDictionary.Clear();
             deleteStatement.Clear();
