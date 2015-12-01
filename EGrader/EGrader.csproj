@@ -80,10 +80,15 @@
     <Compile Include="Controllers\Menu\MenuController.cs" />
     <Compile Include="Controllers\Teacher\StudentGradingController.cs" />
     <Compile Include="Models\ClassesInSchoolsModel.cs" />
+    <Compile Include="Models\CourseRubricsModel.cs" />
+    <Compile Include="Models\CoursesModel.cs" />
     <Compile Include="Models\GradesModel.cs" />
     <Compile Include="Models\Objects\ClassInSchoolObject.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Objects\CourseObject.cs" />
+    <Compile Include="Models\Objects\CourseRubricObject.cs" />
+    <Compile Include="Models\Objects\GradeObject.cs" />
     <Compile Include="Models\Objects\UserObject.cs" />
     <Compile Include="Views\Admin\ListableView.xaml.cs">
       <DependentUpon>ListableView.xaml</DependentUpon>

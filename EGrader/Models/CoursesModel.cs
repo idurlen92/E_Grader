@@ -3,21 +3,25 @@ using EGrader.Models.Objects;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EGrader.Models {
-    class GradesModel : Model {
+    public class CoursesModel : Model {
+
+        private String[] tableColumns = { "id", "course_name" };
 
 
-        public GradesModel() : base("grades") { }
+        public CoursesModel() : base("courses") { }
 
 
         public override int Delete(object deleteObject) {
             int rowsAffected = -1;
 
             try {
-                GradeObject gradeObj = deleteObject as GradeObject;
-                String statement = statementBuilder.Delete("date=", gradeObj.Date, "AND student_id=", gradeObj.StudentId, "AND teacher_id=",
-                                    gradeObj.TeacherId, "AND rubric_id=", gradeObj.RubricId);
+                CourseObject course = deleteObject as CourseObject;
+                String statement = statementBuilder.Delete("id=", course.Id);
                 rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.DeleteParamsDictionary);
             }
             catch (StatementBuilderException e) {
@@ -32,27 +36,35 @@ namespace EGrader.Models {
 
 
         public override DataTable GetByCriteria(params object[] criteriaParams) {
-            String statement = statementBuilder.Select("*").Where(criteriaParams).Create();
+            String statement = statementBuilder.Select(tableColumns).Where(criteriaParams).OrderBy("2 ASC").Create();
             return databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
         }
 
 
         public override List<object> GetObjectsByCriteria(params object[] criteriaParams) {
-            List<object> gradesList = new List<object>();
+            List<object> coursesList = new List<object>();
             DataTable dataTable = GetByCriteria(criteriaParams);
             foreach (DataRow row in dataTable.Rows)
-                gradesList.Add(new GradeObject(dataTable.Columns, row));
-            return gradesList;
+                coursesList.Add(new CourseObject(dataTable.Columns, row));
+            return coursesList;
         }
 
 
 
         public override int Insert(object insertObject) {
-            throw new NotImplementedException();
+            int rowsAffected = -1;
+            CourseObject course = insertObject as CourseObject;
+
+            String statement = statementBuilder.Insert("id", "course_name").Values(course.Id, course.CourseName);
+            rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.InsertParamsDictionary);
+
+            return rowsAffected;
         }
 
 
+
         public override int Update(object updateObject) {
+            //TODO:
             throw new NotImplementedException();
         }
     }

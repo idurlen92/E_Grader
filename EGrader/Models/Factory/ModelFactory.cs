@@ -27,6 +27,12 @@ namespace EGrader.Models.Factory {
                 return new UsersModel();
             else if (type == ModelType.ClassesInSchools)
                 return new ClassesInSchoolsModel();
+            else if (type == ModelType.Courses)
+                return new CoursesModel();
+            else if (type == ModelType.CourseRubrics)
+                return new CourseRubricsModel();
+            else if (type == ModelType.Grades)
+                return new GradesModel();
             return null;
         }
 

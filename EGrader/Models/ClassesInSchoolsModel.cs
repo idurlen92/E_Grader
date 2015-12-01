@@ -22,22 +22,12 @@ namespace EGrader.Models {
 
 
         public override int Delete(object deleteObject) {
-            List<object> deleteList = new List<object>();
-            deleteList.Add(deleteObject);
-            return Delete(deleteList);
-        }
-
-
-        public override int Delete(List<object> objectsToDeleteList) {
             int rowsAffected = -1;
 
             try {
-                databaseManager.StartTransaction();
-                foreach (ClassInSchoolObject schoolClass in objectsToDeleteList) {
-                    String statement = statementBuilder.Delete("id=", schoolClass.Id);
-                    rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.DeleteParamsDictionary);
-                }
-                databaseManager.CommitTransaction();
+                ClassInSchoolObject schoolClass = deleteObject as ClassInSchoolObject;
+                String statement = statementBuilder.Delete("id=", schoolClass.Id);
+                rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.DeleteParamsDictionary);
             }
             catch (StatementBuilderException e) {
                 databaseManager.RollBackTransacion();
