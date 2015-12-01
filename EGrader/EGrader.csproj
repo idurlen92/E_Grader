@@ -76,10 +76,11 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\Factory\ControllerFactory.cs" />
-    <Compile Include="Controllers\GradesController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\Menu\MenuController.cs" />
+    <Compile Include="Controllers\Teacher\StudentGradingController.cs" />
     <Compile Include="Models\ClassesInSchoolsModel.cs" />
+    <Compile Include="Models\GradesModel.cs" />
     <Compile Include="Models\Objects\ClassInSchoolObject.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\Model.cs" />
@@ -91,9 +92,6 @@
       <DependentUpon>UserDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Factory\ViewFactory.cs" />
-    <Compile Include="Views\GradesView.xaml.cs">
-      <DependentUpon>GradesView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Menus\AdminMenu.xaml.cs">
       <DependentUpon>AdminMenu.xaml</DependentUpon>
     </Compile>
@@ -109,6 +107,9 @@
     </Compile>
     <Compile Include="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Teacher\StudentGradingView.xaml.cs">
+      <DependentUpon>StudentGradingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\View.cs" />
     <Compile Include="Windows\LoginWindow.xaml.cs">
@@ -130,10 +131,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\GradesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Menus\AdminMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Teacher\StudentGradingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

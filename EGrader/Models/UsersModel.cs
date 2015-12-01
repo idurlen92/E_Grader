@@ -63,20 +63,6 @@ namespace EGrader.Models {
         }
 
 
-        public List<object> GetStudents(int schoolId) {
-            List<object> usersList = new List<object>();
-            String[,] joinArrays = new String[,] { { "classes_in_schools c", "u.class_id", "c.id" }, { "user_types ut", "ut.id", "u.user_type_id"} };
-            String[] selectColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.password", "u.user_type_id", "u.works_in",
-                "u.class_id", "ut.user_type_name" };
-
-            String statement = statementBuilder.Select(selectColumns).Join(joinArrays).Where("c.school_id =", schoolId, "AND u.user_type_id=", 3).Create();
-            DataTable dataTable = databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
-            foreach (DataRow row in dataTable.Rows)
-                usersList.Add(new UserObject(dataTable.Columns, row));
-
-            return usersList;
-        }
-
 
         public override int Insert(object insertObject) {
             int rowsAffected = -1;
@@ -111,5 +97,26 @@ namespace EGrader.Models {
             rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.UpdateParamsDictionary);
             return rowsAffected;
         }
+
+
+
+
+        public List<object> GetStudents(int schoolId) {
+            List<object> usersList = new List<object>();
+            String[,] joinArrays = new String[,] { { "classes_in_schools c", "u.class_id", "c.id" }, { "user_types ut", "ut.id", "u.user_type_id" } };
+            String[] selectColumns = new String[] { "u.id", "u.name", "u.lastname", "u.username", "u.password", "u.user_type_id", "u.works_in",
+                "u.class_id", "ut.user_type_name" };
+
+            String statement = statementBuilder.Select(selectColumns).Join(joinArrays).Where("c.school_id =", schoolId, "AND u.user_type_id=", 3).Create();
+            DataTable dataTable = databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
+
+            foreach (DataRow row in dataTable.Rows)
+                usersList.Add(new UserObject(dataTable.Columns, row));
+
+            return usersList;
+        }
+
+
+
     }//class
 }

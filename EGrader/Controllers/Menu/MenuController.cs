@@ -16,7 +16,6 @@ namespace EGrader.Controllers.Menu {
 
         public MenuController(MenuView menu) {
             this.menu = menu;
-
             if (menu is AdminMenu) {
                 foreach (Button button in ((AdminMenu) menu).contentHolder.Children)
                     button.Click += DoAction;
@@ -39,12 +38,12 @@ namespace EGrader.Controllers.Menu {
                 ActionLogOut();
             else if (buttonName.Contains("profile"))
                 AppController.ChangeContext(AppContext.Profile);
+            else if (buttonName.ToLower().Contains("studentgrading"))
+                AppController.ChangeContext(AppContext.StudentGrading);
             else if (buttonName.Contains("teachers"))
                 AppController.ChangeContext(AppContext.Teachers);
             else if (buttonName.Contains("students"))
                 AppController.ChangeContext(AppContext.Students);
-            else if (buttonName.Contains("grades"))
-                AppController.ChangeContext(AppContext.Grades);
 
             menu.Toggle(sender, e);
         }

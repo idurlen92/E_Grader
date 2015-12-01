@@ -12,7 +12,7 @@
         <!-- Margin: Left Up Right Down -->
         <!-- Margin: Left Up Right Down -->
         <Button Margin="50,10,50,5"  Width="200" Height="25" Background="White" Name="buttonProfile" Content="Profil"/>
-        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonGrades" Content="Ocjene"/>
+        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonCourses" Content="Predmeti"/>
         <Button Width="200" Height="25"  Background="White" Name="buttonLogout" Content="Odjava"/>
     </StackPanel>
 </UserControl>

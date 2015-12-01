@@ -1,10 +1,9 @@
 ﻿using EGrader.Classes;
 using EGrader.Controllers;
-using EGrader.Models;
 using EGrader.Views.Admin;
 using EGrader.Views.Menus;
+using EGrader.Views.Teacher;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace EGrader.Views.Factory {
 
@@ -18,10 +17,10 @@ namespace EGrader.Views.Factory {
                 return new StartView();
             else if (context == AppContext.Profile)
                 return new ProfileView();
-            else if (context == AppContext.Grades)
-                return new GradesView();
             else if (context == AppContext.Students || context == AppContext.Teachers)
                 return new ListableView();
+            else if (context == AppContext.StudentGrading)
+                return new StudentGradingView();
             return null;
         }
 

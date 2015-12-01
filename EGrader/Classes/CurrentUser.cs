@@ -13,7 +13,6 @@ namespace EGrader.Classes {
 
         private static UserObject userObject;
 
-
         public static int Id { get { return  (userObject == null) ? -1 : userObject.Id; } }
         public static int ClassId { get { return (userObject == null) ? -1 : userObject.ClassId; } }
         public static int UserTypeId { get { return (userObject == null) ? -1 : userObject.UserTypeId; } }

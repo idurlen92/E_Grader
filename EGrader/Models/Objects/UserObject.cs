@@ -37,7 +37,7 @@ namespace EGrader.Models.Objects {
             String userType = columns.Contains("user_type_name") ? Convert.ToString(row["user_type_name"]) : "-";
             if (userType.ToLower().Contains("admin"))
                 this.userType = UserType.Admin;
-            else if(userType.ToLower().Contains("student"))
+            else
                 this.userType = (userType.Contains("student") ? UserType.Student : UserType.Teacher);
         }
 
