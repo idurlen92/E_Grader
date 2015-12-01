@@ -46,6 +46,21 @@ namespace EGrader.Models {
         }
 
 
+        public List<object> GetStudentGrades(int studentId, int rubricID) {
+            List<object> gradesList = new List<object>();
+            String[] selectColumns = { "g.date", "g.student_id", "g.teacher_id", "g.rubric_id", "g.grade", "g.note" };
+            String[] joinArray = { "course_rubrics cr", "cr.id", "g.rubric_id" };
+
+            String statement = statementBuilder.Select(selectColumns).Join(joinArray).Where("g.student_id=", studentId, " AND g.rubric_id=", rubricID).Create();
+            DataTable dataTable = databaseManager.ExecuteQuery(statement, statementBuilder.WhereParamsDictionary);
+
+            foreach (DataRow row in dataTable.Rows)
+                gradesList.Add(new GradeObject(dataTable.Columns, row));            
+
+            return gradesList;
+        }
+
+
 
         public override int Insert(object insertObject) {
             throw new NotImplementedException();

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace EGrader.Models {
     public class CourseRubricsModel : Model {
 
-        String[] tableColumns = { "cr.id", "cr.rubric_name", "cr.course_id", "c.courseName" };
+        String[] tableColumns = { "cr.id", "cr.rubric_name", "cr.course_id", "c.course_name" };
         String[] joinParams = { "courses c", "c.id", "cr.course_id" };
 
 
