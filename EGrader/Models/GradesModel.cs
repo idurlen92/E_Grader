@@ -63,7 +63,24 @@ namespace EGrader.Models {
 
 
         public override int Insert(object insertObject) {
-            throw new NotImplementedException();
+            int rowsAffected = -1;
+            try {
+                GradeObject gradeObj = insertObject as GradeObject;
+
+                String statement = "";
+                if (gradeObj.Note.Length > 0)
+                    statement = statementBuilder.Insert("student_id", "teacher_id", "rubric_id", "date", "grade", "note").Values(
+                                gradeObj.StudentId, gradeObj.TeacherId, gradeObj.RubricId, gradeObj.Date, gradeObj.Grade, gradeObj.Note);
+                else
+                    statement = statementBuilder.Insert("student_id", "teacher_id", "rubric_id", "date", "grade").Values(
+                            gradeObj.StudentId, gradeObj.TeacherId, gradeObj.RubricId, gradeObj.Date, gradeObj.Grade);
+
+                rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.InsertParamsDictionary);
+            }
+            catch(Exception e) {
+                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
+            }
+            return rowsAffected;
         }
 
 

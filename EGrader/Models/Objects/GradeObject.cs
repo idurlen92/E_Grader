@@ -13,8 +13,8 @@ namespace EGrader.Models.Objects {
         int studentId;
         int teacherId;
 
-        String date;
-        String note;
+        String date = "";
+        String note = "";
 
 
         public GradeObject() { }

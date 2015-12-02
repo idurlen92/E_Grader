@@ -28,6 +28,8 @@ namespace EGrader.Views.Factory {
         public static Window NewDialogInstance(AppContext context) {
             if (context == AppContext.Students || context == AppContext.Teachers)
                 return new UserDialog();
+            else if (context == AppContext.StudentGrading)
+                return new InsertGradeDialog();
             return null;
         }
 

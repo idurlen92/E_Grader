@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">Prijava</Label>
-        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelInfo">Nepostojeći korisnik</Label>
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelInfo">Krivo kor. ime ili lozinka</Label>
         <Label Grid.Row="2" Grid.Column="0" Width="75" Height="25">Kor. ime:</Label>
         <TextBox Grid.Row="2" Grid.Column="1" Width="200" Height="25" Name="textBoxUsername"></TextBox>
         <Label Grid.Row="3" Grid.Column="0" Width="75" Height="25">Lozinka:</Label>
