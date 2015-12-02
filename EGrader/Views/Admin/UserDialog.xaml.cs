@@ -29,7 +29,7 @@ namespace EGrader.Views.Admin {
         public ComboBox CurrentComboBox { get { return comboBox; } }
 
 
-        public void CreateClassesList(List<String> classesList) {
+        public void CreateClassesList() {
             Label label = new Label();
             Grid.SetColumn(label, 0);
             Grid.SetRow(label, 5);
@@ -39,12 +39,6 @@ namespace EGrader.Views.Admin {
             comboBox.Height = 25;
             Grid.SetColumn(comboBox, 1);
             Grid.SetRow(comboBox, 5);
-
-            foreach (String className in classesList) {
-                ComboBoxItem item = new ComboBoxItem();
-                item.Content = className;
-                comboBox.Items.Add(item);
-            }
 
             contentGrid.Children.Add(label);
             contentGrid.Children.Add(comboBox);

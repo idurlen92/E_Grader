@@ -30,24 +30,22 @@ namespace EGrader.Views.Admin {
 
 
         private void CreateList(List<object> objectsList) {
-            foreach(UserObject user in objectsList) {
+            foreach(String[] userArray in objectsList) {
                 Grid grid = new Grid();
                 grid.ShowGridLines = true;
                 grid.RowDefinitions.Add(new RowDefinition());
                 grid.Margin = new Thickness(30, 10, 30, 0);
-
-                for(int i=0; i<4; i++) {
+                
+                for (int i = 0; i < userArray.Length; i++) {
                     ColumnDefinition columnDef = new ColumnDefinition();
                     columnDef.Width = new GridLength(150);
                     grid.ColumnDefinitions.Add(columnDef);
-                }
 
-                String[] columnValues = new String[] { user.Name, user.Lastname, user.Username, "TODO" };
-                for (int columNumber = 0; columNumber < columnValues.Length; columNumber++) {
                     Label label = new Label();
-                    label.Content = columnValues[columNumber];
-                    Grid.SetColumn(label, columNumber);
+                    label.Content = userArray[i];
+                    Grid.SetColumn(label, i);
                     Grid.SetRow(label, 0);
+
                     grid.Children.Add(label);
                 }
 

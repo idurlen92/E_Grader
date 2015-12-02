@@ -187,6 +187,8 @@ namespace EGrader.Controllers.Admin {
 
         void ActionUpdateClass(object sender, EventArgs e) {
             CreateDialog();
+
+            ClassInSchoolObject schoolClass = schoolClassesList[selectedListItem];
             //TODO:
         }
 

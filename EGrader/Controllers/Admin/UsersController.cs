@@ -14,17 +14,20 @@ using System.Windows.Controls;
 namespace EGrader.Controllers.Admin {
     public class UsersController : Controller{
 
-        int selectedListItem = -1;
-
         bool isEdit = false;
-
-        List<object> usersList;
-        List<ClassInSchoolObject> schoolClassesList;
+        int selectedListItem = -1;
 
         UserObject editedUser;
 
-        UserDialog dialog;
+        List<ClassInSchoolObject> schoolClassesList;
+        List<ClassObject> classesList;
+        List<object> usersList;
+
         ClassesInSchoolsModel schoolClassesModel;
+        ClassesModel classesModel;
+
+        UserDialog dialog;
+        
         UsersModel model;
         UsersView view;
 
@@ -34,9 +37,13 @@ namespace EGrader.Controllers.Admin {
             this.model = (UsersModel) model;
             this.view = (UsersView) view;
 
-            usersList = new List<object>();
+            classesList = new List<ClassObject>();
             schoolClassesList = new List<ClassInSchoolObject>();
-            
+            usersList = new List<object>();
+
+            classesModel = (ClassesModel) ModelFactory.NewModelInstance(ModelType.Classes);
+            schoolClassesModel = (ClassesInSchoolsModel) ModelFactory.NewModelInstance(ModelType.ClassesInSchools);
+
             this.view.buttonDelete.Click += ActionDelete;
             this.view.buttonAdd.Click += ActionShowDialog;
 
@@ -46,6 +53,32 @@ namespace EGrader.Controllers.Admin {
             GetData();
         }
 
+
+        String FindClassById(int id) {
+            foreach(ClassObject currentClass in classesList) {
+                if (currentClass.Id == id)
+                    return currentClass.ClassName;
+            }
+            return "-";
+        }
+
+
+        String FindClassName(UserObject user) {
+            if(user.UserType == UserType.Teacher) {
+                foreach(ClassInSchoolObject schoolClass in schoolClassesList) {
+                    if(schoolClass.TeacherId == user.Id)
+                        return FindClassById(schoolClass.ClassId);
+                }//foreach
+            }
+            else {
+                foreach (ClassInSchoolObject schoolClass in schoolClassesList) {
+                    if (schoolClass.Id == user.ClassId) 
+                        return FindClassById(schoolClass.ClassId);
+                }//foreach
+            }
+
+            return "--";
+        }
 
 
         private void GetData() {
@@ -59,8 +92,13 @@ namespace EGrader.Controllers.Admin {
 
                 if (usersList.Count == 0)
                     MessageBox.Show("Nema korisnika!");
-                else
-                    view.Update(ref usersList);
+                else {
+                    List<object> contentList = new List<object>();
+                    foreach(UserObject user in usersList)
+                        contentList.Add(new String[] { user.Lastname, user.Name, user.Username, FindClassName(user) });
+                    view.Update(ref contentList);
+                }
+                    
 
                 foreach (ListViewItem listItem in view.CurrentListView.Items) {
                     listItem.PreviewMouseLeftButtonUp += ActionItemClick;
@@ -75,20 +113,16 @@ namespace EGrader.Controllers.Admin {
 
 
 
-        private List<String> LoadClasses() {
-            List<String> classesList = new List<String>();
-
+        private void LoadClasses() {
             try {
-                foreach (ClassInSchoolObject schoolClass in schoolClassesModel.GetObjectsByCriteria()) {
+                foreach (ClassObject currentClass in classesModel.GetObjectsByCriteria())
+                    classesList.Add(currentClass);
+                foreach (ClassInSchoolObject schoolClass in schoolClassesModel.GetObjectsByCriteria("cs.school_id=", CurrentUser.WorksIn)) 
                     schoolClassesList.Add(schoolClass);
-                    classesList.Add(schoolClass.ClassName);
-                }
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message + ":\n" + e.StackTrace);
             }
-
-            return classesList;
         }
 
 
@@ -98,8 +132,11 @@ namespace EGrader.Controllers.Admin {
             dialog.Closed += ActionDisableEdit;
             dialog.buttonClose.Click += ActionCloseDialog;
             dialog.ResizeMode = ResizeMode.NoResize;
-            if(AppContext.Students == AppController.CurrentAppContext)
-                dialog.CreateClassesList(LoadClasses());
+            if (AppContext.Students == AppController.CurrentAppContext) {
+                dialog.CreateClassesList();
+                foreach (ClassInSchoolObject schoolClass in schoolClassesList) 
+                    dialog.CurrentComboBox.Items.Add(FindClassById(schoolClass.ClassId));
+            }
         }
 
 

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ClassDialog"  
         Width="400"
-        Height="200">
+        Height="250">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125"/>
@@ -23,8 +23,8 @@
         <ComboBox Grid.Row="0" Grid.Column="1" Name="comboBoxClassName"></ComboBox>
         <ComboBox Grid.Row="1" Grid.Column="1" Name="comboBoxTeacher"></ComboBox>
         <StackPanel Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 30 0 0">
-            <Button Content="Unos" Margin="0 0 10 0" Width="75" Name="buttonInsert"/>
-            <Button Content="Povratak" Margin="10 0 0 0" Width="75" Name="buttonClose"/>
+            <Button Content="Povratak" Margin="0 0 10 0" Width="75" Name="buttonClose"/>
+            <Button Content="Unos" Margin="10 0 0 0" Width="75" Name="buttonInsert"/>
         </StackPanel>
     </Grid>
 </Window>
