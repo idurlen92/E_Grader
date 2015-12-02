@@ -30,11 +30,9 @@ namespace EGrader.Models {
                 rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.DeleteParamsDictionary);
             }
             catch (StatementBuilderException e) {
-                databaseManager.RollBackTransacion();
                 Console.WriteLine(e.Message + ":\n" + e.StackTrace);
             }
             catch (Exception e) {
-                databaseManager.RollBackTransacion();
                 Console.WriteLine(e.Message + ":\n" + e.StackTrace);
             }
 

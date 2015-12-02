@@ -11,9 +11,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace EGrader.Controllers.Admin {
     public class ClassesController : Controller{
+
+        int selectedListItem = -1;
 
         List<ClassObject> classesList;
         List<ClassInSchoolObject> schoolClassesList;
@@ -39,8 +42,9 @@ namespace EGrader.Controllers.Admin {
             teachersList = new List<UserObject>();
 
             this.view.CurrentListView.SelectionMode = System.Windows.Controls.SelectionMode.Single;
-
             this.view.buttonAdd.Click += ActionShowDialog;
+            this.view.buttonDelete.Click += ActionDelete;
+            this.view.buttonDelete.IsEnabled = false;
 
             LoadClassNames();
             LoadData();
@@ -76,11 +80,31 @@ namespace EGrader.Controllers.Admin {
                 }
                 
                 view.Update(ref classesArrayList);
+                foreach (ListViewItem listItem in view.CurrentListView.Items) {
+                    listItem.PreviewMouseLeftButtonUp += ActionItemClick;
+                    listItem.MouseDoubleClick += ActionUpdateClass;
+                }
             }
             catch(Exception e) {
                 Console.WriteLine(e.Message + ":\n" + e.StackTrace);
             }
         }
+
+
+
+        void ActionItemClick(object sender, RoutedEventArgs e) {
+            ListViewItem listItem = (ListViewItem) sender;
+
+            int itemIndex = view.CurrentListView.Items.IndexOf(listItem);
+            if (selectedListItem == itemIndex) {
+                listItem.IsSelected = false;
+                selectedListItem = -1;
+            }
+            else
+                selectedListItem = itemIndex;
+            view.buttonDelete.IsEnabled = (selectedListItem > -1);
+        }
+
 
 
         private Boolean IsExistentClass (ClassObject currentClass) {
@@ -145,6 +169,25 @@ namespace EGrader.Controllers.Admin {
                 LoadData();
 
             dialog.Close();
+        }
+
+
+
+        void ActionDelete(object sender, EventArgs e) {
+            if(MessageBox.Show("Jeste li sigurni da želite obrisati razred?", "Upozorenje", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
+
+            if (model.Delete(schoolClassesList[selectedListItem]) < 1)
+                MessageBox.Show("Ne možete obrisati razred u kojem ima učenika!");
+            else
+                LoadData();
+        }
+
+
+
+        void ActionUpdateClass(object sender, EventArgs e) {
+            CreateDialog();
+            //TODO:
         }
 
     }//class
