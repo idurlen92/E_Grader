@@ -27,6 +27,9 @@ namespace EGrader.Models.Objects {
             this.teacherId = columns.Contains("teacher_id") ? Convert.ToInt32(row["teacher_id"]) : -1;
             this.date = (columns.Contains("date") && !row.IsNull("date")) ? Convert.ToString(row["date"]) : "-";
             this.note = (columns.Contains("note") && !row.IsNull("note")) ? Convert.ToString(row["note"]) : "-";
+
+            if (!this.date.Equals("-"))
+                this.date = this.date.Substring(0, this.date.IndexOf(' ') + 1);
         }
 
 
