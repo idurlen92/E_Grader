@@ -16,22 +16,16 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left">Ime:</Label>
-        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left">Prezime:</Label>
-        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left">Kor.ime:</Label>
-        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left">Datum rođenja:</Label>
-        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left">Spol:</Label>
+        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold">Ime:</Label>
+        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold">Prezime:</Label>
+        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold">Kor. ime:</Label>
 
         <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="labelName"></Label>
         <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Name="labelLastname"></Label>
         <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Name="labelUsername"></Label>
-        <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Name="labelBirthDate"></Label>
-        <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Name="labelGender"></Label>
 
     </Grid>
 </UserControl>

@@ -13,6 +13,8 @@ namespace EGrader.Controllers.Factory {
         public static Controller NewControllerInstance(Model model, View view, AppContext context) {
             if (context == AppContext.Students || context == AppContext.Teachers)
                 return new UsersController(model, view);
+            else if (context == AppContext.ClassAdministration)
+                return new ClassesController(model, view);
             else if (context == AppContext.StudentGrading)
                 return new StudentGradingController(model, view);
             else if (context == AppContext.Grades)

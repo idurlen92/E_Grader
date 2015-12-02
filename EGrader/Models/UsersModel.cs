@@ -92,7 +92,6 @@ namespace EGrader.Models {
 
 
         public List<object> GetStudents(int schoolId) {
-            //TODO: razred, blalba...
             List<object> usersList = new List<object>();
             String[,] joinArray = new String[,] { { "classes_in_schools cs", "u.class_id", "cs.id" }, { "user_types ut", "ut.id", "u.user_type_id" } };
 

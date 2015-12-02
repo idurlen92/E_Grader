@@ -26,13 +26,13 @@ namespace EGrader.Controllers.Admin {
         UserDialog dialog;
         ClassesInSchoolsModel schoolClassesModel;
         UsersModel model;
-        ListableView view;
+        UsersView view;
 
 
 
         public UsersController(Model model, View view) {
             this.model = (UsersModel) model;
-            this.view = (ListableView) view;
+            this.view = (UsersView) view;
 
             usersList = new List<object>();
             schoolClassesList = new List<ClassInSchoolObject>();

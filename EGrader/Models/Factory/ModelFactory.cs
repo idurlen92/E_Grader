@@ -18,6 +18,8 @@ namespace EGrader.Models.Factory {
                 return new UsersModel();
             else if (context == AppContext.StudentGrading || context == AppContext.Grades)
                 return new GradesModel();
+            else if (context == AppContext.ClassAdministration)
+                return new ClassesInSchoolsModel();
             return null;
         }
 
@@ -33,6 +35,8 @@ namespace EGrader.Models.Factory {
                 return new CourseRubricsModel();
             else if (type == ModelType.Grades)
                 return new GradesModel();
+            else if(type == ModelType.Classes)
+                return new ClassesModel();
             return null;
         }
 

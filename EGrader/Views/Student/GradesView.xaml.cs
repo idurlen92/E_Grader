@@ -42,22 +42,18 @@ namespace EGrader.Views.Student {
 
                 for (int j = 0; j < matrix.GetLength(1); j++) {
                     ColumnDefinition columnDef = new ColumnDefinition();
-                    columnDef.Width = new GridLength(contentGrid.Width / (matrix.GetLength(1) + 1));
-                    contentGrid.ColumnDefinitions.Add(columnDef);
+                    columnDef.Width = new GridLength(j == 0 ? 150 : (contentGrid.Width / (matrix.GetLength(1) + 2)));
 
                     Label label = new Label();
+                    if (i == 0 || j == 0)
+                        label.FontWeight = FontWeights.Bold;
+
                     Grid.SetRow(label, i);
                     Grid.SetColumn(label, j);
                     label.Content = matrix[i, j];
                     contentGrid.Children.Add(label);
                 }//for 2
             }
-        }
-
-
-
-        public void Update(ref DataTable dataTable) {
-            throw new NotImplementedException();
         }
 
 

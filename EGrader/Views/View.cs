@@ -9,7 +9,6 @@ namespace EGrader.Views {
     public interface View {
 
         void Update(ref List<object> objectsList);
-        void Update(ref DataTable dataTable);
 
     }
 }

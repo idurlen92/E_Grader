@@ -2,7 +2,7 @@
 using System.Data;
 
 namespace EGrader.Models.Objects {
-    class ClassInSchoolObject {
+    public class ClassInSchoolObject {
 
         int id;// This is id that goes to students
         int classId;

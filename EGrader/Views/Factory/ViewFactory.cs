@@ -19,7 +19,9 @@ namespace EGrader.Views.Factory {
             else if (context == AppContext.Profile)
                 return new ProfileView();
             else if (context == AppContext.Students || context == AppContext.Teachers)
-                return new ListableView();
+                return new UsersView();
+            else if (context == AppContext.ClassAdministration)
+                return new ClassesView();
             else if (context == AppContext.StudentGrading)
                 return new StudentGradingView();
             else if (context == AppContext.Grades)
@@ -33,6 +35,8 @@ namespace EGrader.Views.Factory {
                 return new UserDialog();
             else if (context == AppContext.StudentGrading)
                 return new InsertGradeDialog();
+            else if (context == AppContext.ClassAdministration)
+                return new ClassDialog();
             return null;
         }
 

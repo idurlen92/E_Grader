@@ -60,7 +60,19 @@ namespace EGrader.Models {
 
 
         public override int Insert(object insertObject) {
-            throw new NotImplementedException();
+            int rowsAffected = -1;
+
+            try {
+                ClassInSchoolObject schoolClass = insertObject as ClassInSchoolObject;
+                String statement = statementBuilder.Insert("class_id", "school_id", "teacher_id").Values(
+                                     schoolClass.ClassId, schoolClass.SchoolId, schoolClass.TeacherId);
+
+                rowsAffected = databaseManager.ExecuteStatement(statement, statementBuilder.InsertParamsDictionary);
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message + ":\n" + e.StackTrace);
+            }
+            return rowsAffected;
         }
 
         public override int Update(object updateObject) {

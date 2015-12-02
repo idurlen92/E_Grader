@@ -87,6 +87,7 @@
     <Compile Include="Classes\Database\StatementBuilder.cs" />
     <Compile Include="Classes\Database\StatementBuilderException.cs" />
     <Compile Include="Classes\Utils.cs" />
+    <Compile Include="Controllers\Admin\ClassesController.cs" />
     <Compile Include="Controllers\Admin\UsersController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\Controller.cs" />
@@ -96,18 +97,26 @@
     <Compile Include="Controllers\Student\GradesController.cs" />
     <Compile Include="Controllers\Teacher\StudentGradingController.cs" />
     <Compile Include="Models\ClassesInSchoolsModel.cs" />
+    <Compile Include="Models\ClassesModel.cs" />
     <Compile Include="Models\CourseRubricsModel.cs" />
     <Compile Include="Models\CoursesModel.cs" />
     <Compile Include="Models\GradesModel.cs" />
     <Compile Include="Models\Objects\ClassInSchoolObject.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Objects\ClassObject.cs" />
     <Compile Include="Models\Objects\CourseObject.cs" />
     <Compile Include="Models\Objects\CourseRubricObject.cs" />
     <Compile Include="Models\Objects\GradeObject.cs" />
     <Compile Include="Models\Objects\UserObject.cs" />
-    <Compile Include="Views\Admin\ListableView.xaml.cs">
-      <DependentUpon>ListableView.xaml</DependentUpon>
+    <Compile Include="Views\Admin\ClassDialog.xaml.cs">
+      <DependentUpon>ClassDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\ClassesView.xaml.cs">
+      <DependentUpon>ClassesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\UsersView.xaml.cs">
+      <DependentUpon>UsersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Admin\UserDialog.xaml.cs">
       <DependentUpon>UserDialog.xaml</DependentUpon>
@@ -150,7 +159,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\UsersModel.cs" />
-    <Page Include="Views\Admin\ListableView.xaml">
+    <Page Include="Views\Admin\ClassDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\ClassesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\UsersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
