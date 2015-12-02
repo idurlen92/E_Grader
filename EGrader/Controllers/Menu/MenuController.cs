@@ -44,6 +44,10 @@ namespace EGrader.Controllers.Menu {
                 AppController.ChangeContext(AppContext.Teachers);
             else if (buttonName.Contains("students"))
                 AppController.ChangeContext(AppContext.Students);
+            else if (buttonName.Contains("classes"))
+                AppController.ChangeContext(AppContext.Classes);
+            else if (buttonName.Contains("grades"))
+                AppController.ChangeContext(AppContext.Grades);
 
             menu.Toggle(sender, e);
         }

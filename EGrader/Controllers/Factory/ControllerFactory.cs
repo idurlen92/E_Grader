@@ -1,5 +1,6 @@
 ﻿using EGrader.Controllers.Admin;
 using EGrader.Controllers.Menu;
+using EGrader.Controllers.Student;
 using EGrader.Controllers.Teacher;
 using EGrader.Models;
 using EGrader.Views;
@@ -14,6 +15,8 @@ namespace EGrader.Controllers.Factory {
                 return new UsersController(model, view);
             else if (context == AppContext.StudentGrading)
                 return new StudentGradingController(model, view);
+            else if (context == AppContext.Grades)
+                return new GradesController(model, view);
             return null;
         }
 

@@ -93,6 +93,7 @@
     <Compile Include="Controllers\Factory\ControllerFactory.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\Menu\MenuController.cs" />
+    <Compile Include="Controllers\Student\GradesController.cs" />
     <Compile Include="Controllers\Teacher\StudentGradingController.cs" />
     <Compile Include="Models\ClassesInSchoolsModel.cs" />
     <Compile Include="Models\CourseRubricsModel.cs" />
@@ -127,6 +128,9 @@
     </Compile>
     <Compile Include="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Student\GradesView.xaml.cs">
+      <DependentUpon>GradesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Teacher\InsertGradeDialog.xaml.cs">
       <DependentUpon>InsertGradeDialog.xaml</DependentUpon>
@@ -171,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Student\GradesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -231,6 +239,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

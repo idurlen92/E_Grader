@@ -2,6 +2,7 @@
 using EGrader.Controllers;
 using EGrader.Views.Admin;
 using EGrader.Views.Menus;
+using EGrader.Views.Student;
 using EGrader.Views.Teacher;
 using System.Windows;
 
@@ -21,6 +22,8 @@ namespace EGrader.Views.Factory {
                 return new ListableView();
             else if (context == AppContext.StudentGrading)
                 return new StudentGradingView();
+            else if (context == AppContext.Grades)
+                return new GradesView();
             return null;
         }
 

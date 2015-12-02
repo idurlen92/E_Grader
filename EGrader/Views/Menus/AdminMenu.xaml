@@ -13,7 +13,6 @@
         <!-- Margin: Left Up Right Down -->
         <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonStudents" Content="Učenici" />
         <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonTeachers" Content="Profesori" />
-        <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonCourses" Content="Predmeti"/>
         <Button Margin="50 0 50 5" Width="200" Height="25"  Background="White" Name="buttonClasses" Content="Razredi"/>
         <Button Width="200" Height="25"  Background="White" Name="buttonLogout" Content="Odjava"/>
     </StackPanel>

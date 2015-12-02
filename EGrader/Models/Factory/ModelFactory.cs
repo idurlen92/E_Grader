@@ -16,7 +16,7 @@ namespace EGrader.Models.Factory {
         public static Model NewModelInstance(AppContext context) {
             if (context == AppContext.Login || context == AppContext.Students || context == AppContext.Teachers)
                 return new UsersModel();
-            else if (context == AppContext.StudentGrading)
+            else if (context == AppContext.StudentGrading || context == AppContext.Grades)
                 return new GradesModel();
             return null;
         }

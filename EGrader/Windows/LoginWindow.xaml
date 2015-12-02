@@ -20,13 +20,13 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">Prijava</Label>
-        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelInfo">Krivo kor. ime ili lozinka</Label>
-        <Label Grid.Row="2" Grid.Column="0" Width="75" Height="25">Kor. ime:</Label>
+        <Label Margin="0 0 0 5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold">Prijava</Label>
+        <Label Margin="0 0 0 5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelInfo" Content="Krivo kor. ime ili lozinka" FontWeight="Bold" Foreground="Red"/>
+        <Label  Margin="0 0 0 5" Grid.Row="2" Grid.Column="0" Width="75" Height="25">Kor. ime:</Label>
         <TextBox Grid.Row="2" Grid.Column="1" Width="200" Height="25" Name="textBoxUsername"></TextBox>
         <Label Grid.Row="3" Grid.Column="0" Width="75" Height="25">Lozinka:</Label>
         <PasswordBox Grid.Row="3" Grid.Column="1" Width="200" Height="25" Name="textBoxPassword"></PasswordBox>
-        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Width="100" Height="25" Name="buttonLogin">Prijava</Button>
-        <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelForgottenPassword">Zaboravljena lozinka?</Label>
+        <Button Margin="0 10 0 5" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Width="100" Height="25" Name="buttonLogin">Prijava</Button>
+        <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Width="150" Height="25" Visibility="Hidden" Name="labelForgottenPassword" FontWeight="Thin" Foreground="Blue">Zaboravljena lozinka?</Label>
     </Grid>
 </Window>
