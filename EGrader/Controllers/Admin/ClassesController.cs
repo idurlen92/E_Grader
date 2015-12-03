@@ -73,7 +73,7 @@ namespace EGrader.Controllers.Admin {
                 teachersList.Clear();
                 schoolClassesList.Clear();
 
-                String subQuery = "SELECT cs.teacher_id FROM classes_in_schools cs";
+                String subQuery = "SELECT cs.teacher_id FROM classes_in_schools cs WHERE cs.teacher_id IS NOT NULL";
                 object[] criteria = new object[] { "u.works_in=", CurrentUser.WorksIn, " AND u.user_type_id=", 2, " AND u.id NOT IN(" + subQuery + ")"};
                 foreach (UserObject teacher in usersModel.GetObjectsByCriteria(criteria))
                     teachersList.Add(teacher);
