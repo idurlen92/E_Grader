@@ -157,7 +157,6 @@ namespace EGrader.Classes.Database {
         // ###############################  I N S E R T  ###############################
 
         // ---------- SELECT STATEMENT ----------
-
         public StatementBuilder Select() {
             selectStatement.Append("SELECT * FROM " + tableName + " ");
             return this;
