@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="EGrader.Views.Teacher.StudentGradingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EGrader.Views.Teacher"
+             mc:Ignorable="d" 
+             d:DesignWidth="800"
+             d:DesignHeight="575">
+    <StackPanel>
+        <StackPanel Height="30" Margin="25 10 25 15" Orientation="Horizontal">
+            <Label>Predmet:</Label>
+            <ComboBox Width="200" Margin="10 0 0 0" Name="comboBoxCourse"/>
+            <Label>Učenik:</Label>
+            <ComboBox Width="200" Margin="10 0" Name="comboBoxStudent"/>
+        </StackPanel>
+        <Grid Width="750" Height="400"  Name="contentGrid" Margin="0 0 0 15"/>
+        <Button Height="25" Width="100" Name="buttonAddGrade" Content="Upiši ocjenu"/>
+    </StackPanel>
+</UserControl>
