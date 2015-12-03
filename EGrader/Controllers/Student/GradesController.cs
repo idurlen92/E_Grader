@@ -53,9 +53,7 @@ namespace EGrader.Controllers.Student {
 
                 foreach (CourseObject course in coursesModel.GetObjectsByCriteria()) {
                     coursesList.Add(course);
-                    ComboBoxItem cBoxItem = new ComboBoxItem();
-                    cBoxItem.Content = course.CourseName;
-                    view.comboBoxCourse.Items.Add(cBoxItem);
+                    view.comboBoxCourse.Items.Add(course.CourseName);
                 }
 
                 view.comboBoxCourse.SelectedIndex = 0;
