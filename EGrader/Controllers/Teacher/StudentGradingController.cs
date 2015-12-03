@@ -53,6 +53,9 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
+        /// <summary>
+        /// Dohvaćanje sbi podataka iz baze i spremanje u liste i punjenje comboboxeva za odabir predmeta i učenika!
+        /// </summary>
         void FetchAllData() {
             try {
                 view.comboBoxCourse.Items.Clear();
@@ -83,7 +86,9 @@ namespace EGrader.Controllers.Teacher {
 
 
 
-
+        /// <summary>
+        /// Dohvaćanej svih ocjena traženog učenika za traženi predmet.
+        /// </summary>
         void FetchGrades() {
             CourseObject selectedCourse = coursesList[view.comboBoxCourse.SelectedIndex < 0 ? 0 : view.comboBoxCourse.SelectedIndex];
             UserObject selectedStudent = studentsList[view.comboBoxStudent.SelectedIndex < 0 ? 0 : view.comboBoxStudent.SelectedIndex];
@@ -108,7 +113,9 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
-
+        /// <summary>
+        /// Stravanje 2x2 matrice ocjena.
+        /// </summary>
         void CreateStringMatrix() {
             List<String> monthsListRoman = new List<string>() { "IX", "X", "XI", "XII", "I", "II", "III", "IV", "V", "VI" };
 
@@ -151,11 +158,21 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
+        /// <summary>
+        /// Handler za promjenu comboboxeva - novo dohvaćanje podataka.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionComboChange(object sender, EventArgs e) {
             FetchGrades();
         }
 
 
+        /// <summary>
+        /// Handler za dupi klik - brisanje ocjene.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionDoubleClick(object sender, EventArgs e) {
             if (MessageBox.Show("Jeste li sigurni da želite obrisati ocjenu?", "Upozorenje", MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
@@ -174,7 +191,11 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
-
+        /// <summary>
+        /// Handler za prikaz dijaloškog okvira za unos ocjene.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionShowDialog(object sender, EventArgs e) {
             dialog = (InsertGradeDialog) ViewFactory.NewDialogInstance(AppController.CurrentAppContext);
             for (int i = 1; i < 6; i++)
@@ -189,6 +210,11 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
+        /// <summary>
+        /// Handler za zatvaranje dijaloškog okvira.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionCloseDialog(object sender, EventArgs e) {
             String date = dialog.datePicker.SelectedDate.ToString();
             Console.WriteLine(date);
@@ -196,6 +222,12 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
+        /// <summary>
+        /// Pretraga ocjene prema kliknutom stupcu i redu.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
         GradeObject GetGradeByCell(int row, int col) {
             String rubricName = rubricsList[row - 1].RubricName;
             String month = monthsList[col - 1];
@@ -213,6 +245,11 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
+        /// <summary>
+        /// Pretraživanje rubrika prema imenu - vraćanje id-a.
+        /// </summary>
+        /// <param name="rubricName"></param>
+        /// <returns></returns>
         int GetRubricId(String rubricName) {
             foreach(CourseRubricObject rubric in rubricsList) {
                 if (rubric.RubricName.CompareTo(rubricName) == 0)
@@ -223,6 +260,12 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
+        /// <summary>
+        /// Provjera dal je kliknuta ćelija puna (unešena ocjena).
+        /// </summary>
+        /// <param name="selectedDate"></param>
+        /// <param name="rubricName"></param>
+        /// <returns></returns>
         bool IsCellValid(String selectedDate, String rubricName) {
             if (!gradesListDictionary.ContainsKey(rubricName)) {
                 Console.WriteLine("No dictionary key!!!");
@@ -236,6 +279,11 @@ namespace EGrader.Controllers.Teacher {
         }
 
 
+        /// <summary>
+        /// Akcija pritiska gumba za insert - insert nove ocjene.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionInsert(object sender, EventArgs e) {
             if(dialog.comboBoxGrade.SelectedIndex < 0 || dialog.comboBoxRubric.SelectedIndex < 0 || !dialog.datePicker.SelectedDate.HasValue) {
                 MessageBox.Show("Unesite potrebna polja!");

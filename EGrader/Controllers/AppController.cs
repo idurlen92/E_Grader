@@ -43,7 +43,9 @@ namespace EGrader.Controllers {
         }
 
 
-        
+        /// <summary>
+        /// Povratak na login screen.
+        /// </summary>
         public static void ReturnToLoginWindow() {
             LoginWindow loginWindow = new LoginWindow();
             App.Current.MainWindow = loginWindow;
@@ -56,7 +58,10 @@ namespace EGrader.Controllers {
         }
 
 
-
+        /// <summary>
+        /// Promjena konteksta aplikacije i instanciranje novog modela, view-a i controllera.
+        /// </summary>
+        /// <param name="context"></param>
         public static void ChangeContext(AppContext context) {
             currentAppContext = context;
 

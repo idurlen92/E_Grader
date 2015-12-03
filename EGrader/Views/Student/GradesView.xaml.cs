@@ -15,6 +15,10 @@ namespace EGrader.Views.Student {
         }
 
 
+        /// <summary>
+        /// Kreiranje "tablice" ocjena na temelju proslijeđene string matrice.
+        /// </summary>
+        /// <param name="matrix"></param>
         public void CreateGrid(String[,] matrix) {
             contentGrid.ColumnDefinitions.Clear();
             contentGrid.RowDefinitions.Clear();

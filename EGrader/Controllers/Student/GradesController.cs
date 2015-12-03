@@ -46,7 +46,9 @@ namespace EGrader.Controllers.Student {
         }
 
 
-
+        /// <summary>
+        /// Dohvaćanje svih podataka iz baze.
+        /// </summary>
         void FetchAllData() {
             try {
                 view.comboBoxCourse.Items.Clear();
@@ -65,7 +67,9 @@ namespace EGrader.Controllers.Student {
         }
 
 
-
+        /// <summary>
+        /// Dohvaćanje svih ocjena učenika iz traženog predmeta.
+        /// </summary>
         void FetchGrades() {
             CourseObject selectedCourse = coursesList[view.comboBoxCourse.SelectedIndex < 0 ? 0 : view.comboBoxCourse.SelectedIndex];
 
@@ -88,7 +92,12 @@ namespace EGrader.Controllers.Student {
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
         GradeObject GetGradeByCell(int row, int col) {
             String rubricName = rubricsList[row - 1].RubricName;
             String month = monthsList[col - 1];
@@ -106,7 +115,9 @@ namespace EGrader.Controllers.Student {
         }
 
 
-
+        /// <summary>
+        /// Izrada matrice ocjena.
+        /// </summary>
         void CreateStringMatrix() {
             List<String> monthsListRoman = new List<string>() { "IX", "X", "XI", "XII", "I", "II", "III", "IV", "V", "VI" };
 

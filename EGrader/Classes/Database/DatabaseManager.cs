@@ -21,7 +21,10 @@ namespace EGrader.Classes.Database {
         public NpgsqlConnection Connection { get { return connection; } }
 
 
-
+        /// <summary>
+        /// Statička metoda za vraćanje instance klase (singleton)
+        /// </summary>
+        /// <returns></returns>
         public static DatabaseManager GetInstance() {
             if (instance == null)
                 instance = new DatabaseManager();
@@ -29,7 +32,9 @@ namespace EGrader.Classes.Database {
         }
 
 
-
+        /// <summary>
+        /// Metoda za stvaranje konekcije na bazu.
+        /// </summary>
         public void Connect() {
             if (connection == null)
                 connection = new NpgsqlConnection(connectionString);
@@ -38,7 +43,9 @@ namespace EGrader.Classes.Database {
         }
 
 
-
+        /// <summary>
+        /// Metoda za uklanjanje konekcije na bazu.
+        /// </summary>
         public void Disconnect() {
             if (connection != null)
                 connection.Close();            
@@ -46,6 +53,9 @@ namespace EGrader.Classes.Database {
 
 
 
+        /// <summary>
+        /// Metoda za pokretanje transakcije.
+        /// </summary>
         public void StartTransaction() {
             Connect();
             transaction = connection.BeginTransaction();
@@ -54,6 +64,9 @@ namespace EGrader.Classes.Database {
 
 
 
+        /// <summary>
+        /// Metoda za potvrđivanje transakcje.
+        /// </summary>
         public void CommitTransaction() {
             isTransactionExecuting = false;
 
@@ -70,6 +83,9 @@ namespace EGrader.Classes.Database {
 
 
 
+        /// <summary>
+        /// Metoda za poništavanje transakcije.
+        /// </summary>
         public void RollBackTransacion() {
             isTransactionExecuting = false;
 
@@ -87,6 +103,13 @@ namespace EGrader.Classes.Database {
 
 
         // ####################### NON-SELECT STATEMENT #######################
+
+        /// <summary>
+        /// Metoda za izvršavanje naredbi koje nisu upit (select).
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <param name="paramsDictionary"></param>
+        /// <returns></returns>
         public int ExecuteStatement(String statement, Dictionary<String, String> paramsDictionary) {
             int rowsAffacted = 0;
             Connect();
@@ -109,7 +132,7 @@ namespace EGrader.Classes.Database {
 
 
         /// <summary>
-        /// Used for query with no binding parameters.
+        /// Izvršavanje upita bez bindanja parametara.
         /// </summary>
         /// <param name="commandString"></param>
         /// <returns>List of list of strings: every primitive type will be cast to String</returns>
@@ -121,7 +144,7 @@ namespace EGrader.Classes.Database {
 
 
         /// <summary>
-        /// Used for querying with binded parameters. 
+        /// Izvršavaje upita uz bindanje parametara.
         /// paramsDictionary: name/value
         /// </summary>
         /// <param name="commandString"></param>

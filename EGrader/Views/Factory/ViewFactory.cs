@@ -13,6 +13,12 @@ namespace EGrader.Views.Factory {
 
     public class ViewFactory {
 
+
+        /// <summary>
+        /// Instanciranje novog view-a na temelju proslijeđenog konteksta.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static View NewViewInstance(AppContext context) {
             if (context == AppContext.Start)
                 return new StartView();
@@ -30,6 +36,11 @@ namespace EGrader.Views.Factory {
         }
 
 
+        /// <summary>
+        /// Instanciranje novog dijaloškog okvira na temelju proslijeđenog konteksta.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static Window NewDialogInstance(AppContext context) {
             if (context == AppContext.Students || context == AppContext.Teachers)
                 return new UserDialog();
@@ -41,6 +52,11 @@ namespace EGrader.Views.Factory {
         }
 
 
+        /// <summary>
+        /// Instanciranje novog menija na temelju tipa korisnika.
+        /// </summary>
+        /// <param name="userType"></param>
+        /// <returns></returns>
         public static MenuView NewMenuInstance(UserType userType) {
             if (userType == UserType.Admin)
                 return new AdminMenu();

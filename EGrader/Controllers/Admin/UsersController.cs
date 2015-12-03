@@ -54,6 +54,11 @@ namespace EGrader.Controllers.Admin {
         }
 
 
+        /// <summary>
+        /// Slijedno pretraživaje razreda u listi, prema id-u.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         String FindClassById(int id) {
             foreach(ClassObject currentClass in classesList) {
                 if (currentClass.Id == id)
@@ -63,6 +68,11 @@ namespace EGrader.Controllers.Admin {
         }
 
 
+        /// <summary>
+        /// Pretražuje ime razreda na temelju proslijeđenog učenika/učitelja.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         String FindClassName(UserObject user) {
             if(user.UserType == UserType.Teacher) {
                 foreach(ClassInSchoolObject schoolClass in schoolClassesList) {
@@ -80,6 +90,9 @@ namespace EGrader.Controllers.Admin {
             return "--";
         }
 
+        /// <summary>
+        /// Dohvaća sve potrebne podatke iz baze podataka.
+        /// </summary>
 
         private void GetData() {
             try {
@@ -112,7 +125,9 @@ namespace EGrader.Controllers.Admin {
         }
 
 
-
+        /// <summary>
+        /// Dohvaća razrede iz baze i sprema u odgovarajuću listu.
+        /// </summary>
         private void LoadClasses() {
             try {
                 foreach (ClassObject currentClass in classesModel.GetObjectsByCriteria())
@@ -127,6 +142,9 @@ namespace EGrader.Controllers.Admin {
 
 
 
+        /// <summary>
+        /// Kreira i prikazuje dijaloški okvir za unos novog korisnika.
+        /// </summary>
         void CreateDialog() {
             dialog = (UserDialog) ViewFactory.NewDialogInstance(AppContext.Teachers);
             dialog.Closed += ActionDisableEdit;
@@ -141,6 +159,11 @@ namespace EGrader.Controllers.Admin {
 
 
 
+        /// <summary>
+        /// Handler gumba za dodavanje - prikaz dijaloškog okvira za editiranje korisnika.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionShowEditDialog(object sender, EventArgs e) {
             CreateDialog();
             dialog.buttonInsert.Click += ActionInsertUpdate;
@@ -164,6 +187,12 @@ namespace EGrader.Controllers.Admin {
         }
 
 
+
+        /// <summary>
+        /// Handler editiranja korisnika - prikaz dialoga za unos korisnika.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionShowDialog(object sender, EventArgs e) {
             CreateDialog();
             dialog.buttonInsert.Click += ActionInsertUpdate;
@@ -171,17 +200,32 @@ namespace EGrader.Controllers.Admin {
         }
 
 
+        /// <summary>
+        /// Disablanje edit moda kod zatvaranja dijaloškog okvira.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionDisableEdit(object sender, EventArgs e) {
             isEdit = false;
         }
 
 
+        /// <summary>
+        /// Handler za gumb za zatvaranje dijaloškog okvira.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionCloseDialog(object sender, EventArgs e) {
             isEdit = false;
             dialog.Close();
         }
 
 
+        /// <summary>
+        /// Handler klika na element liste - dspremanje indexa klliknutog elementa.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionItemClick(object sender, RoutedEventArgs e) {
             ListViewItem listItem = (ListViewItem) sender;
 
@@ -196,7 +240,11 @@ namespace EGrader.Controllers.Admin {
         }
 
 
-
+        /// <summary>
+        /// Handler pritiska guma za briasanje - brisanje korisnika.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionDelete(object sender, EventArgs e) {
             if (MessageBox.Show("Jeste li sigurni?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
@@ -215,6 +263,10 @@ namespace EGrader.Controllers.Admin {
 
 
 
+        /// <summary>
+        /// Stvaranje POCO objekta na temelju unešenih podataka iz dijaloškog okvira.
+        /// </summary>
+        /// <returns></returns>
         private UserObject FillUserData() {
             UserObject userObject = new UserObject();
             userObject.SetName(dialog.textBoxName.Text);
@@ -234,6 +286,11 @@ namespace EGrader.Controllers.Admin {
 
 
 
+        /// <summary>
+        /// Handler gumba za dodavanje u dijaloškom okviru - dodavanje ili updatanje korisnika.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionInsertUpdate(object sender, RoutedEventArgs e) {
             if((!isEdit && (dialog.passwordBox.Password.Length == 0 || dialog.passwordBoxConfirm.Password.Length == 0)) 
                 || dialog.textBoxLastname.Text.Length == 0  || dialog.textBoxName.Text.Length == 0 || dialog.textBoxUsername.Text.Length == 0
@@ -245,7 +302,6 @@ namespace EGrader.Controllers.Admin {
                 MessageBox.Show("Lozinke se ne podudaraju!");
                 return;
             }
-
 
             UserObject userObject = FillUserData();
             if (isEdit) {

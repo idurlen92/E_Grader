@@ -90,7 +90,11 @@ namespace EGrader.Models {
 
 
 
-
+        /// <summary>
+        /// Dohvaćanje svih učenika škole navedene u parametru.
+        /// </summary>
+        /// <param name="schoolId"></param>
+        /// <returns></returns>
         public List<object> GetStudents(int schoolId) {
             List<object> usersList = new List<object>();
             String[,] joinArray = new String[,] { { "classes_in_schools cs", "u.class_id", "cs.id" }, { "user_types ut", "ut.id", "u.user_type_id" } };
@@ -105,6 +109,11 @@ namespace EGrader.Models {
         }
 
 
+        /// <summary>
+        /// Dohvaćanje svih učenika čiji je id učitelj-a proslijeđen u parametru.
+        /// </summary>
+        /// <param name="teacherId"></param>
+        /// <returns></returns>
         public List<object> GetStudentsOfTeacher(int teacherId) {
             List<object> usersList = new List<object>();
             String[,] joinArray = new String[,] { { "classes_in_schools cs", "u.class_id", "cs.id" }, { "user_types ut", "ut.id", "u.user_type_id" } };

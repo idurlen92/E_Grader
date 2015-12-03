@@ -28,7 +28,10 @@ namespace EGrader.Views.Admin {
             scrollView.Content = currentListView;
         }
 
-
+        /// <summary>
+        /// Kreiranje listview-a korisnika na temelju liste u parametru.
+        /// </summary>
+        /// <param name="objectsList"></param>
         private void CreateList(List<object> objectsList) {
             foreach(String[] userArray in objectsList) {
                 Grid grid = new Grid();

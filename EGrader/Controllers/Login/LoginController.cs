@@ -38,7 +38,11 @@ namespace EGrader.Controllers.Login {
         }
 
 
-
+        /// <summary>
+        /// Handlanje pritiska gumba u poljima za unos teksta - punjenje strigbuildera, togglanje labele za info i disablanje buttona za login.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ActionKeyPress(object sender, RoutedEventArgs e) {
             if(sender is TextBox) {
                 usernameStringBuilder.Clear();
@@ -55,6 +59,11 @@ namespace EGrader.Controllers.Login {
 
 
 
+        /// <summary>
+        /// Handlanje gumba za login - provjeravanje postojanja korisnika, login...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ActionLogin(object sender, RoutedEventArgs e) {
             List<object> usersList = new List<object>();
             try {

@@ -13,7 +13,7 @@ namespace EGrader.Controllers.Menu {
 
         MenuView menu;
 
-
+        
         public MenuController(MenuView menu) {
             this.menu = menu;
             if (menu is AdminMenu) {
@@ -31,6 +31,11 @@ namespace EGrader.Controllers.Menu {
         }
 
        
+        /// <summary>
+        /// Handlanje klika na element menija - promjena konteksta aplikacije.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void DoAction(object sender, RoutedEventArgs e) {
             String buttonName = ((Button) sender).Name.ToLower();
 
@@ -53,7 +58,9 @@ namespace EGrader.Controllers.Menu {
         }
        
 
-
+        /// <summary>
+        /// Odjava korisnika.
+        /// </summary>
         public void ActionLogOut() {
             if(MessageBox.Show("Odjava", "Želite li se odjaviti?", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                 CurrentUser.LogUserOut();

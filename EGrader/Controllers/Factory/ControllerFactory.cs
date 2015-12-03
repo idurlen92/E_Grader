@@ -10,6 +10,13 @@ namespace EGrader.Controllers.Factory {
     class ControllerFactory {
 
 
+        /// <summary>
+        /// Kreira instance Controller klase ovisno o kontekstu.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="view"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static Controller NewControllerInstance(Model model, View view, AppContext context) {
             if (context == AppContext.Students || context == AppContext.Teachers)
                 return new UsersController(model, view);
@@ -23,6 +30,11 @@ namespace EGrader.Controllers.Factory {
         }
 
 
+        /// <summary>
+        /// Kreira instancu MenuController-a.
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <returns></returns>
         public static Controller NewMenuControllerInstance(MenuView menu) {
             return new MenuController(menu);
         }

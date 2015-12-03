@@ -13,6 +13,11 @@ namespace EGrader.Models.Factory {
     class ModelFactory {
 
 
+        /// <summary>
+        /// Instanciranje novog modela prema traženom kontekstu.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static Model NewModelInstance(AppContext context) {
             if (context == AppContext.Login || context == AppContext.Students || context == AppContext.Teachers)
                 return new UsersModel();
@@ -24,6 +29,11 @@ namespace EGrader.Models.Factory {
         }
 
 
+        /// <summary>
+        /// Instanciranje novog modela prema tipu modela.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static Model NewModelInstance(ModelType type) {
             if (type == ModelType.Users)
                 return new UsersModel();

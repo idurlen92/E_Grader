@@ -1,11 +1,8 @@
 ﻿using EGrader.Classes;
-using EGrader.Controllers;
-using EGrader.Models;
 using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using EGrader.Models.Factory;
 
 namespace EGrader.Views {
     /// <summary>

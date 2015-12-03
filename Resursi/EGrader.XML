@@ -1,0 +1,910 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EGrader</name>
+    </assembly>
+    <members>
+        <member name="M:EGrader.Classes.CurrentUser.IsAdmin">
+            <summary>
+            Provjerava da li je trenutni korisnik u admin ulozi.
+            </summary>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:EGrader.Classes.CurrentUser.IsStudent">
+            <summary>
+            Provjerava da li je trenutni korisnik u ucenuk ulozi.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.CurrentUser.isTeacher">
+            <summary>
+            Provjerava da li je trenutni korisnik u ucitelj ulozi.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.CurrentUser.LogUserIn(EGrader.Models.Objects.UserObject)">
+            <summary>
+            Logiranje korisnika.
+            </summary>
+            <param name="userObject"></param>
+        </member>
+        <member name="M:EGrader.Classes.CurrentUser.LogUserOut">
+            <summary>
+            Odjava korisnika.
+            </summary>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.GetInstance">
+            <summary>
+            Statička metoda za vraćanje instance klase (singleton)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.Connect">
+            <summary>
+            Metoda za stvaranje konekcije na bazu.
+            </summary>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.Disconnect">
+            <summary>
+            Metoda za uklanjanje konekcije na bazu.
+            </summary>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.StartTransaction">
+            <summary>
+            Metoda za pokretanje transakcije.
+            </summary>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.CommitTransaction">
+            <summary>
+            Metoda za potvrđivanje transakcje.
+            </summary>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.RollBackTransacion">
+            <summary>
+            Metoda za poništavanje transakcije.
+            </summary>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.ExecuteStatement(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Metoda za izvršavanje naredbi koje nisu upit (select).
+            </summary>
+            <param name="statement"></param>
+            <param name="paramsDictionary"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.ExecuteQuery(System.String)">
+            <summary>
+            Izvršavanje upita bez bindanja parametara.
+            </summary>
+            <param name="commandString"></param>
+            <returns>List of list of strings: every primitive type will be cast to String</returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.DatabaseManager.ExecuteQuery(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Izvršavaje upita uz bindanje parametara.
+            paramsDictionary: name/value
+            </summary>
+            <param name="commandString"></param>
+            <param name="paramsDictionary"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.IsPrimitiveType(System.Object)">
+            <summary>
+            Metoda za provjervanje dal je proslijeđeni parametar primitivan tip.
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.IsVariable(System.Object)">
+            <summary>
+            Provjerava da li je parametar dio naredbe ili varijabla koju treba bindati.
+            </summary>
+            <param name="arg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.IsLastParam(System.Object)">
+            <summary>
+            Provjera da li je proslijeđeni parametar zadnji parametar IN operatora.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.ProcessParameters(System.Collections.Generic.Dictionary{System.String,System.String}@,System.Text.StringBuilder@,System.Object[])">
+            <summary>
+            Pozivanje istoimene funkcije (preopterećenje) s parametrom <code>isUpdate</code> postavljenim na <code>false</code>
+            </summary>
+            <param name="paramsDictionary"></param>
+            <param name="statement"></param>
+            <param name="conditionParams"></param>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.ProcessParameters(System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String}@,System.Text.StringBuilder@,System.Object[])">
+            <summary>
+            Procesiranje parametara kod WHERE, SET naredbi.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Select">
+            <summary>
+            Formatiranje SELECT naredbe sa svim stupcima tablice (*).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Select(System.String[])">
+            <summary>
+            Formatiranje SELECT naredbe sa stupcima u parametrima.
+            </summary>
+            <param name="columnParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Select(System.Collections.Generic.List{System.String})">
+            <summary>
+            Formatiranje SELECT naredbe sa stupcima u parametrima.
+            </summary>
+            <param name="columnParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.FindTableAlias(System.Collections.Generic.List{System.String})">
+            <summary>
+            Traženje aliasa trenutne tablice.
+            </summary>
+            <param name="aliasesList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.AddTableAlias(System.String)">
+            <summary>
+            Dodavalje aliasa trenutne tablice  u stupce SELECT naredbe.
+            </summary>
+            <param name="alias"></param>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Join(System.String[])">
+            <summary>
+            3D matrica: [1] naziv tablice za spajanje, [2] vanjski ključ, [2] ključ u tablici za spajanje
+            Join('users u', 't.user_id', 'u.id')
+            </summary>
+            <param name="joinParams"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:EGrader.Classes.Database.StatementBuilder.Join(System.String[0:,0:])" -->
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Where(System.Object[])">
+            <summary>
+            WHERE klauzula SELECT naredbe.
+            Ne koristiti za ostale naredbe(Delete, update)
+            Prihvaća samo string i broj.
+            </summary>
+            <param name="variablesList"></param>
+            <param name="stringParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.GroupBy(System.String)">
+            <summary>
+            Formatiranje GROUP BY naredbe.
+            </summary>
+            <param name="column"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.OrderBy(System.String[])">
+            <summary>
+            FOrmatiranje ORDER BY naredbe.
+            </summary>
+            <param name="columnParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Limit(System.Int32)">
+            <summary>
+            Formatiranje LIMIT naredbe.
+            </summary>
+            <param name="limit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Limit(System.String)">
+            <summary>
+             Formatiranje LIMIT naredbe.
+             </summary>
+             <param name="limit"></param>
+             <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Offset(System.Int32)">
+            <summary>
+            Formatiranje OFFSET naredbe.
+            </summary>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Offset(System.String)">
+            <summary>
+            Formatiranje OFFSET naredbe.
+            </summary>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Create">
+            <summary>
+            Formatiranje cijelog Select statementa.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.resetFields">
+            <summary>
+            Resetiranje field-ova.
+            </summary>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Insert(System.String[])">
+            <summary>
+            Formatiranje Insert naredbe. Prihvaća samo sringove i brojeve kao parametre
+            </summary>
+            <param name="columns"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Values(System.Object[])">
+            <summary>
+            Formatiranje drugog dijela Insert naredbe. Prihvaća samo stringove i brojeve kao parametre.
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Update(System.Object[])">
+            <summary>
+            Formatiranje Update naredbe.
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.UWhere(System.Object[])">
+            <summary>
+            Formatiranje Where klauzule Update naredbe.
+            </summary>
+            <param name=""></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Database.StatementBuilder.Delete(System.Object[])">
+            <summary>
+            Formatiranje Delete naredbe.
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Classes.Utils.ParseMonth(System.String)">
+            <summary>
+            Parsiranje mjeseca iz datuma.
+            </summary>
+            <param name="dateString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.LoadClassNames">
+            <summary>
+            Dohvaćanje razreda iz baze.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.LoadData">
+            <summary>
+            Dohvaćanje svih potrebnih podataka i spremanje u listu.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.ActionItemClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handler klika na element liste - spremanje indeksa kliknutog elementa.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.IsExistentClass(EGrader.Models.Objects.ClassObject)">
+            <summary>
+            Provjerava dal je razred već postojeć u trenutnoj školi.
+            </summary>
+            <param name="currentClass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.CreateDialog">
+            <summary>
+            Kreiranje i prikaz dijaloškog okvira za unos razreda.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.ActionShowDialog(System.Object,System.EventArgs)">
+            <summary>
+            Handler klika na gumb za dodavanje - prikaz dijaloškog okvira za dodavanje razreda.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.ActionCloseDialog(System.Object,System.EventArgs)">
+            <summary>
+            Akcija gumba za zatvaranje dijaloškog okvira.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.GetClassId(System.String)">
+            <summary>
+            Pretražianje liste razreda prema imenu razreda. Vraća id razreda.
+            </summary>
+            <param name="className"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.ActionInsert(System.Object,System.EventArgs)">
+            <summary>
+            Handler gumba za dodavanje razreda - Insert.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.ClassesController.ActionDelete(System.Object,System.EventArgs)">
+            <summary>
+            Handler gumba za brisanje razreda - delete.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.FindClassById(System.Int32)">
+            <summary>
+            Slijedno pretraživaje razreda u listi, prema id-u.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.FindClassName(EGrader.Models.Objects.UserObject)">
+            <summary>
+            Pretražuje ime razreda na temelju proslijeđenog učenika/učitelja.
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.GetData">
+            <summary>
+            Dohvaća sve potrebne podatke iz baze podataka.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.LoadClasses">
+            <summary>
+            Dohvaća razrede iz baze i sprema u odgovarajuću listu.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.CreateDialog">
+            <summary>
+            Kreira i prikazuje dijaloški okvir za unos novog korisnika.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.ActionShowEditDialog(System.Object,System.EventArgs)">
+            <summary>
+            Handler gumba za dodavanje - prikaz dijaloškog okvira za editiranje korisnika.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.ActionShowDialog(System.Object,System.EventArgs)">
+            <summary>
+            Handler editiranja korisnika - prikaz dialoga za unos korisnika.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.ActionDisableEdit(System.Object,System.EventArgs)">
+            <summary>
+            Disablanje edit moda kod zatvaranja dijaloškog okvira.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.ActionCloseDialog(System.Object,System.EventArgs)">
+            <summary>
+            Handler za gumb za zatvaranje dijaloškog okvira.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.ActionItemClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handler klika na element liste - dspremanje indexa klliknutog elementa.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.ActionDelete(System.Object,System.EventArgs)">
+            <summary>
+            Handler pritiska guma za briasanje - brisanje korisnika.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.FillUserData">
+            <summary>
+            Stvaranje POCO objekta na temelju unešenih podataka iz dijaloškog okvira.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Admin.UsersController.ActionInsertUpdate(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handler gumba za dodavanje u dijaloškom okviru - dodavanje ili updatanje korisnika.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.AppController.ReturnToLoginWindow">
+            <summary>
+            Povratak na login screen.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.AppController.ChangeContext(EGrader.Controllers.AppContext)">
+            <summary>
+            Promjena konteksta aplikacije i instanciranje novog modela, view-a i controllera.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Factory.ControllerFactory.NewControllerInstance(EGrader.Models.Model,EGrader.Views.View,EGrader.Controllers.AppContext)">
+            <summary>
+            Kreira instance Controller klase ovisno o kontekstu.
+            </summary>
+            <param name="model"></param>
+            <param name="view"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Factory.ControllerFactory.NewMenuControllerInstance(EGrader.Views.Menus.MenuView)">
+            <summary>
+            Kreira instancu MenuController-a.
+            </summary>
+            <param name="menu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Login.LoginController.ActionKeyPress(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handlanje pritiska gumba u poljima za unos teksta - punjenje strigbuildera, togglanje labele za info i disablanje buttona za login.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Login.LoginController.ActionLogin(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handlanje gumba za login - provjeravanje postojanja korisnika, login...
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Menu.MenuController.DoAction(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handlanje klika na element menija - promjena konteksta aplikacije.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Menu.MenuController.ActionLogOut">
+            <summary>
+            Odjava korisnika.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Student.GradesController.FetchAllData">
+            <summary>
+            Dohvaćanje svih podataka iz baze.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Student.GradesController.FetchGrades">
+            <summary>
+            Dohvaćanje svih ocjena učenika iz traženog predmeta.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Student.GradesController.GetGradeByCell(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <param name="col"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Student.GradesController.CreateStringMatrix">
+            <summary>
+            Izrada matrice ocjena.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.FetchAllData">
+            <summary>
+            Dohvaćanje sbi podataka iz baze i spremanje u liste i punjenje comboboxeva za odabir predmeta i učenika!
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.FetchGrades">
+            <summary>
+            Dohvaćanej svih ocjena traženog učenika za traženi predmet.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.CreateStringMatrix">
+            <summary>
+            Stravanje 2x2 matrice ocjena.
+            </summary>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.ActionComboChange(System.Object,System.EventArgs)">
+            <summary>
+            Handler za promjenu comboboxeva - novo dohvaćanje podataka.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.ActionDoubleClick(System.Object,System.EventArgs)">
+            <summary>
+            Handler za dupi klik - brisanje ocjene.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.ActionShowDialog(System.Object,System.EventArgs)">
+            <summary>
+            Handler za prikaz dijaloškog okvira za unos ocjene.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.ActionCloseDialog(System.Object,System.EventArgs)">
+            <summary>
+            Handler za zatvaranje dijaloškog okvira.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.GetGradeByCell(System.Int32,System.Int32)">
+            <summary>
+            Pretraga ocjene prema kliknutom stupcu i redu.
+            </summary>
+            <param name="row"></param>
+            <param name="col"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.GetRubricId(System.String)">
+            <summary>
+            Pretraživanje rubrika prema imenu - vraćanje id-a.
+            </summary>
+            <param name="rubricName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.IsCellValid(System.String,System.String)">
+            <summary>
+            Provjera dal je kliknuta ćelija puna (unešena ocjena).
+            </summary>
+            <param name="selectedDate"></param>
+            <param name="rubricName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Controllers.Teacher.StudentGradingController.ActionInsert(System.Object,System.EventArgs)">
+            <summary>
+            Akcija pritiska gumba za insert - insert nove ocjene.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Models.Factory.ModelFactory.NewModelInstance(EGrader.Controllers.AppContext)">
+            <summary>
+            Instanciranje novog modela prema traženom kontekstu.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Models.Factory.ModelFactory.NewModelInstance(EGrader.Models.Factory.ModelType)">
+            <summary>
+            Instanciranje novog modela prema tipu modela.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Models.Model.Delete(System.Object)">
+            <summary>
+            Apstraktna metoda za Delete.
+            </summary>
+            <param name="deleteObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Models.Model.GetByCriteria(System.Object[])">
+            <summary>
+            Apstraktna metoda za filtriranje upita. Vraća Datatable.
+            </summary>
+            <param name="criteriaParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Models.Model.GetObjectsByCriteria(System.Object[])">
+            <summary>
+            Apstraktna metoda za filtriranje upita. Vraća odgovarajući POCO objekt.
+            </summary>
+            <param name="criteriaParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Models.Model.Insert(System.Object)">
+            <summary>
+            Apstraktna metoda za insert statement, na temelju proslijeđenog POCO objekta.
+            </summary>
+            <param name="insertObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Models.Model.Update(System.Object)">
+            <summary>
+            Apstraktna metoda za update tablice na temelju proslijeđenog POCO objekta.
+            </summary>
+            <param name="updateObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Models.UsersModel.GetStudents(System.Int32)">
+            <summary>
+            Dohvaćanje svih učenika škole navedene u parametru.
+            </summary>
+            <param name="schoolId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Models.UsersModel.GetStudentsOfTeacher(System.Int32)">
+            <summary>
+            Dohvaćanje svih učenika čiji je id učitelj-a proslijeđen u parametru.
+            </summary>
+            <param name="teacherId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EGrader.Views.Admin.ClassDialog">
+            <summary>
+            Interaction logic for ClassDialog.xaml
+            </summary>
+            <summary>
+            ClassDialog
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Admin.ClassDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.Admin.ClassesView">
+            <summary>
+            Interaction logic for ClassesView.xaml
+            </summary>
+            <summary>
+            ClassesView
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Admin.ClassesView.CreateList(System.Collections.Generic.List{System.Object})">
+            <summary>
+            Kreiranje listview-a na temelju liste objetata u parametru.
+            </summary>
+            <param name="classesList"></param>
+        </member>
+        <member name="M:EGrader.Views.Admin.ClassesView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.Admin.UsersView">
+            <summary>
+            Interaction logic for ListableView.xaml
+            </summary>
+            <summary>
+            UsersView
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Admin.UsersView.CreateList(System.Collections.Generic.List{System.Object})">
+            <summary>
+            Kreiranje listview-a korisnika na temelju liste u parametru.
+            </summary>
+            <param name="objectsList"></param>
+        </member>
+        <member name="M:EGrader.Views.Admin.UsersView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.Admin.UserDialog">
+            <summary>
+            Interaction logic for UserDialog.xaml
+            </summary>
+            <summary>
+            UserDialog
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Admin.UserDialog.CreateClassesList">
+            <summary>
+            Postavljanje određenih elemenata dijaloškog okvira - comboboxa i labele za odabir razreda.
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Admin.UserDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Factory.ViewFactory.NewViewInstance(EGrader.Controllers.AppContext)">
+            <summary>
+            Instanciranje novog view-a na temelju proslijeđenog konteksta.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Views.Factory.ViewFactory.NewDialogInstance(EGrader.Controllers.AppContext)">
+            <summary>
+            Instanciranje novog dijaloškog okvira na temelju proslijeđenog konteksta.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGrader.Views.Factory.ViewFactory.NewMenuInstance(EGrader.Classes.UserType)">
+            <summary>
+            Instanciranje novog menija na temelju tipa korisnika.
+            </summary>
+            <param name="userType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EGrader.Views.Menus.AdminMenu">
+            <summary>
+            Interaction logic for AdminMenu.xaml
+            </summary>
+            <summary>
+            AdminMenu
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Menus.AdminMenu.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Menus.MenuView.Toggle(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Apstraktna metoda togglanja menija.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:EGrader.Views.Menus.StudentMenu">
+            <summary>
+            Interaction logic for StudentMenu.xaml
+            </summary>
+            <summary>
+            StudentMenu
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Menus.StudentMenu.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.Menus.TeacherMenu">
+            <summary>
+            Interaction logic for TeacherMenu.xaml
+            </summary>
+            <summary>
+            TeacherMenu
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Menus.TeacherMenu.Toggle(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Postavljaneje menija na vidljivo/nevidljivo stanje (toggle).
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:EGrader.Views.Menus.TeacherMenu.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.ProfileView">
+            <summary>
+            Interaction logic for ProfileView.xaml
+            </summary>
+            <summary>
+            ProfileView
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.ProfileView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.StartView">
+            <summary>
+            Interaction logic for StartView.xaml
+            </summary>
+            <summary>
+            StartView
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.StartView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.Student.GradesView">
+            <summary>
+            Interaction logic for GradesView.xaml
+            </summary>
+            <summary>
+            GradesView
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Student.GradesView.CreateGrid(System.String[0:,0:])">
+            <summary>
+            Kreiranje "tablice" ocjena na temelju proslijeđene string matrice.
+            </summary>
+            <param name="matrix"></param>
+        </member>
+        <member name="M:EGrader.Views.Student.GradesView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.Teacher.InsertGradeDialog">
+            <summary>
+            Interaction logic for InsertGradeDialog.xaml
+            </summary>
+            <summary>
+            InsertGradeDialog
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Teacher.InsertGradeDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Views.Teacher.StudentGradingView">
+            <summary>
+            Interaction logic for StudentGradingView.xaml
+            </summary>
+            <summary>
+            StudentGradingView
+            </summary>
+        </member>
+        <member name="M:EGrader.Views.Teacher.StudentGradingView.CreateGrid(System.String[0:,0:])">
+            <summary>
+            Kreiranje "tablice" ocjena na temelju proslijeđene string matrice.
+            </summary>
+            <param name="matrix"></param>
+        </member>
+        <member name="M:EGrader.Views.Teacher.StudentGradingView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Windows.LoginWindow">
+            <summary>
+            Interaction logic for LoginWindow.xaml
+            </summary>
+            <summary>
+            LoginWindow
+            </summary>
+        </member>
+        <member name="M:EGrader.Windows.LoginWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.Windows.MainWindow">
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:EGrader.Windows.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:EGrader.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:EGrader.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:EGrader.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:EGrader.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:EGrader.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:EGrader.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

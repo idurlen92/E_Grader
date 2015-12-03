@@ -23,28 +23,47 @@ namespace EGrader.Classes {
         public static UserType UserType { get { return (userObject == null) ? UserType.None : userObject.UserType; } }
         
 
+        /// <summary>
+        /// Provjerava da li je trenutni korisnik u admin ulozi.
+        /// </summary>
+        /// <returns>boolean</returns>
         public static bool IsAdmin() {
             return (userObject != null && userObject.UserType == UserType.Admin);
         }
 
 
+        /// <summary>
+        /// Provjerava da li je trenutni korisnik u ucenuk ulozi.
+        /// </summary>
+        /// <returns></returns>
         public static bool IsStudent() {
             return (userObject != null && userObject.UserType == UserType.Student);
         }
 
 
+        /// <summary>
+        /// Provjerava da li je trenutni korisnik u ucitelj ulozi.
+        /// </summary>
+        /// <returns></returns>
         public static bool isTeacher() {
             return (userObject != null && userObject.UserType == UserType.Teacher);
         }
 
 
 
+        /// <summary>
+        /// Logiranje korisnika.
+        /// </summary>
+        /// <param name="userObject"></param>
         public static void LogUserIn(UserObject userObject) {
             CurrentUser.userObject = userObject;
         }
         
 
 
+        /// <summary>
+        /// Odjava korisnika.
+        /// </summary>
         public static void LogUserOut() {
             userObject = null;
         }

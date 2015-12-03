@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,7 +16,10 @@ namespace EGrader.Views.Teacher {
         }
 
 
-
+        /// <summary>
+        /// Kreiranje "tablice" ocjena na temelju proslijeđene string matrice.
+        /// </summary>
+        /// <param name="matrix"></param>
         public void CreateGrid(String[,] matrix) {
             contentGrid.ColumnDefinitions.Clear();
             contentGrid.RowDefinitions.Clear();

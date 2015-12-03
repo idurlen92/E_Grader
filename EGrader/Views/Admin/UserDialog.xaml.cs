@@ -29,6 +29,9 @@ namespace EGrader.Views.Admin {
         public ComboBox CurrentComboBox { get { return comboBox; } }
 
 
+        /// <summary>
+        /// Postavljanje određenih elemenata dijaloškog okvira - comboboxa i labele za odabir razreda.
+        /// </summary>
         public void CreateClassesList() {
             Label label = new Label();
             Grid.SetColumn(label, 0);

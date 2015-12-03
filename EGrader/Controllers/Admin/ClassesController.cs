@@ -51,7 +51,9 @@ namespace EGrader.Controllers.Admin {
         }
 
 
-
+        /// <summary>
+        /// Dohvaćanje razreda iz baze.
+        /// </summary>
         void LoadClassNames() {
             try{
                 foreach (ClassObject currentClass in classesModel.GetObjectsByCriteria())
@@ -63,6 +65,9 @@ namespace EGrader.Controllers.Admin {
         }
 
 
+        /// <summary>
+        /// Dohvaćanje svih potrebnih podataka i spremanje u listu.
+        /// </summary>
         void LoadData() {
             try {
                 teachersList.Clear();
@@ -91,7 +96,11 @@ namespace EGrader.Controllers.Admin {
         }
 
 
-
+        /// <summary>
+        /// Handler klika na element liste - spremanje indeksa kliknutog elementa.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionItemClick(object sender, RoutedEventArgs e) {
             ListViewItem listItem = (ListViewItem) sender;
 
@@ -106,7 +115,11 @@ namespace EGrader.Controllers.Admin {
         }
 
 
-
+        /// <summary>
+        /// Provjerava dal je razred već postojeć u trenutnoj školi.
+        /// </summary>
+        /// <param name="currentClass"></param>
+        /// <returns></returns>
         private Boolean IsExistentClass (ClassObject currentClass) {
             foreach(ClassInSchoolObject schoolClass in schoolClassesList) {
                 if (schoolClass.ClassId == currentClass.Id)
@@ -116,6 +129,10 @@ namespace EGrader.Controllers.Admin {
         }
 
 
+
+        /// <summary>
+        /// Kreiranje i prikaz dijaloškog okvira za unos razreda.
+        /// </summary>
         void CreateDialog() {
             dialog = (ClassDialog) ViewFactory.NewDialogInstance(AppContext.ClassAdministration);
 
@@ -133,16 +150,30 @@ namespace EGrader.Controllers.Admin {
         }
 
 
+        /// <summary>
+        /// Handler klika na gumb za dodavanje - prikaz dijaloškog okvira za dodavanje razreda.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionShowDialog(object sender, EventArgs e) {
             CreateDialog();
         }
 
-
+        /// <summary>
+        /// Akcija gumba za zatvaranje dijaloškog okvira.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionCloseDialog(object sender, EventArgs e) {
             dialog.Close();
         }
 
 
+        /// <summary>
+        /// Pretražianje liste razreda prema imenu razreda. Vraća id razreda.
+        /// </summary>
+        /// <param name="className"></param>
+        /// <returns></returns>
         int GetClassId(String className) {
             foreach(ClassObject currentClass in classesList) {
                 if (currentClass.ClassName.Equals(className))
@@ -152,6 +183,11 @@ namespace EGrader.Controllers.Admin {
         }
 
 
+        /// <summary>
+        /// Handler gumba za dodavanje razreda - Insert.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionInsert(object sender, EventArgs e) {
             if(dialog.comboBoxClassName.SelectedIndex < 0 || dialog.comboBoxTeacher.SelectedIndex < 0) {
                 MessageBox.Show("Unesite sve potrebne podatke!");
@@ -172,7 +208,11 @@ namespace EGrader.Controllers.Admin {
         }
 
 
-
+        /// <summary>
+        /// Handler gumba za brisanje razreda - delete.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ActionDelete(object sender, EventArgs e) {
             if(MessageBox.Show("Jeste li sigurni da želite obrisati razred?", "Upozorenje", MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
@@ -186,9 +226,8 @@ namespace EGrader.Controllers.Admin {
 
 
         void ActionUpdateClass(object sender, EventArgs e) {
-            CreateDialog();
-
-            ClassInSchoolObject schoolClass = schoolClassesList[selectedListItem];
+            //CreateDialog();
+            //ClassInSchoolObject schoolClass = schoolClassesList[selectedListItem];
             //TODO: 
         }
 

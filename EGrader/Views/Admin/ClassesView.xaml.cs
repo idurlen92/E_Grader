@@ -38,6 +38,10 @@ namespace EGrader.Views.Admin {
         }
 
 
+        /// <summary>
+        /// Kreiranje listview-a na temelju liste objetata u parametru.
+        /// </summary>
+        /// <param name="classesList"></param>
         public void CreateList(List<object> classesList) {
             foreach (String[] classArrayString in classesList) {
                 Grid grid = new Grid();

@@ -11,6 +11,7 @@ namespace EGrader.Classes {
     public class Utils {
 
 
+        
         public static String FormatDate(String dateString) {
             StringBuilder formattedDate = new StringBuilder();
             /*
@@ -26,6 +27,11 @@ namespace EGrader.Classes {
 
 
 
+        /// <summary>
+        /// Parsiranje mjeseca iz datuma.
+        /// </summary>
+        /// <param name="dateString"></param>
+        /// <returns></returns>
         public static String ParseMonth(String dateString) {
             int firstDot = dateString.IndexOf('.') + 1;
             int secondDot = dateString.IndexOf('.', firstDot);

@@ -73,13 +73,18 @@ namespace EGrader.Classes.Database {
 
         // ###############################  H E L P E R     M E T H O D S  ###############################
 
+        /// <summary>
+        /// Metoda za provjervanje dal je proslijeđeni parametar primitivan tip.
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         private bool IsPrimitiveType(object param) {
             return (param is string || param is int || param is long || param is short);
         }
 
 
         /// <summary>
-        /// Check if given parameter is a part of a statement or a variable that needs to be bound.
+        /// Provjerava da li je parametar dio naredbe ili varijabla koju treba bindati.
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
@@ -98,7 +103,7 @@ namespace EGrader.Classes.Database {
 
 
         /// <summary>
-        /// Check if given parameter is last parameter in case of IN operators..
+        /// Provjera da li je proslijeđeni parametar zadnji parametar IN operatora.
         /// </summary>
         /// <returns></returns>
         private Boolean IsLastParam(object param) {
@@ -111,6 +116,12 @@ namespace EGrader.Classes.Database {
 
 
 
+        /// <summary>
+        /// Pozivanje istoimene funkcije (preopterećenje) s parametrom <code>isUpdate</code> postavljenim na <code>false</code>
+        /// </summary>
+        /// <param name="paramsDictionary"></param>
+        /// <param name="statement"></param>
+        /// <param name="conditionParams"></param>
         private void ProcessParameters(ref Dictionary<String, String> paramsDictionary, ref StringBuilder statement, params object[] conditionParams) {
             ProcessParameters(false, ref paramsDictionary, ref statement, conditionParams);
         }
@@ -118,7 +129,7 @@ namespace EGrader.Classes.Database {
 
 
         /// <summary>
-        /// Use to proccess passed parameters in Where clause of Select, Delete, or Update statement or Set clause of Update statement.
+        /// Procesiranje parametara kod WHERE, SET naredbi.
         /// </summary>
         /// <returns></returns>
         private void ProcessParameters(bool isUpdate, ref Dictionary<String, String> paramsDictionary, ref StringBuilder statement, params object[] conditionParams) {
@@ -157,21 +168,35 @@ namespace EGrader.Classes.Database {
         // ###############################  I N S E R T  ###############################
 
         // ---------- SELECT STATEMENT ----------
+        /// <summary>
+        /// Formatiranje SELECT naredbe sa svim stupcima tablice (*).
+        /// </summary>
+        /// <returns></returns>
         public StatementBuilder Select() {
             selectStatement.Append("SELECT * FROM " + tableName + " ");
             return this;
         }
 
 
+        /// <summary>
+        /// Formatiranje SELECT naredbe sa stupcima u parametrima.
+        /// </summary>
+        /// <param name="columnParams"></param>
+        /// <returns></returns>
         public StatementBuilder Select(params String[] columnParams) {
             List<String> columnsList = new List<string>();
             foreach (String column in columnParams)
                 columnsList.Add(column);
             return Select(columnsList);
         }
-       
 
 
+
+        /// <summary>
+        /// Formatiranje SELECT naredbe sa stupcima u parametrima.
+        /// </summary>
+        /// <param name="columnParams"></param>
+        /// <returns></returns>
         public StatementBuilder Select(List<String> columnsList) {
             this.columnsList.Clear();
             selectStatement.Append("SELECT ");
@@ -187,6 +212,11 @@ namespace EGrader.Classes.Database {
 
 
         // ---------- JOIN STATEMENT ----------
+        /// <summary>
+        /// Traženje aliasa trenutne tablice.
+        /// </summary>
+        /// <param name="aliasesList"></param>
+        /// <returns></returns>
         private String FindTableAlias(List<String> aliasesList) {
             foreach (String aliasedColumn in columnsList) {
                 String[] parts = aliasedColumn.Split('.');
@@ -200,6 +230,10 @@ namespace EGrader.Classes.Database {
 
 
 
+        /// <summary>
+        /// Dodavalje aliasa trenutne tablice  u stupce SELECT naredbe.
+        /// </summary>
+        /// <param name="alias"></param>
         private void AddTableAlias(String alias) {
             int insertIndex = selectStatement.ToString().IndexOf("JOIN") - 1;
             selectStatement.Insert(insertIndex, ' ' + alias);
@@ -208,10 +242,8 @@ namespace EGrader.Classes.Database {
 
 
         /// <summary>
-        /// 3D array where:
-        /// [1] foreign key 
-        /// [2] foreign table id
-        /// Example: Join('users u', 't.user_id', 'u.id')
+        /// 3D matrica: [1] naziv tablice za spajanje, [2] vanjski ključ, [2] ključ u tablici za spajanje
+        /// Join('users u', 't.user_id', 'u.id')
         /// </summary>
         /// <param name="joinParams"></param>
         /// <returns></returns>
@@ -230,10 +262,8 @@ namespace EGrader.Classes.Database {
 
 
         /// <summary>
-        /// <para>Array of 3D arrays where:
-        /// [0] table to join name
-        
-        /// </summary>
+        /// Polje 3D matrica: [1] naziv tablice za spajanje, [2] vanjski ključ, [2] ključ u tablici za spajanje
+        /// Join('users u', 't.user_id', 'u.id')
         /// <param name="joinParams"></param>
         /// <returns></returns>
         public StatementBuilder Join(String[,] joinParams) {
@@ -262,9 +292,9 @@ namespace EGrader.Classes.Database {
 
         // ---------- WHERE STATEMENT ----------
         /// <summary>
-        /// Where clause of Select statement.
-        /// Do not use in other statements! (Delete, update, ...)
-        /// Accepting strings or numbers!
+        /// WHERE klauzula SELECT naredbe.
+        /// Ne koristiti za ostale naredbe(Delete, update)
+        /// Prihvaća samo string i broj.
         /// </summary>
         /// <param name="variablesList"></param>
         /// <param name="stringParams"></param>
@@ -282,12 +312,22 @@ namespace EGrader.Classes.Database {
 
 
         // ---------- OTHER STATEMENTS ----------
+        /// <summary>
+        /// Formatiranje GROUP BY naredbe.
+        /// </summary>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public StatementBuilder GroupBy(String column) {
             groupByStatement.Append("GROUP BY" + column + " ");
             return this;
         }
 
 
+        /// <summary>
+        /// FOrmatiranje ORDER BY naredbe.
+        /// </summary>
+        /// <param name="columnParams"></param>
+        /// <returns></returns>
         public StatementBuilder OrderBy(params String[] columnParams) {
             orderByStatement.Append("ORDER BY ");
             for (int i = 0; i < columnParams.Length; i++)
@@ -296,25 +336,42 @@ namespace EGrader.Classes.Database {
         }
 
 
+        /// <summary>
+        /// Formatiranje LIMIT naredbe.
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <returns></returns>
         public StatementBuilder Limit(int limit) {
             return Limit(Convert.ToString(limit));
         }
 
-
-
+        ///<summary>
+        /// Formatiranje LIMIT naredbe.
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <returns></returns>
         public StatementBuilder Limit(String limit) {
             limitStatement.Append("LIMIT " + limit + " ");
             return this;
         }
 
 
-
+        /// <summary>
+        /// Formatiranje OFFSET naredbe.
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         public StatementBuilder Offset(int offset) {
             return Limit(Convert.ToString(offset));
         }
 
 
 
+        /// <summary>
+        /// Formatiranje OFFSET naredbe.
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         public StatementBuilder Offset(String offset) {
             limitStatement.Append("OFFSET " + offset + " ");
             return this;
@@ -324,7 +381,7 @@ namespace EGrader.Classes.Database {
 
         // ------------------- EXECUTION -------------------
         /// <summary>
-        /// Creates SQL Select statement.
+        /// Formatiranje cijelog Select statementa.
         /// </summary>
         /// <returns></returns>
         public String Create() {
@@ -345,6 +402,9 @@ namespace EGrader.Classes.Database {
         }
 
 
+        /// <summary>
+        /// Resetiranje field-ova.
+        /// </summary>
         private void resetFields() {
             isJoined = false;
             tableAlias = "";
@@ -359,6 +419,11 @@ namespace EGrader.Classes.Database {
 
 
         // ###############################  I N S E R T  ###############################
+        /// <summary>
+        /// Formatiranje Insert naredbe. Prihvaća samo sringove i brojeve kao parametre
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <returns></returns>
         public StatementBuilder Insert(params String[] columns) {
             insertStatement.Clear();
             insertStatement.Append("INSERT INTO " + tableName + "(");
@@ -369,6 +434,11 @@ namespace EGrader.Classes.Database {
         }
 
 
+        /// <summary>
+        /// Formatiranje drugog dijela Insert naredbe. Prihvaća samo stringove i brojeve kao parametre.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public String Values(params object[] parameters) {
             insertParamsDictionary.Clear();
             insertStatement.Append("VALUES(");
@@ -391,6 +461,11 @@ namespace EGrader.Classes.Database {
 
 
         // ###############################  U P D A T E  ###############################
+        /// <summary>
+        /// Formatiranje Update naredbe.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public StatementBuilder Update(params object[] parameters) {
             updateParamsDictionary.Clear();
             updateStatement.Clear();
@@ -403,7 +478,7 @@ namespace EGrader.Classes.Database {
 
 
         /// <summary>
-        /// Where clause of Update statement. DO NOT use for Select statement!
+        /// Formatiranje Where klauzule Update naredbe.
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
@@ -421,6 +496,11 @@ namespace EGrader.Classes.Database {
 
 
         // ###############################  D E L E T E  ###############################
+        /// <summary>
+        /// Formatiranje Delete naredbe.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public String Delete(params object[] parameters) {
             deleteParamsDictionary.Clear();
             deleteStatement.Clear();
